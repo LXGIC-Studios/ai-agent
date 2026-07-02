@@ -105,34 +105,38 @@ const TYPED = "Create a complete business plan for my mobile coffee cart startup
 const SECTIONS = [
   ["Executive Summary", [
     ["p","The business will be a premium mobile coffee cart serving high-quality espresso drinks, cold brew, seasonal lattes, teas, and small grab-and-go pastries at events, offices, markets, weddings, and private gatherings."],
-    ["p","Starting as a lean mobile cart rather than a brick-and-mortar cafe keeps startup costs low and creates multiple revenue streams."]
+    ["p","The core positioning is: A gourmet coffee shop experience brought directly to your event, office, neighborhood, or market."]
   ]],
   ["Market Analysis", [
-    ["p","Specialty coffee demand remains strong \u2014 at-home and specialty consumption recently hit a 14-year high. CHIPREUTERS The broader U.S. coffee and snack shop industry is estimated at $75.5 billion in 2026. CHIPIBIS"]
+    ["p","Specialty coffee demand remains high. The National Coffee Association reported in 2025 that 46% of American adults had specialty coffee in the past day, the highest level in 14 years. CHIPNCA IBISWorld estimates U.S. coffee and snack shop industry revenue at $75.5 billion in 2026. CHIPIBIS"]
   ]],
   ["Competitive Research", [
-    ["p","The cart should not compete as \u201ccheap coffee.\u201d It should compete on quality, convenience, and experience \u2014 most cafes skip events and close early, leaving that demand open."]
+    ["p","The cart should not compete as \u201ccheap coffee.\u201d It should compete on quality, convenience, and experience."],
+    ["li","Indirect competitors: catering boxes, hotel coffee service, office machines, drive-thru chains"],
+    ["li","The best gap is to own a specific niche instead of copying existing carts"]
   ]],
   ["Revenue Model", [
-    ["li","8 to 12 paid events per month"],
-    ["li","2 to 4 recurring weekly or monthly corporate accounts"],
-    ["li","$8,000 to $15,000 in monthly gross revenue by month 12"]
+    ["li","Target average ticket: $7.00 to $9.50"],
+    ["li","Corporate packages: $550 to $2,400 per event"],
+    ["li","Weddings and private events: $700 to $2,300 per booking"],
+    ["li","4 recurring accounts at $500 per month = $2,000 in stable monthly revenue"]
   ]],
   ["Marketing Strategy", [
-    ["li","A customer list of 1,000+ local followers and subscribers"],
-    ["li","Instagram-first content and recurring office partnerships"],
-    ["li","A signature menu: Honey Oak Latte, Brown Sugar Cold Brew, Campfire Mocha"]
+    ["li","Tagline: \u201cCraft coffee, wherever you gather.\u201d"],
+    ["li","4 to 6 short-form videos per week: pour shots, setups, customer reactions"],
+    ["li","Partner packet for planners, venues, offices, and property managers"]
   ]],
   ["12-Month Roadmap", [
-    ["li","Q1: Permits, cart build-out, supplier contracts"],
-    ["li","Q2: Launch, menu iteration, first recurring accounts"],
-    ["li","Q3: Catering packages and office subscriptions"],
-    ["li","Q4: A proven event package that scales into a second cart or kiosk"]
+    ["li","Months 1\u20133: Foundation, cart build-out, compliance, soft launch"],
+    ["li","Months 4\u20136: Public launch, corporate push, wedding vendors"],
+    ["li","Months 7\u20139: Recurring revenue, seasonal menu, operations"],
+    ["li","Months 10\u201312: Holiday push, reviews, scale decision"],
+    ["li","Year-one target: $92,000 to $100,000 gross revenue"]
   ]]
 ];
 function renderChips(text) {
   return text
-    .replaceAll("CHIPREUTERS", '<span class="chip"><span class="cdot"></span>Reuters</span>')
+    .replaceAll("CHIPNCA", '<span class="chip">ncausa.org</span>')
     .replaceAll("CHIPIBIS", '<span class="chip">IBISWorld</span>');
 }
 
@@ -235,7 +239,7 @@ function sectionHTML(sec, frac, streaming) {
   return html;
 }
 
-const PREAMBLE = "I\u2019ll build this as a practical launch plan, not a generic MBA template \u2014 lean, mobile-first, and ready to customize.";
+const PREAMBLE = "Here\u2019s a complete first-pass business plan built around a gourmet mobile coffee cart.";
 function sceneB(t) {
   const preAt = 0.35, thoughtAt = 0.95, titleAt = 1.25;
   let ai = '';
@@ -247,7 +251,7 @@ function sceneB(t) {
     const pChars = Math.floor(PREAMBLE.length * pFrac);
     parts += `<p>${PREAMBLE.slice(0, pChars)}${(pFrac < 1) ? '<span class="stream-dot"></span>' : ''}</p>`;
     if (t >= thoughtAt) parts += `<div class="thought">Thought for 4s<span class="tchev"></span></div>`;
-    if (t >= titleAt) parts += `<h1>Business Plan: Gourmet Mobile Coffee Cart</h1>`;
+    if (t >= titleAt) parts += `<h1>Business Plan: Gourmet Mobile Coffee Cart Startup</h1>`;
     SECTIONS.forEach((s, i) => {
       const st = HEAD_T[i];
       if (t >= st) {
@@ -272,6 +276,9 @@ function sceneB(t) {
 const UNDO = `<svg viewBox="0 0 24 24"><path d="M12.5 8H7.83l2.58-2.59L9 4 4 9l5 5 1.41-1.41L7.83 10h4.67a4.5 4.5 0 0 1 0 9H7v2h5.5a6.5 6.5 0 0 0 0-13z"/></svg>`;
 const REDO = `<svg viewBox="0 0 24 24"><path d="M11.5 8h4.67l-2.58-2.59L15 4l5 5-5 5-1.41-1.41L16.17 10H11.5a4.5 4.5 0 0 0 0 9H17v2h-5.5a6.5 6.5 0 0 1 0-13z"/></svg>`;
 
+function docChips(text) {
+  return text.replaceAll("CHIPNCA", "(ncausa.org)").replaceAll("CHIPIBIS", "(IBISWorld)");
+}
 function docSectionHTML(sec) {
   const [heading, items] = sec;
   let html = '';
@@ -279,10 +286,10 @@ function docSectionHTML(sec) {
   for (const [kind, text] of items) {
     if (kind === 'li') {
       if (!liOpen) { html += '<ul>'; liOpen = true; }
-      html += `<li>${text}</li>`;
+      html += `<li>${docChips(text)}</li>`;
     } else {
       if (liOpen) { html += '</ul>'; liOpen = false; }
-      html += `<p>${text}</p>`;
+      html += `<p>${docChips(text)}</p>`;
     }
   }
   if (liOpen) html += '</ul>';
@@ -294,15 +301,15 @@ function sceneC(t) {
   const tf = Math.max(0, Math.min(1, (t - 2.0) / 0.3));
   const docBody = `
     <div class="docs-page">
-      <h1>Business Plan: Bloom Coffee Cart</h1>
+      <h1>Business Plan: Gourmet Mobile Coffee Cart Startup</h1>
       <div class="sub">Draft v1 &middot; June 2026</div>
       ${SECTIONS.map((s, i) => `<h2>${i+1}. ${s[0]}</h2>${docSectionHTML(s)}
         ${s[0] === 'Revenue Model' ? `<table>
-          <tr><th>Metric</th><th>Projection</th></tr>
-          <tr><td>Average ticket</td><td>$6.50</td></tr>
-          <tr><td>Cups per day</td><td>180</td></tr>
-          <tr><td>Daily revenue</td><td>$1,170</td></tr>
-          <tr><td>Beverage gross margin</td><td>68%</td></tr>
+          <tr><th>Metric</th><th>Target</th></tr>
+          <tr><td>Average ticket</td><td>$7.00 – $9.50</td></tr>
+          <tr><td>Paid events per month</td><td>8 – 12</td></tr>
+          <tr><td>Monthly gross by month 12</td><td>$8,000 – $15,000</td></tr>
+          <tr><td>Year-one revenue</td><td>$92,000 – $100,000</td></tr>
         </table>` : ''}`).join('')}
       <h2>Appendix</h2>
       <ul><li>Startup costs and equipment list</li><li>Permit and licensing checklist</li><li>Break-even analysis</li></ul>
@@ -311,7 +318,7 @@ function sceneC(t) {
     <div class="docs-top">
       <div class="docs-icon"></div>
       <div>
-        <div class="docs-name">Business Plan: Bloom Coffee Cart</div>
+        <div class="docs-name">Business Plan: Gourmet Mobile Coffee Cart</div>
         <div class="docs-menu"><span>File</span><span>Edit</span><span>View</span><span>Insert</span><span>Format</span><span>Tools</span></div>
       </div>
       <div class="docs-share">Share</div>
