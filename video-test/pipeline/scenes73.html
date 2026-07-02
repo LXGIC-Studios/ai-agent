@@ -123,16 +123,7 @@ const STATUS = `<div class="statusbar"><span class="st-time">3:56</span>
   <svg viewBox="0 0 54 24" style="width:56px;height:26px"><rect x="1" y="1" width="44" height="22" rx="7" fill="none" stroke="#8e8e93" stroke-width="2"/><rect x="4" y="4" width="30" height="16" rx="4" fill="#f0efea"/><path d="M48 8v8a5 5 0 0 0 0-8z" fill="#8e8e93"/></svg>
   </span></div>`;
 
-const STAR = (() => {
-  let rays = '';
-  for (let k = 0; k < 9; k++) {
-    const a = (k / 9) * Math.PI * 2 + 0.25;
-    const x1 = 12 + Math.cos(a) * 2.2, y1 = 12 + Math.sin(a) * 2.2;
-    const x2 = 12 + Math.cos(a + 0.28) * 9.6, y2 = 12 + Math.sin(a + 0.28) * 9.6;
-    rays += `<line x1="${x1.toFixed(2)}" y1="${y1.toFixed(2)}" x2="${x2.toFixed(2)}" y2="${y2.toFixed(2)}" stroke="#e0714f" stroke-width="1.7" stroke-linecap="round"/>`;
-  }
-  return `<svg class="starburst" viewBox="0 0 24 24">${rays}</svg>`;
-})();
+const STAR = `<img src="claude_spark.png" class="starburst">`;
 const GHOST = `<svg viewBox="0 0 24 24" style="width:52px;height:52px;fill:none;stroke:#c9c6bd;stroke-width:1.7"><path d="M12 3.5a6.2 6.2 0 0 0-6.2 6.2V19l2.1-1.8 2 1.8 2.1-1.8 2.1 1.8 2-1.8 2.1 1.8V9.7A6.2 6.2 0 0 0 12 3.5z"/><circle cx="9.6" cy="10" r="0.9" fill="#c9c6bd"/><circle cx="14.4" cy="10" r="0.9" fill="#c9c6bd"/></svg>`;
 const SEND = `<div class="cl-send"><svg viewBox="0 0 24 24"><path d="M12 4l7 7-1.4 1.4L13 7.8V20h-2V7.8l-4.6 4.6L5 11z"/></svg></div>`;
 const SENDIDLE = `<div class="cl-send idle"><svg viewBox="0 0 24 24"><path d="M12 4l7 7-1.4 1.4L13 7.8V20h-2V7.8l-4.6 4.6L5 11z"/></svg></div>`;
