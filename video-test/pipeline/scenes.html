@@ -32,12 +32,15 @@ html,body { width:1080px; height:1920px; overflow:hidden; background:#212121; fo
 .gpt-send svg { width:38px; height:38px; fill:#212121; }
 
 .u-bubble { background:#303030; color:#ececec; font-size:37px; line-height:1.5; padding:30px 42px; border-radius:40px; max-width:780px; margin-left:auto; }
-.a-msg { color:#ececec; font-size:36px; line-height:1.58; margin-top:56px; max-width:980px; }
-.a-msg h2 { font-size:40px; font-weight:700; color:#ffffff; margin:42px 0 14px; }
-.a-msg h1 { font-size:46px; font-weight:700; color:#ffffff; margin:6px 0 10px; }
-.a-msg p { color:#d9d9df; }
+.a-msg { color:#ececec; font-size:33px; line-height:1.55; margin-top:52px; max-width:980px; }
+.a-msg h1 { font-size:44px; font-weight:700; color:#ffffff; margin:6px 0 10px; }
+.a-msg h2 { font-size:37px; font-weight:700; color:#ffffff; margin:40px 0 12px; }
+.a-msg p { color:#d9d9df; margin:10px 0; }
 .a-msg .lead { color:#d9d9df; }
-.stream-dot { display:inline-block; width:22px; height:22px; border-radius:50%; background:#ececec; margin-left:8px; vertical-align:-2px; }
+.a-msg ul { padding-left:42px; margin:8px 0; }
+.a-msg li { color:#d9d9df; margin:8px 0; }
+.a-msg li::marker { color:#8e8ea0; }
+.stream-dot { display:inline-block; width:20px; height:20px; border-radius:50%; background:#ececec; margin-left:8px; vertical-align:-2px; }
 .think { display:inline-block; color:#8e8ea0; font-size:36px; }
 .shimmer { background:linear-gradient(90deg,#8e8ea0 30%,#ececec 50%,#8e8ea0 70%); background-size:200% 100%; -webkit-background-clip:text; background-clip:text; color:transparent; }
 
@@ -47,19 +50,22 @@ html,body { width:1080px; height:1920px; overflow:hidden; background:#212121; fo
 .docs-icon { width:64px; height:84px; background:#2b7de9; border-radius:8px; position:relative; }
 .docs-icon:after { content:''; position:absolute; left:14px; top:22px; width:36px; height:6px; background:#fff; box-shadow:0 14px 0 #fff, 0 28px 0 #fff, 0 42px 0 #fff; }
 .docs-name { font-size:38px; color:#202124; font-weight:400; }
-.docs-star { color:#5f6368; font-size:34px; margin-left:6px; }
 .docs-menu { display:flex; gap:34px; font-size:29px; color:#202124; margin-top:10px; }
-.docs-share { margin-left:auto; background:#c2e7ff; color:#001d35; font-size:32px; font-weight:600; padding:20px 44px; border-radius:50px; display:flex; align-items:center; gap:14px; }
-.docs-toolbar { margin:24px 40px 0; background:#edf2fa; border-radius:50px; height:80px; display:flex; align-items:center; padding:0 36px; gap:30px; color:#444746; font-size:30px; }
+.docs-share { margin-left:auto; background:#c2e7ff; color:#001d35; font-size:32px; font-weight:600; padding:20px 48px; border-radius:50px; }
+.docs-toolbar { margin:24px 40px 0; background:#edf2fa; border-radius:50px; height:80px; display:flex; align-items:center; padding:0 40px; gap:32px; color:#444746; font-size:30px; }
 .docs-toolbar .sep { width:2px; height:40px; background:#c4c7c5; }
+.docs-toolbar svg { width:34px; height:34px; fill:#444746; }
 .docs-scroll { flex:1; overflow:hidden; position:relative; margin-top:28px; }
 .docs-page { width:920px; margin:0 auto 60px; background:#fff; border:1px solid #dadce0; border-radius:4px; padding:96px 88px 120px; font-family:Arial, sans-serif; }
-.docs-page h1 { font-size:50px; color:#000; font-weight:700; margin-bottom:10px; }
-.docs-page .sub { font-size:28px; color:#5f6368; margin-bottom:44px; }
-.docs-page h2 { font-size:36px; color:#1a73e8; font-weight:700; margin:44px 0 14px; }
-.docs-page p, .docs-page li { font-size:30px; line-height:1.65; color:#202124; }
-.docs-page ul { padding-left:44px; }
-.toast { position:absolute; left:50%; bottom:110px; background:#202124; color:#fff; font-size:32px; padding:26px 48px; border-radius:12px; display:flex; gap:16px; align-items:center; box-shadow:0 8px 30px rgba(0,0,0,.3); }
+.docs-page h1 { font-size:48px; color:#000; font-weight:700; margin-bottom:8px; }
+.docs-page .sub { font-size:27px; color:#5f6368; margin-bottom:40px; }
+.docs-page h2 { font-size:34px; color:#202124; font-weight:700; margin:42px 0 12px; }
+.docs-page p, .docs-page li { font-size:29px; line-height:1.6; color:#202124; }
+.docs-page ul { padding-left:44px; margin:8px 0; }
+.docs-page table { border-collapse:collapse; margin:16px 0; width:100%; }
+.docs-page td, .docs-page th { border:1.5px solid #b6bcc4; padding:14px 22px; font-size:28px; color:#202124; text-align:left; }
+.docs-page th { background:#f1f3f4; font-weight:700; }
+.toast { position:absolute; left:50%; bottom:110px; background:#202124; color:#fff; font-size:32px; padding:26px 48px; border-radius:12px; box-shadow:0 8px 30px rgba(0,0,0,.3); }
 </style>
 <div id="stage"></div>
 <script>
@@ -67,13 +73,37 @@ const stage = document.getElementById('stage');
 const PROMPT = "Create a complete business plan for my mobile coffee cart startup — include an executive summary, market analysis, competitive research, revenue model, marketing strategy, and a 12-month roadmap.";
 const TYPED = "Create a complete business plan for my mobile coffee cart startup";
 
+/* Realistic AI-generated plan content. Each section: [heading, [items]], item = ["p"|"li", text] */
 const SECTIONS = [
-  ["Executive Summary","A mobile specialty coffee cart serving premium espresso in high-traffic downtown locations, targeting commuters and office workers."],
-  ["Market Analysis","The specialty coffee market is valued at $45B and growing 8% annually. Morning foot traffic downtown exceeds 12,000 people daily."],
-  ["Competitive Research","Three direct competitors within two miles — none open before 7 AM, leaving the early commuter window wide open."],
-  ["Revenue Model","Average ticket $6.50 × 180 cups/day ≈ $1,170 daily revenue, with 68% gross margin on beverages."],
-  ["Marketing Strategy","Instagram-first launch, loyalty punch cards, and office pre-order partnerships within a five-block radius."],
-  ["12-Month Roadmap","Q1: permits & cart build-out · Q2: launch & iterate · Q3: catering line · Q4: second cart."]
+  ["Executive Summary", [
+    ["p","Bloom Coffee Cart is a mobile specialty coffee business serving high-traffic downtown locations. The concept targets morning commuters with premium espresso drinks, requiring an estimated $38,500 in startup capital and projecting profitability by month seven."]
+  ]],
+  ["Market Analysis", [
+    ["li","U.S. specialty coffee market: $45.4B, growing 8.1% annually"],
+    ["li","Target area: 12,000+ daily commuters within a half-mile radius"],
+    ["li","Peak demand window: 6:30–9:30 AM, underserved by existing cafes"]
+  ]],
+  ["Competitive Research", [
+    ["li","Three brick-and-mortar cafes within 2 miles — none open before 7 AM"],
+    ["li","No mobile competitors on the north transit corridor"],
+    ["li","Differentiators: sub-90-second service, loyalty pricing, location flexibility"]
+  ]],
+  ["Revenue Model", [
+    ["li","Average ticket: $6.50 at a projected 180 cups per day"],
+    ["li","Projected daily revenue: $1,170 with a 68% beverage gross margin"],
+    ["li","Secondary streams: catering, office subscriptions, retail beans"]
+  ]],
+  ["Marketing Strategy", [
+    ["li","Instagram-first launch: daily location stories and build-in-public content"],
+    ["li","Loyalty punch card: every tenth drink free"],
+    ["li","Pre-order partnerships with offices within a five-block radius"]
+  ]],
+  ["12-Month Roadmap", [
+    ["li","Q1: Permits, cart build-out, supplier contracts"],
+    ["li","Q2: Soft launch, menu iteration, loyalty program"],
+    ["li","Q3: Catering line and office subscription rollout"],
+    ["li","Q4: Break-even review and second-cart feasibility"]
+  ]]
 ];
 
 const MIC = `<div class="gpt-mic"><svg viewBox="0 0 24 24"><path d="M12 14a3 3 0 0 0 3-3V5a3 3 0 0 0-6 0v6a3 3 0 0 0 3 3zm5-3a5 5 0 0 1-10 0H5a7 7 0 0 0 6 6.92V21h2v-3.08A7 7 0 0 0 19 11h-2z"/></svg></div>`;
@@ -114,26 +144,51 @@ function sceneA(t) {
 
 /* ---------- Scene B: plan streaming (dur 9.4s) ---------- */
 const HEAD_T = [3.36, 4.18, 5.22, 6.24, 7.14, 8.44];
+const REVEAL = 0.95;  // seconds to stream one section's body
+
+function sectionHTML(sec, frac, streaming) {
+  const [heading, items] = sec;
+  const total = items.reduce((n, it) => n + it[1].length, 0);
+  let budget = Math.floor(total * frac);
+  let html = '';
+  let liOpen = false;
+  for (const [kind, text] of items) {
+    if (budget <= 0) break;
+    const part = text.slice(0, budget);
+    const done = budget >= text.length;
+    budget -= text.length;
+    const dot = (!done && streaming) ? '<span class="stream-dot"></span>' : '';
+    if (kind === 'li') {
+      if (!liOpen) { html += '<ul>'; liOpen = true; }
+      html += `<li>${part}${dot}</li>`;
+    } else {
+      if (liOpen) { html += '</ul>'; liOpen = false; }
+      html += `<p>${part}${dot}</p>`;
+    }
+  }
+  if (liOpen) html += '</ul>';
+  return html;
+}
+
 function sceneB(t) {
   const thinkEnd = 0.9, titleAt = 1.25;
   let ai = '';
   if (t < thinkEnd) {
-    ai = `<span class="think shimmer" style="background-position:${(-200*t).toFixed(0)}% 0">Thinking…</span>`;
+    ai = `<span class="think shimmer" style="background-position:${(-200*t).toFixed(0)}% 0">Thinking&#8230;</span>`;
   } else {
     let parts = '';
     if (t >= titleAt) {
-      parts += `<h1>&#9749; Business Plan — Bloom Coffee Cart</h1><p class="lead">Here’s a complete plan you can customize:</p>`;
+      parts += `<h1>Business Plan: Bloom Coffee Cart</h1><p class="lead">Here&#8217;s a comprehensive plan you can customize:</p>`;
     }
     SECTIONS.forEach((s, i) => {
       const st = HEAD_T[i];
       if (t >= st) {
-        const frac = Math.min(1, (t - st) / 0.9);
-        const chars = Math.floor(s[1].length * frac);
-        parts += `<h2>${i+1}. ${s[0]}</h2><p>${s[1].slice(0, chars)}${frac < 1 ? '<span class="stream-dot"></span>' : ''}</p>`;
+        const frac = Math.min(1, (t - st) / REVEAL);
+        parts += `<h2>${i+1}. ${s[0]}</h2>` + sectionHTML(s, frac, true);
       }
     });
     if (t >= titleAt && t < HEAD_T[0]) parts += `<span class="stream-dot"></span>`;
-    ai = parts || `<span class="think shimmer" style="background-position:${(-200*t).toFixed(0)}% 0">Thinking…</span>`;
+    ai = parts || `<span class="think shimmer">Thinking&#8230;</span>`;
   }
   const body = `<div id="inner" style="position:absolute;left:52px;right:52px;top:40px">
     <div class="u-bubble" style="font-size:33px;max-width:720px;padding:24px 36px">${PROMPT}</div>
@@ -147,29 +202,56 @@ function sceneB(t) {
 }
 
 /* ---------- Scene C: Google Docs (dur 3.9s) ---------- */
+const UNDO = `<svg viewBox="0 0 24 24"><path d="M12.5 8H7.83l2.58-2.59L9 4 4 9l5 5 1.41-1.41L7.83 10h4.67a4.5 4.5 0 0 1 0 9H7v2h5.5a6.5 6.5 0 0 0 0-13z"/></svg>`;
+const REDO = `<svg viewBox="0 0 24 24"><path d="M11.5 8h4.67l-2.58-2.59L15 4l5 5-5 5-1.41-1.41L16.17 10H11.5a4.5 4.5 0 0 0 0 9H17v2h-5.5a6.5 6.5 0 0 1 0-13z"/></svg>`;
+
+function docSectionHTML(sec) {
+  const [heading, items] = sec;
+  let html = '';
+  let liOpen = false;
+  for (const [kind, text] of items) {
+    if (kind === 'li') {
+      if (!liOpen) { html += '<ul>'; liOpen = true; }
+      html += `<li>${text}</li>`;
+    } else {
+      if (liOpen) { html += '</ul>'; liOpen = false; }
+      html += `<p>${text}</p>`;
+    }
+  }
+  if (liOpen) html += '</ul>';
+  return html;
+}
+
 function sceneC(t) {
-  const scroll = Math.max(0, (t - 0.35)) * 260;
+  const scroll = Math.max(0, (t - 0.3)) * 330;
   const tf = Math.max(0, Math.min(1, (t - 2.0) / 0.3));
   const docBody = `
     <div class="docs-page">
-      <h1>Business Plan — Bloom Coffee Cart</h1>
-      <div class="sub">Draft · generated with AI · ready to customize</div>
-      ${SECTIONS.map((s, i) => `<h2>${i+1}. ${s[0]}</h2><p>${s[1]}</p>`).join('')}
+      <h1>Business Plan: Bloom Coffee Cart</h1>
+      <div class="sub">Draft v1 &middot; June 2026</div>
+      ${SECTIONS.map((s, i) => `<h2>${i+1}. ${s[0]}</h2>${docSectionHTML(s)}
+        ${s[0] === 'Revenue Model' ? `<table>
+          <tr><th>Metric</th><th>Projection</th></tr>
+          <tr><td>Average ticket</td><td>$6.50</td></tr>
+          <tr><td>Cups per day</td><td>180</td></tr>
+          <tr><td>Daily revenue</td><td>$1,170</td></tr>
+          <tr><td>Beverage gross margin</td><td>68%</td></tr>
+        </table>` : ''}`).join('')}
       <h2>Appendix</h2>
-      <ul><li>Startup costs &amp; equipment list</li><li>Permit checklist</li><li>Break-even analysis</li></ul>
+      <ul><li>Startup costs and equipment list</li><li>Permit and licensing checklist</li><li>Break-even analysis</li></ul>
     </div>`;
   stage.innerHTML = `<div class="docs">
     <div class="docs-top">
       <div class="docs-icon"></div>
       <div>
-        <div style="display:flex;align-items:center"><span class="docs-name">Business Plan — Bloom Coffee Cart</span><span class="docs-star">&#9734;</span></div>
+        <div class="docs-name">Business Plan: Bloom Coffee Cart</div>
         <div class="docs-menu"><span>File</span><span>Edit</span><span>View</span><span>Insert</span><span>Format</span><span>Tools</span></div>
       </div>
-      <div class="docs-share">&#128274; Share</div>
+      <div class="docs-share">Share</div>
     </div>
-    <div class="docs-toolbar"><span>&#8630;</span><span>&#8631;</span><span>&#128424;</span><div class="sep"></div><span>100%</span><div class="sep"></div><span style="font-weight:700">B</span><span style="font-style:italic">I</span><span style="text-decoration:underline">U</span><div class="sep"></div><span>Arial</span><div class="sep"></div><span>11</span></div>
-    <div class="docs-scroll"><div style="transform:translateY(${-scroll}px)">${docBody}</div>
-      <div class="toast" style="opacity:${tf};transform:translateX(-50%) translateY(${(40*(1-tf)).toFixed(1)}px)"><span style="color:#8ab4f8">&#10003;</span> Pasted from clipboard</div></div></div>`;
+    <div class="docs-toolbar">${UNDO}${REDO}<div class="sep"></div><span>100%</span><div class="sep"></div><span style="font-weight:700">B</span><span style="font-style:italic;font-family:Georgia">I</span><span style="text-decoration:underline">U</span><div class="sep"></div><span>Arial</span><div class="sep"></div><span>11</span></div>
+    <div class="docs-scroll"><div style="transform:translateY(${(-scroll).toFixed(1)}px)">${docBody}</div>
+      <div class="toast" style="opacity:${tf.toFixed(2)};transform:translateX(-50%) translateY(${(40*(1-tf)).toFixed(1)}px)">Pasted from clipboard</div></div></div>`;
 }
 
 window.seek = (scene, t) => {

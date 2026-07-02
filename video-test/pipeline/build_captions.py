@@ -76,10 +76,10 @@ Format: Layer, Start, End, Style, MarginL, MarginR, MarginV, Effect, Text
 POP = r"{\fscx82\fscy82\t(0,80,\fscx100\fscy100)}"
 
 lines = []
-for chunks, off in [(INTRO, 0.0), (MIDDLE, 4.05), (OUTRO, 20.95)]:
+for chunks, off in [(INTRO, -0.45), (MIDDLE, 3.60), (OUTRO, 20.50)]:
     for text, s, e, acc in chunks:
         style = "CapAcc" if acc else "Cap"
-        lines.append(f"Dialogue: 0,{ts(s+off)},{ts(e+off)},{style},0,0,0,,{POP}{text}")
+        lines.append(f"Dialogue: 0,{ts(max(0, s+off))},{ts(max(0, e+off))},{style},0,0,0,,{POP}{text}")
 
 with open("reel.ass", "w") as f:
     f.write(HEADER + "\n".join(lines) + "\n")
