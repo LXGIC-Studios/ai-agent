@@ -42,7 +42,7 @@ OUTRO = [  # trim 0.30-3.75, offset 19.80
     ("AND FOLLOW ALONG", 1.42, 2.02, True),
     ("FOR MORE WAYS", 2.02, 2.44, False),
     ("TO MAKE MONEY", 2.44, 2.90, True),
-    ("WITH AI", 2.90, 3.45, True),
+    ("WITH AI", 2.90, 3.60, True),
 ]
 
 def ts(t):
@@ -68,7 +68,7 @@ Format: Layer, Start, End, Style, MarginL, MarginR, MarginV, Effect, Text
 POP = r"{\fscx82\fscy82\t(0,80,\fscx100\fscy100)}"
 
 lines = []
-for chunks, off in [(INTRO, 0.0), (MIDDLE, 2.40), (OUTRO, 19.80)]:
+for chunks, off in [(INTRO, 0.0), (MIDDLE, 2.60), (OUTRO, 20.00)]:
     for text, s, e, acc in chunks:
         style = "CapAcc" if acc else "Cap"
         lines.append(f"Dialogue: 0,{ts(max(0, s+off))},{ts(max(0, e+off))},{style},0,0,0,,{POP}{text}")
