@@ -98,8 +98,8 @@ html,body { width:1080px; height:1920px; overflow:hidden; background:#000; font-
 <div id="stage"></div>
 <script>
 const stage = document.getElementById('stage');
-const PROMPT = "Give me 10 different marketing angles to sell products for any audience. For each, give the angle in a one-line headline.";
-const TYPED = "Give me 10 different marketing angles to sell products for any audience. For each, give the angle in a one-line headline.";
+const PROMPT = "Give me 10 different marketing angles to sell [protein powder] to [gym beginners]. For each, give the angle and a one line ad headline";
+const TYPED = PROMPT;
 
 /* Realistic AI-generated plan content. Each section: [heading, [items]], item = ["p"|"li", text] */
 const SECTIONS = [
@@ -239,59 +239,78 @@ function sectionHTML(sec, frac, streaming) {
   return html;
 }
 
-const ANGLES = [
-  ["Beginner-Friendly","Protein made simple for your first 90 days"],
-  ["Fast Results","See visible progress in your first 12 weeks"],
-  ["Convenience","One scoop. Done. Zero meal-prep stress"],
-  ["Trust","Third-party tested. No mystery ingredients"],
-  ["Value","Costs less than your daily coffee"],
-  ["Community","Join 50,000 beginners on the same journey"],
-  ["Myth-Busting","No bulky gains. Just lean progress"],
-  ["Recovery","Train more often by recovering faster"],
-  ["Simplicity","The only supplement a beginner needs"],
-  ["Social Proof","Rated 4.8 stars by first-year lifters"]
+const SEGS = [
+  ["Muscle Growth Starter Angle","Build muscle faster as a beginner","You don\u2019t need experience\u2014just protein to start building real muscle."],
+  ["Post-Workout Recovery Angle","Recover faster after workouts","Train today, recover tomorrow\u2014don\u2019t stay sore for days."],
+  ["Beginner Mistake Fix Angle","Most beginners don\u2019t eat enough protein","You\u2019re training hard\u2014but are you feeding your muscles enough?"],
+  ["Convenience / Busy Lifestyle Angle","Easy nutrition for busy people","No time to cook? One shake = your protein fix in 10 seconds."],
+  ["Confidence & Transformation Angle","Look better, feel better","Your transformation starts with one simple daily habit."],
+  ["Budget-Friendly Nutrition Angle","Cheaper than high-protein foods","Get your daily protein for less than a fast-food meal."],
+  ["Social Proof Angle","Everyone at the gym is using it","Join thousands of beginners already seeing results."],
+  ["Simplicity Angle","No confusing supplement stacks","Skip the supplement aisle overwhelm\u2014start with the one that works."],
+  ["Taste Angle","Protein that actually tastes good","Finally, a protein shake you\u2019ll look forward to drinking."],
+  ["Habit & Consistency Angle","Small habit, big results","One scoop a day is the easiest gym win you\u2019ll ever get."]
 ];
-const B_TITLE = "Here are 10 marketing angles for protein powder aimed at gym beginners:";
+const B_TITLE = "Here are 10 strong marketing angles to sell protein powder to gym beginners, each with a clear hook and a one-line ad headline:";
+function segHTML(seg, idx, frac, picked) {
+  const [name, focus, headline] = seg;
+  const l1 = `${idx+1}. ${name}`;
+  const l2 = `Focus: \u201c${focus}\u201d`;
+  const l3 = `Headline: \u201c${headline}\u201d`;
+  const total = l1.length + l2.length + l3.length;
+  let budget = Math.floor(total * frac);
+  const cut = (txt) => { const p = txt.slice(0, Math.max(0, budget)); budget -= txt.length; return p; };
+  const a = cut(l1), b = cut(l2), c = cut(l3);
+  const style = picked ? 'background:#2f3a2f;border-radius:18px;padding:16px 22px;margin:0 -22px;outline:2px solid #4a5d4a;' : '';
+  let html = `<div id="${idx === 1 ? 'pick' : ''}" style="${style}">`;
+  if (a) html += `<div style="font-weight:700;color:#fff;font-size:34px;margin-bottom:6px">${a}</div>`;
+  if (b) html += `<div style="color:#d9d9df;font-size:31px;margin-bottom:4px">${b}</div>`;
+  if (c) html += `<div style="color:#d9d9df;font-size:31px;font-style:italic">${c}</div>`;
+  html += '</div>';
+  if (frac >= 1) html += `<div style="height:1px;background:#333;margin:26px 0"></div>`;
+  return html;
+}
 function sceneB(t) {
-  const bubble2At = 0.25, dotsEnd = 0.55, titleAt = 0.7;
-  const angleStart = 1.8, angleGap = 0.28, angleReveal = 0.34;
+  const dotsEnd = 0.5, titleAt = 0.65;
+  const segStart = 1.8, segGap = 0.29, segReveal = 0.5;
   const pickAt = 5.85, pickIdx = 1;
   let ai = '';
   if (t >= dotsEnd) {
     let parts = '';
     if (t >= titleAt) {
-      const f = Math.min(1, (t - titleAt) / 0.7);
-      parts += `<p>${B_TITLE.slice(0, Math.floor(B_TITLE.length * f))}${f < 1 ? '<span class="stream-dot"></span>' : ''}</p>`;
+      const f = Math.min(1, (t - titleAt) / 0.8);
+      parts += `<p style="font-size:31px">${B_TITLE.slice(0, Math.floor(B_TITLE.length * f))}${f < 1 ? '<span class="stream-dot"></span>' : ''}</p>`;
+      if (f >= 1) parts += `<div style="height:1px;background:#333;margin:26px 0"></div>`;
     }
-    let listHtml = '';
-    ANGLES.forEach((a, i) => {
-      const st = angleStart + i * angleGap;
+    SEGS.forEach((seg, i) => {
+      const st = segStart + i * segGap;
       if (t >= st) {
-        const f = Math.min(1, (t - st) / angleReveal);
-        const full = `${a[0]}: \u201c${a[1]}\u201d`;
-        const chars = Math.floor(full.length * f);
-        const shown = full.slice(0, chars);
-        const picked = (t >= pickAt && i === pickIdx);
-        const style = picked ? 'background:#2f3a2f;border-radius:16px;padding:8px 16px;margin:4px -16px;outline:2px solid #4a5d4a;' : '';
-        listHtml += `<li style="${style}"><b style="color:#fff">${shown.split(':')[0]}${shown.includes(':')?':':''}</b>${shown.includes(':')?shown.slice(shown.indexOf(':')+1):''}${(f<1)?'<span class="stream-dot"></span>':''}</li>`;
+        const f = Math.min(1, (t - st) / segReveal);
+        parts += segHTML(seg, i, f, t >= pickAt && i === pickIdx);
       }
     });
-    if (listHtml) parts += `<ol style="padding-left:48px;margin:14px 0">${listHtml}</ol>`;
     ai = parts || `<span class="think shimmer" style="background-position:${(-200*t).toFixed(0)}% 0">Thinking&#8230;</span>`;
   } else {
     ai = `<span class="think shimmer" style="background-position:${(-200*t).toFixed(0)}% 0">Thinking&#8230;</span>`;
   }
-  const b2 = (t >= bubble2At) ? `<div class="u-bubble" style="font-size:33px;max-width:640px;padding:24px 36px;margin-top:24px">Protein powder for gym beginners</div>` : '';
   const body = `<div id="inner" style="position:absolute;left:52px;right:52px;top:40px">
-    <div class="u-bubble" style="font-size:31px;max-width:760px;padding:24px 36px">${PROMPT}</div>
-    ${b2}
-    <div class="a-msg" style="font-size:33px">${ai}</div></div>`;
+    <div class="u-bubble" style="font-size:31px;max-width:780px;padding:24px 36px">${PROMPT}</div>
+    <div class="a-msg" style="font-size:31px">${ai}</div></div>`;
   stage.innerHTML = gptChrome(body, composer(`<span class="ph">Ask ChatGPT</span>`, false, true), '', true);
   const bodyEl = document.getElementById('body');
   const innerEl = document.getElementById('inner');
   const avail = bodyEl.clientHeight - 90;
   const h = innerEl.scrollHeight;
-  if (h > avail) innerEl.style.top = (40 - (h - avail)) + 'px';
+  const bottomTop = (h > avail) ? (40 - (h - avail)) : 40;
+  let top = bottomTop;
+  const pickEl = document.getElementById('pick');
+  if (t >= 5.6 && pickEl) {
+    const target = Math.max(bottomTop, Math.min(40, 260 - pickEl.offsetTop));
+    const p = Math.min(1, (t - 5.6) / 0.55);
+    const ease = 1 - Math.pow(1 - p, 3);
+    top = bottomTop + (target - bottomTop) * ease;
+  }
+  innerEl.style.top = top + 'px';
 }
 
 /* ---------- Scene C: Google Docs (dur 3.9s) ---------- */
