@@ -13,17 +13,25 @@ html,body { width:1080px; height:1920px; overflow:hidden; background:#262624; fo
 .statusbar { height:100px; display:flex; align-items:center; justify-content:space-between; padding:14px 70px 0; }
 .st-time { color:#f0efea; font-size:40px; font-weight:700; }
 .st-icons { display:flex; align-items:center; gap:16px; }
-.cl-top { height:150px; display:flex; align-items:center; padding:0 44px; gap:28px; }
-.cl-burger { width:96px; height:96px; min-width:96px; border-radius:50%; background:#33322f; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:14px; }
-.cl-burger div { height:5px; background:#f0efea; border-radius:3px; width:42px; }
-.cl-wordmark { font-family:Georgia,serif; color:#f0efea; font-size:52px; font-weight:600; margin:0 auto; letter-spacing:1px; }
-.cl-new { width:96px; height:96px; min-width:96px; border-radius:50%; background:#33322f; display:flex; align-items:center; justify-content:center; color:#f0efea; font-size:48px; font-weight:300; }
+.cl-top { height:190px; display:flex; align-items:center; justify-content:space-between; padding:30px 44px 0; }
+.cl-burger { width:104px; height:104px; border-radius:50%; background:#302f2c; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:13px; box-shadow:0 2px 10px rgba(0,0,0,.25); }
+.cl-burger div { height:4px; background:#c9c6bd; border-radius:2px; }
+.cl-burger div:nth-child(1) { width:44px; }
+.cl-burger div:nth-child(2) { width:30px; margin-right:14px; }
+.cl-new { width:104px; height:104px; border-radius:50%; background:#302f2c; display:flex; align-items:center; justify-content:center; box-shadow:0 2px 10px rgba(0,0,0,.25); }
 .cl-body { flex:1; padding:40px 52px; overflow:hidden; position:relative; }
-.cl-composer-wrap { padding:24px 40px 70px; }
-.cl-composer { background:#30302e; border:2px solid #45433f; border-radius:48px; min-height:128px; display:flex; align-items:center; padding:20px 24px 20px 48px; }
-.cl-composer .plus { width:60px; height:60px; min-width:60px; color:#f0efea; font-size:48px; font-weight:300; display:flex; align-items:center; justify-content:center; margin-right:16px; }
-.cl-input { flex:1; color:#f0efea; font-size:38px; line-height:1.4; word-break:break-word; }
+.cl-composer-wrap { padding:24px 34px 40px; }
+.cl-composer { background:#2e2d2a; border:2px solid #413f3a; border-radius:52px; padding:38px 34px 28px 44px; }
+.cl-input { color:#f0efea; font-size:43px; line-height:1.4; word-break:break-word; min-height:60px; }
 .cl-input .ph { color:#8a867d; }
+.cl-crow { display:flex; align-items:center; margin-top:30px; gap:22px; }
+.cl-plus { width:84px; height:84px; min-width:84px; border-radius:50%; background:#3a3936; color:#dcd9d0; font-size:52px; font-weight:300; display:flex; align-items:center; justify-content:center; }
+.cl-model { background:#1f1e1c; border-radius:50px; padding:22px 36px; font-size:33px; color:#f0efea; font-weight:600; }
+.cl-model span { color:#8a867d; font-weight:400; margin-left:12px; }
+.cl-mic { width:84px; height:84px; min-width:84px; border-radius:50%; background:#3a3936; display:flex; align-items:center; justify-content:center; margin-left:auto; }
+.cl-mic svg { width:42px; height:42px; fill:#dcd9d0; }
+.cl-orb { width:96px; height:96px; min-width:96px; border-radius:50%; background:#f0efea; display:flex; align-items:center; justify-content:center; }
+.cl-orb svg { width:44px; height:44px; fill:#1f1e1c; }
 .caret { display:inline-block; width:4px; height:46px; background:#f0efea; vertical-align:-9px; margin-left:2px; }
 .cl-send { width:80px; height:80px; min-width:80px; border-radius:50%; background:#d97757; display:flex; align-items:center; justify-content:center; margin-left:14px; }
 .cl-send svg { width:40px; height:40px; fill:#fff; }
@@ -43,7 +51,7 @@ html,body { width:1080px; height:1920px; overflow:hidden; background:#262624; fo
 /* Claude home */
 .cl-home { height:100%; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:44px; }
 .cl-greet { font-family:Georgia,serif; color:#f0efea; font-size:64px; }
-.starburst { width:120px; height:120px; }
+.starburst { width:150px; height:150px; }
 
 /* Artifacts screen */
 .art-title { font-family:Georgia,serif; color:#f0efea; font-size:72px; margin:30px 0 8px; }
@@ -115,19 +123,33 @@ const STATUS = `<div class="statusbar"><span class="st-time">3:56</span>
   <svg viewBox="0 0 54 24" style="width:56px;height:26px"><rect x="1" y="1" width="44" height="22" rx="7" fill="none" stroke="#8e8e93" stroke-width="2"/><rect x="4" y="4" width="30" height="16" rx="4" fill="#f0efea"/><path d="M48 8v8a5 5 0 0 0 0-8z" fill="#8e8e93"/></svg>
   </span></div>`;
 
-const STAR = `<svg class="starburst" viewBox="0 0 24 24"><path fill="#d97757" d="M12 1.5l1.7 6.1 5.4-3.3-3.3 5.4 6.1 1.7-6.1 1.7 3.3 5.4-5.4-3.3-1.7 6.1-1.7-6.1-5.4 3.3 3.3-5.4-6.1-1.7 6.1-1.7-3.3-5.4 5.4 3.3z"/></svg>`;
+const STAR = (() => {
+  let rays = '';
+  for (let k = 0; k < 9; k++) {
+    const a = (k / 9) * Math.PI * 2 + 0.25;
+    const x1 = 12 + Math.cos(a) * 2.2, y1 = 12 + Math.sin(a) * 2.2;
+    const x2 = 12 + Math.cos(a + 0.28) * 9.6, y2 = 12 + Math.sin(a + 0.28) * 9.6;
+    rays += `<line x1="${x1.toFixed(2)}" y1="${y1.toFixed(2)}" x2="${x2.toFixed(2)}" y2="${y2.toFixed(2)}" stroke="#e0714f" stroke-width="1.7" stroke-linecap="round"/>`;
+  }
+  return `<svg class="starburst" viewBox="0 0 24 24">${rays}</svg>`;
+})();
+const GHOST = `<svg viewBox="0 0 24 24" style="width:52px;height:52px;fill:none;stroke:#c9c6bd;stroke-width:1.7"><path d="M12 3.5a6.2 6.2 0 0 0-6.2 6.2V19l2.1-1.8 2 1.8 2.1-1.8 2.1 1.8 2-1.8 2.1 1.8V9.7A6.2 6.2 0 0 0 12 3.5z"/><circle cx="9.6" cy="10" r="0.9" fill="#c9c6bd"/><circle cx="14.4" cy="10" r="0.9" fill="#c9c6bd"/></svg>`;
 const SEND = `<div class="cl-send"><svg viewBox="0 0 24 24"><path d="M12 4l7 7-1.4 1.4L13 7.8V20h-2V7.8l-4.6 4.6L5 11z"/></svg></div>`;
 const SENDIDLE = `<div class="cl-send idle"><svg viewBox="0 0 24 24"><path d="M12 4l7 7-1.4 1.4L13 7.8V20h-2V7.8l-4.6 4.6L5 11z"/></svg></div>`;
 
 function clChrome(bodyHTML, composerHTML, kbHTML) {
-  return `<div class="cl">${STATUS}
+  return `<div class="cl">
     <div class="cl-top"><div class="cl-burger"><div></div><div></div></div>
-    <div class="cl-wordmark">Claude</div><div class="cl-new">+</div></div>
+    <div class="cl-new">${GHOST}</div></div>
     <div class="cl-body" id="body">${bodyHTML}</div>
     ${composerHTML ? `<div class="cl-composer-wrap">${composerHTML}</div>` : ''}${kbHTML || ''}</div>`;
 }
+const MICBTN = `<div class="cl-mic"><svg viewBox="0 0 24 24"><path d="M12 14a3 3 0 0 0 3-3V5a3 3 0 0 0-6 0v6a3 3 0 0 0 3 3zm5-3a5 5 0 0 1-10 0H5a7 7 0 0 0 6 6.92V21h2v-3.08A7 7 0 0 0 19 11h-2z"/></svg></div>`;
+const ORBBTN = `<div class="cl-orb"><svg viewBox="0 0 24 24"><path d="M9 4h2v16H9zM4 9h2v6H4zM14 6h2v12h-2zM19 10h2v4h-2z"/></svg></div>`;
 function composer(txt, ready) {
-  return `<div class="cl-composer"><div class="plus">+</div><div class="cl-input">${txt}</div>${ready ? SEND : SENDIDLE}</div>`;
+  const right = ready ? SEND : ORBBTN;
+  return `<div class="cl-composer"><div class="cl-input">${txt}</div>
+    <div class="cl-crow"><div class="cl-plus">+</div><div class="cl-model">Fable 5<span>High</span></div>${MICBTN}${right}</div></div>`;
 }
 
 const KB_H = 760;
@@ -152,7 +174,7 @@ function keyboard(frac, hot) {
 /* ---------- Scene A (8.0s): home -> Artifacts -> type prompt -> send ---------- */
 function sceneA(t) {
   if (t < 1.5) {
-    const body = `<div class="cl-home">${STAR}<div class="cl-greet">Good afternoon</div></div>`;
+    const body = `<div class="cl-home">${STAR}<div class="cl-greet">Evening, Nathan</div></div>`;
     stage.innerHTML = clChrome(body, composer(`<span class="ph">Chat with Claude</span>`, false), '');
     return;
   }
@@ -313,7 +335,7 @@ function sceneC(t) {
   NEXTS[nextIdx].forEach(([r, c]) => {
     next += `<div class="cell" style="left:${30 + c*48}px; top:${10 + r*48}px; background:linear-gradient(145deg,#a855f7,#7c3aed); box-shadow:inset 0 2px 4px rgba(255,255,255,.3), 0 0 12px #a855f755;"></div>`;
   });
-  stage.innerHTML = `<div class="pv">${STATUS}
+  stage.innerHTML = `<div class="pv">
     <div class="pv-head"><span class="pv-back">&#8249;</span><span class="pv-title">Tetris Game</span>
       <div class="pv-pills"><div class="pv-pill on">Preview</div><div class="pv-pill">Code</div></div></div>
     <div class="game">
