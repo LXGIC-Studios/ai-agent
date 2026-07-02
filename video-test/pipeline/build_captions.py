@@ -9,7 +9,7 @@ INTRO = [  # clip1, offset 0.0
     ("IN JUST", 2.50, 2.96, False),
     ("15 MINUTES", 2.96, 3.38, True),
     ("HERE'S HOW", 3.38, 3.64, False),
-    ("TO GET STARTED", 3.64, 4.30, False),
+    ("TO GET STARTED", 3.64, 4.05, False),
 ]
 MIDDLE = [  # clip2 audio, offset 4.30
     ("FIRST, OPEN", 0.00, 1.24, False),
@@ -50,7 +50,7 @@ OUTRO = [  # clip3, offset 21.20
     ("I HOPE THIS VIDEO", 5.74, 6.28, False),
     ("HELPED YOU OUT", 6.28, 6.90, False),
     ("FOLLOW ALONG", 6.90, 7.38, True),
-    ("FOR MY AI TIPS", 7.38, 8.20, True),
+    ("FOR MY AI TIPS", 7.38, 7.95, True),
 ]
 
 def ts(t):
@@ -76,7 +76,7 @@ Format: Layer, Start, End, Style, MarginL, MarginR, MarginV, Effect, Text
 POP = r"{\fscx82\fscy82\t(0,80,\fscx100\fscy100)}"
 
 lines = []
-for chunks, off in [(INTRO, 0.0), (MIDDLE, 4.30), (OUTRO, 21.20)]:
+for chunks, off in [(INTRO, 0.0), (MIDDLE, 4.05), (OUTRO, 20.95)]:
     for text, s, e, acc in chunks:
         style = "CapAcc" if acc else "Cap"
         lines.append(f"Dialogue: 0,{ts(s+off)},{ts(e+off)},{style},0,0,0,,{POP}{text}")
