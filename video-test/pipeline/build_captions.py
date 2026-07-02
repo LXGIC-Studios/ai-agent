@@ -50,7 +50,7 @@ OUTRO = [  # clip3, offset 21.20
     ("I HOPE THIS VIDEO", 5.74, 6.28, False),
     ("HELPED YOU OUT", 6.28, 6.90, False),
     ("FOLLOW ALONG", 6.90, 7.38, True),
-    ("FOR MY AI TIPS", 7.38, 7.95, True),
+    ("FOR MY AI TIPS", 7.38, 8.10, True),
 ]
 
 def ts(t):
