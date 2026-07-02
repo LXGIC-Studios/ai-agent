@@ -1,0 +1,59 @@
+[Script Info]
+ScriptType: v4.00+
+PlayResX: 1080
+PlayResY: 1920
+WrapStyle: 2
+ScaledBorderAndShadow: yes
+
+[V4+ Styles]
+Format: Name, Fontname, Fontsize, PrimaryColour, SecondaryColour, OutlineColour, BackColour, Bold, Italic, Underline, StrikeOut, ScaleX, ScaleY, Spacing, Angle, BorderStyle, Outline, Shadow, Alignment, MarginL, MarginR, MarginV, Encoding
+Style: Cap,Montserrat ExtraBold,74,&H00FFFFFF,&H00FFFFFF,&H00000000,&H96000000,-1,0,0,0,100,100,1,0,1,9,3,2,60,60,470,1
+Style: CapAcc,Montserrat ExtraBold,74,&H007DC319,&H00FFFFFF,&H00000000,&H96000000,-1,0,0,0,100,100,1,0,1,9,3,2,60,60,470,1
+
+[Events]
+Format: Layer, Start, End, Style, MarginL, MarginR, MarginV, Effect, Text
+Dialogue: 0,0:00:00.00,0:00:01.16,Cap,0,0,0,,{\fscx82\fscy82\t(0,80,\fscx100\fscy100)}I RECENTLY BUILT
+Dialogue: 0,0:00:01.16,0:00:01.74,Cap,0,0,0,,{\fscx82\fscy82\t(0,80,\fscx100\fscy100)}AN ENTIRE
+Dialogue: 0,0:00:01.74,0:00:02.12,CapAcc,0,0,0,,{\fscx82\fscy82\t(0,80,\fscx100\fscy100)}BUSINESS PLAN
+Dialogue: 0,0:00:02.12,0:00:02.50,CapAcc,0,0,0,,{\fscx82\fscy82\t(0,80,\fscx100\fscy100)}WITH AI
+Dialogue: 0,0:00:02.50,0:00:02.96,Cap,0,0,0,,{\fscx82\fscy82\t(0,80,\fscx100\fscy100)}IN JUST
+Dialogue: 0,0:00:02.96,0:00:03.38,CapAcc,0,0,0,,{\fscx82\fscy82\t(0,80,\fscx100\fscy100)}15 MINUTES
+Dialogue: 0,0:00:03.38,0:00:03.64,Cap,0,0,0,,{\fscx82\fscy82\t(0,80,\fscx100\fscy100)}HERE'S HOW
+Dialogue: 0,0:00:03.64,0:00:04.30,Cap,0,0,0,,{\fscx82\fscy82\t(0,80,\fscx100\fscy100)}TO GET STARTED
+Dialogue: 0,0:00:04.30,0:00:05.54,Cap,0,0,0,,{\fscx82\fscy82\t(0,80,\fscx100\fscy100)}FIRST, OPEN
+Dialogue: 0,0:00:05.54,0:00:06.42,CapAcc,0,0,0,,{\fscx82\fscy82\t(0,80,\fscx100\fscy100)}CHATGPT, CLAUDE,
+Dialogue: 0,0:00:06.42,0:00:07.08,Cap,0,0,0,,{\fscx82\fscy82\t(0,80,\fscx100\fscy100)}OR WHATEVER AI
+Dialogue: 0,0:00:07.08,0:00:07.66,Cap,0,0,0,,{\fscx82\fscy82\t(0,80,\fscx100\fscy100)}YOU'RE USING
+Dialogue: 0,0:00:07.66,0:00:08.08,Cap,0,0,0,,{\fscx82\fscy82\t(0,80,\fscx100\fscy100)}AND DESCRIBE
+Dialogue: 0,0:00:08.08,0:00:08.96,CapAcc,0,0,0,,{\fscx82\fscy82\t(0,80,\fscx100\fscy100)}YOUR BUSINESS IDEA
+Dialogue: 0,0:00:08.96,0:00:09.70,Cap,0,0,0,,{\fscx82\fscy82\t(0,80,\fscx100\fscy100)}ASK IT TO CREATE
+Dialogue: 0,0:00:09.70,0:00:10.16,Cap,0,0,0,,{\fscx82\fscy82\t(0,80,\fscx100\fscy100)}A COMPLETE
+Dialogue: 0,0:00:10.16,0:00:10.80,CapAcc,0,0,0,,{\fscx82\fscy82\t(0,80,\fscx100\fscy100)}BUSINESS PLAN
+Dialogue: 0,0:00:10.80,0:00:11.26,Cap,0,0,0,,{\fscx82\fscy82\t(0,80,\fscx100\fscy100)}WITH AN
+Dialogue: 0,0:00:11.26,0:00:12.08,CapAcc,0,0,0,,{\fscx82\fscy82\t(0,80,\fscx100\fscy100)}EXECUTIVE SUMMARY
+Dialogue: 0,0:00:12.08,0:00:13.12,CapAcc,0,0,0,,{\fscx82\fscy82\t(0,80,\fscx100\fscy100)}MARKET ANALYSIS
+Dialogue: 0,0:00:13.12,0:00:14.14,CapAcc,0,0,0,,{\fscx82\fscy82\t(0,80,\fscx100\fscy100)}COMPETITIVE RESEARCH
+Dialogue: 0,0:00:14.14,0:00:15.04,CapAcc,0,0,0,,{\fscx82\fscy82\t(0,80,\fscx100\fscy100)}REVENUE MODEL
+Dialogue: 0,0:00:15.04,0:00:16.04,CapAcc,0,0,0,,{\fscx82\fscy82\t(0,80,\fscx100\fscy100)}MARKETING STRATEGY
+Dialogue: 0,0:00:16.04,0:00:16.34,Cap,0,0,0,,{\fscx82\fscy82\t(0,80,\fscx100\fscy100)}AND A
+Dialogue: 0,0:00:16.34,0:00:17.42,CapAcc,0,0,0,,{\fscx82\fscy82\t(0,80,\fscx100\fscy100)}12-MONTH ROADMAP
+Dialogue: 0,0:00:17.42,0:00:17.88,Cap,0,0,0,,{\fscx82\fscy82\t(0,80,\fscx100\fscy100)}IN SECONDS
+Dialogue: 0,0:00:17.88,0:00:18.24,Cap,0,0,0,,{\fscx82\fscy82\t(0,80,\fscx100\fscy100)}IT'LL GENERATE
+Dialogue: 0,0:00:18.24,0:00:18.94,CapAcc,0,0,0,,{\fscx82\fscy82\t(0,80,\fscx100\fscy100)}A POLISHED PLAN
+Dialogue: 0,0:00:18.94,0:00:19.62,Cap,0,0,0,,{\fscx82\fscy82\t(0,80,\fscx100\fscy100)}THAT YOU CAN COPY
+Dialogue: 0,0:00:19.62,0:00:20.40,Cap,0,0,0,,{\fscx82\fscy82\t(0,80,\fscx100\fscy100)}INTO ANY DOCUMENT
+Dialogue: 0,0:00:20.40,0:00:21.20,CapAcc,0,0,0,,{\fscx82\fscy82\t(0,80,\fscx100\fscy100)}AND CUSTOMIZE
+Dialogue: 0,0:00:21.20,0:00:21.96,Cap,0,0,0,,{\fscx82\fscy82\t(0,80,\fscx100\fscy100)}THIS IS A
+Dialogue: 0,0:00:21.96,0:00:22.68,Cap,0,0,0,,{\fscx82\fscy82\t(0,80,\fscx100\fscy100)}GREAT TOOL
+Dialogue: 0,0:00:22.68,0:00:23.08,Cap,0,0,0,,{\fscx82\fscy82\t(0,80,\fscx100\fscy100)}TO CREATE ANY
+Dialogue: 0,0:00:23.08,0:00:23.60,CapAcc,0,0,0,,{\fscx82\fscy82\t(0,80,\fscx100\fscy100)}BUSINESS PLAN
+Dialogue: 0,0:00:23.60,0:00:24.10,Cap,0,0,0,,{\fscx82\fscy82\t(0,80,\fscx100\fscy100)}SO YOU CAN START
+Dialogue: 0,0:00:24.10,0:00:24.56,CapAcc,0,0,0,,{\fscx82\fscy82\t(0,80,\fscx100\fscy100)}PITCHING
+Dialogue: 0,0:00:24.56,0:00:25.36,CapAcc,0,0,0,,{\fscx82\fscy82\t(0,80,\fscx100\fscy100)}TO INVESTORS
+Dialogue: 0,0:00:25.36,0:00:25.88,Cap,0,0,0,,{\fscx82\fscy82\t(0,80,\fscx100\fscy100)}OR JUST GETTING
+Dialogue: 0,0:00:25.88,0:00:26.42,Cap,0,0,0,,{\fscx82\fscy82\t(0,80,\fscx100\fscy100)}YOUR IDEA
+Dialogue: 0,0:00:26.42,0:00:26.94,Cap,0,0,0,,{\fscx82\fscy82\t(0,80,\fscx100\fscy100)}OUT THERE
+Dialogue: 0,0:00:26.94,0:00:27.48,Cap,0,0,0,,{\fscx82\fscy82\t(0,80,\fscx100\fscy100)}I HOPE THIS VIDEO
+Dialogue: 0,0:00:27.48,0:00:28.10,Cap,0,0,0,,{\fscx82\fscy82\t(0,80,\fscx100\fscy100)}HELPED YOU OUT
+Dialogue: 0,0:00:28.10,0:00:28.58,CapAcc,0,0,0,,{\fscx82\fscy82\t(0,80,\fscx100\fscy100)}FOLLOW ALONG
+Dialogue: 0,0:00:28.58,0:00:29.40,CapAcc,0,0,0,,{\fscx82\fscy82\t(0,80,\fscx100\fscy100)}FOR MY AI TIPS

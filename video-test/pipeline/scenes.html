@@ -1,0 +1,181 @@
+<meta charset="utf-8">
+<style>
+@font-face { font-family:'Inter'; src:url('fonts/Inter-400.ttf'); font-weight:400; }
+@font-face { font-family:'Inter'; src:url('fonts/Inter-600.ttf'); font-weight:600; }
+@font-face { font-family:'Inter'; src:url('fonts/Inter-700.ttf'); font-weight:700; }
+* { margin:0; padding:0; box-sizing:border-box; }
+html,body { width:1080px; height:1920px; overflow:hidden; background:#212121; font-family:'Inter',-apple-system,sans-serif; }
+#stage { width:1080px; height:1920px; position:relative; }
+
+/* ================= ChatGPT dark mobile UI ================= */
+.gpt { width:1080px; height:1920px; background:#212121; display:flex; flex-direction:column; }
+.gpt-top { height:160px; display:flex; align-items:center; padding:0 44px; }
+.gpt-burger { width:56px; height:56px; padding-top:6px; }
+.gpt-burger div { height:5px; background:#ececec; border-radius:3px; margin:12px 0; width:44px; }
+.gpt-model { margin:0 auto; display:flex; align-items:center; gap:14px; color:#ececec; font-size:42px; font-weight:600; }
+.gpt-model .chev { border:solid #8e8ea0; border-width:0 4px 4px 0; padding:7px; transform:rotate(45deg); margin-top:-8px; }
+.gpt-new { width:64px; height:64px; border-radius:50%; border:3px solid #444; display:flex; align-items:center; justify-content:center; color:#ececec; font-size:40px; font-weight:300; }
+.gpt-body { flex:1; padding:40px 52px; overflow:hidden; position:relative; }
+.gpt-empty { height:100%; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:40px; }
+.gpt-empty h1 { color:#ececec; font-size:56px; font-weight:600; }
+.gpt-composer-wrap { padding:24px 40px 70px; }
+.gpt-composer { background:#303030; border-radius:56px; min-height:128px; display:flex; align-items:center; padding:20px 24px 20px 48px; }
+.gpt-composer .plus { width:60px; height:60px; min-width:60px; border-radius:50%; color:#ececec; font-size:48px; font-weight:300; display:flex; align-items:center; justify-content:center; margin-right:16px; }
+.gpt-input { flex:1; color:#ececec; font-size:38px; line-height:1.35; word-break:break-word; }
+.gpt-input .ph { color:#8e8ea0; }
+.caret { display:inline-block; width:4px; height:46px; background:#ececec; vertical-align:-9px; margin-left:2px; }
+.gpt-mic, .gpt-orb { width:76px; height:76px; min-width:76px; border-radius:50%; display:flex; align-items:center; justify-content:center; margin-left:14px; }
+.gpt-mic svg { width:40px; height:40px; fill:#ececec; }
+.gpt-orb { background:#ececec; }
+.gpt-orb svg { width:40px; height:40px; fill:#212121; }
+.gpt-send { width:76px; height:76px; min-width:76px; border-radius:50%; background:#ececec; display:flex; align-items:center; justify-content:center; margin-left:14px; }
+.gpt-send svg { width:38px; height:38px; fill:#212121; }
+
+.u-bubble { background:#303030; color:#ececec; font-size:37px; line-height:1.5; padding:30px 42px; border-radius:40px; max-width:780px; margin-left:auto; }
+.a-msg { color:#ececec; font-size:36px; line-height:1.58; margin-top:56px; max-width:980px; }
+.a-msg h2 { font-size:40px; font-weight:700; color:#ffffff; margin:42px 0 14px; }
+.a-msg h1 { font-size:46px; font-weight:700; color:#ffffff; margin:6px 0 10px; }
+.a-msg p { color:#d9d9df; }
+.a-msg .lead { color:#d9d9df; }
+.stream-dot { display:inline-block; width:22px; height:22px; border-radius:50%; background:#ececec; margin-left:8px; vertical-align:-2px; }
+.think { display:inline-block; color:#8e8ea0; font-size:36px; }
+.shimmer { background:linear-gradient(90deg,#8e8ea0 30%,#ececec 50%,#8e8ea0 70%); background-size:200% 100%; -webkit-background-clip:text; background-clip:text; color:transparent; }
+
+/* ================= Google Docs light UI ================= */
+.docs { width:1080px; height:1920px; background:#f9fbfd; display:flex; flex-direction:column; }
+.docs-top { background:#f9fbfd; padding:28px 40px 0; display:flex; align-items:center; gap:28px; }
+.docs-icon { width:64px; height:84px; background:#2b7de9; border-radius:8px; position:relative; }
+.docs-icon:after { content:''; position:absolute; left:14px; top:22px; width:36px; height:6px; background:#fff; box-shadow:0 14px 0 #fff, 0 28px 0 #fff, 0 42px 0 #fff; }
+.docs-name { font-size:38px; color:#202124; font-weight:400; }
+.docs-star { color:#5f6368; font-size:34px; margin-left:6px; }
+.docs-menu { display:flex; gap:34px; font-size:29px; color:#202124; margin-top:10px; }
+.docs-share { margin-left:auto; background:#c2e7ff; color:#001d35; font-size:32px; font-weight:600; padding:20px 44px; border-radius:50px; display:flex; align-items:center; gap:14px; }
+.docs-toolbar { margin:24px 40px 0; background:#edf2fa; border-radius:50px; height:80px; display:flex; align-items:center; padding:0 36px; gap:30px; color:#444746; font-size:30px; }
+.docs-toolbar .sep { width:2px; height:40px; background:#c4c7c5; }
+.docs-scroll { flex:1; overflow:hidden; position:relative; margin-top:28px; }
+.docs-page { width:920px; margin:0 auto 60px; background:#fff; border:1px solid #dadce0; border-radius:4px; padding:96px 88px 120px; font-family:Arial, sans-serif; }
+.docs-page h1 { font-size:50px; color:#000; font-weight:700; margin-bottom:10px; }
+.docs-page .sub { font-size:28px; color:#5f6368; margin-bottom:44px; }
+.docs-page h2 { font-size:36px; color:#1a73e8; font-weight:700; margin:44px 0 14px; }
+.docs-page p, .docs-page li { font-size:30px; line-height:1.65; color:#202124; }
+.docs-page ul { padding-left:44px; }
+.toast { position:absolute; left:50%; bottom:110px; background:#202124; color:#fff; font-size:32px; padding:26px 48px; border-radius:12px; display:flex; gap:16px; align-items:center; box-shadow:0 8px 30px rgba(0,0,0,.3); }
+</style>
+<div id="stage"></div>
+<script>
+const stage = document.getElementById('stage');
+const PROMPT = "Create a complete business plan for my mobile coffee cart startup — include an executive summary, market analysis, competitive research, revenue model, marketing strategy, and a 12-month roadmap.";
+const TYPED = "Create a complete business plan for my mobile coffee cart startup";
+
+const SECTIONS = [
+  ["Executive Summary","A mobile specialty coffee cart serving premium espresso in high-traffic downtown locations, targeting commuters and office workers."],
+  ["Market Analysis","The specialty coffee market is valued at $45B and growing 8% annually. Morning foot traffic downtown exceeds 12,000 people daily."],
+  ["Competitive Research","Three direct competitors within two miles — none open before 7 AM, leaving the early commuter window wide open."],
+  ["Revenue Model","Average ticket $6.50 × 180 cups/day ≈ $1,170 daily revenue, with 68% gross margin on beverages."],
+  ["Marketing Strategy","Instagram-first launch, loyalty punch cards, and office pre-order partnerships within a five-block radius."],
+  ["12-Month Roadmap","Q1: permits & cart build-out · Q2: launch & iterate · Q3: catering line · Q4: second cart."]
+];
+
+const MIC = `<div class="gpt-mic"><svg viewBox="0 0 24 24"><path d="M12 14a3 3 0 0 0 3-3V5a3 3 0 0 0-6 0v6a3 3 0 0 0 3 3zm5-3a5 5 0 0 1-10 0H5a7 7 0 0 0 6 6.92V21h2v-3.08A7 7 0 0 0 19 11h-2z"/></svg></div>`;
+const ORB = `<div class="gpt-orb"><svg viewBox="0 0 24 24"><path d="M9 4h2v16H9zM4 9h2v6H4zM14 6h2v12h-2zM19 10h2v4h-2z"/></svg></div>`;
+const SEND = `<div class="gpt-send"><svg viewBox="0 0 24 24"><path d="M12 4l7 7-1.4 1.4L13 7.8V20h-2V7.8l-4.6 4.6L5 11z"/></svg></div>`;
+
+function gptChrome(bodyHTML, inputHTML) {
+  return `<div class="gpt">
+    <div class="gpt-top">
+      <div class="gpt-burger"><div></div><div></div><div></div></div>
+      <div class="gpt-model">ChatGPT <span class="chev"></span></div>
+      <div class="gpt-new">+</div>
+    </div>
+    <div class="gpt-body" id="body">${bodyHTML}</div>
+    <div class="gpt-composer-wrap">${inputHTML}</div></div>`;
+}
+function composer(txt, sendReady) {
+  const right = sendReady ? SEND : MIC + ORB;
+  return `<div class="gpt-composer"><div class="plus">+</div><div class="gpt-input">${txt}</div>${right}</div>`;
+}
+
+/* ---------- Scene A: typing the prompt (dur 3.6s) ---------- */
+function sceneA(t) {
+  const typeStart = 0.8, typeEnd = 3.0, sendAt = 3.2;
+  const caretOn = (t % 0.9) < 0.55;
+  let n = Math.max(0, Math.min(TYPED.length, Math.floor(((t - typeStart) / (typeEnd - typeStart)) * TYPED.length)));
+  if (t >= typeEnd) n = TYPED.length;
+  const typed = TYPED.slice(0, n);
+  const sent = t >= sendAt;
+  const caret = `<span class="caret" style="opacity:${caretOn?1:0}"></span>`;
+  const body = sent
+    ? `<div class="u-bubble">${PROMPT}</div>`
+    : `<div class="gpt-empty"><h1>What can I help with?</h1></div>`;
+  const inputTxt = sent ? `<span class="ph">Ask anything</span>`
+    : (typed.length ? `${typed}${caret}` : `<span class="ph">Ask anything</span>${caret}`);
+  stage.innerHTML = gptChrome(body, composer(inputTxt, !sent && typed.length > 0));
+}
+
+/* ---------- Scene B: plan streaming (dur 9.4s) ---------- */
+const HEAD_T = [3.36, 4.18, 5.22, 6.24, 7.14, 8.44];
+function sceneB(t) {
+  const thinkEnd = 0.9, titleAt = 1.25;
+  let ai = '';
+  if (t < thinkEnd) {
+    ai = `<span class="think shimmer" style="background-position:${(-200*t).toFixed(0)}% 0">Thinking…</span>`;
+  } else {
+    let parts = '';
+    if (t >= titleAt) {
+      parts += `<h1>&#9749; Business Plan — Bloom Coffee Cart</h1><p class="lead">Here’s a complete plan you can customize:</p>`;
+    }
+    SECTIONS.forEach((s, i) => {
+      const st = HEAD_T[i];
+      if (t >= st) {
+        const frac = Math.min(1, (t - st) / 0.9);
+        const chars = Math.floor(s[1].length * frac);
+        parts += `<h2>${i+1}. ${s[0]}</h2><p>${s[1].slice(0, chars)}${frac < 1 ? '<span class="stream-dot"></span>' : ''}</p>`;
+      }
+    });
+    if (t >= titleAt && t < HEAD_T[0]) parts += `<span class="stream-dot"></span>`;
+    ai = parts || `<span class="think shimmer" style="background-position:${(-200*t).toFixed(0)}% 0">Thinking…</span>`;
+  }
+  const body = `<div id="inner" style="position:absolute;left:52px;right:52px;top:40px">
+    <div class="u-bubble" style="font-size:33px;max-width:720px;padding:24px 36px">${PROMPT}</div>
+    <div class="a-msg">${ai}</div></div>`;
+  stage.innerHTML = gptChrome(body, composer(`<span class="ph">Ask anything</span>`, false));
+  const bodyEl = document.getElementById('body');
+  const innerEl = document.getElementById('inner');
+  const avail = bodyEl.clientHeight - 90;
+  const h = innerEl.scrollHeight;
+  if (h > avail) innerEl.style.top = (40 - (h - avail)) + 'px';
+}
+
+/* ---------- Scene C: Google Docs (dur 3.9s) ---------- */
+function sceneC(t) {
+  const scroll = Math.max(0, (t - 0.35)) * 260;
+  const tf = Math.max(0, Math.min(1, (t - 2.0) / 0.3));
+  const docBody = `
+    <div class="docs-page">
+      <h1>Business Plan — Bloom Coffee Cart</h1>
+      <div class="sub">Draft · generated with AI · ready to customize</div>
+      ${SECTIONS.map((s, i) => `<h2>${i+1}. ${s[0]}</h2><p>${s[1]}</p>`).join('')}
+      <h2>Appendix</h2>
+      <ul><li>Startup costs &amp; equipment list</li><li>Permit checklist</li><li>Break-even analysis</li></ul>
+    </div>`;
+  stage.innerHTML = `<div class="docs">
+    <div class="docs-top">
+      <div class="docs-icon"></div>
+      <div>
+        <div style="display:flex;align-items:center"><span class="docs-name">Business Plan — Bloom Coffee Cart</span><span class="docs-star">&#9734;</span></div>
+        <div class="docs-menu"><span>File</span><span>Edit</span><span>View</span><span>Insert</span><span>Format</span><span>Tools</span></div>
+      </div>
+      <div class="docs-share">&#128274; Share</div>
+    </div>
+    <div class="docs-toolbar"><span>&#8630;</span><span>&#8631;</span><span>&#128424;</span><div class="sep"></div><span>100%</span><div class="sep"></div><span style="font-weight:700">B</span><span style="font-style:italic">I</span><span style="text-decoration:underline">U</span><div class="sep"></div><span>Arial</span><div class="sep"></div><span>11</span></div>
+    <div class="docs-scroll"><div style="transform:translateY(${-scroll}px)">${docBody}</div>
+      <div class="toast" style="opacity:${tf};transform:translateX(-50%) translateY(${(40*(1-tf)).toFixed(1)}px)"><span style="color:#8ab4f8">&#10003;</span> Pasted from clipboard</div></div></div>`;
+}
+
+window.seek = (scene, t) => {
+  if (scene === 'A') sceneA(t);
+  else if (scene === 'B') sceneB(t);
+  else sceneC(t);
+  return true;
+};
+</script>
