@@ -95,15 +95,15 @@ Always trim out:
 7. **QC (checklist below), fix, re-render.**
 8. **Deliver:** named file (not numbered) → `examples/` on the repo branch + send in chat (<40MB; ~50MB silently fails).
 
-## 9. QC checklist (before every delivery)
+## 9. QC — run the full checklist
 
-- [ ] Frame-check every transition: no freeze-frames, no camera-reach, no look-down visible.
-- [ ] Audio tails: silencedetect confirms last word + ring-out intact at every seam and at the end; fade starts after speech.
-- [ ] Captions never overlap his face or the UI's interactive elements; accents on the right words; no emojis anywhere.
-- [ ] Every zoom punch lands on its VO word; holds are pixel-still (diff two frames inside a hold).
-- [ ] B-roll: nothing static >2s; typing/thinking fast; app chrome matches the real product; greeting/name correct; composer text white.
-- [ ] Timeline math: caption band duration == final duration; VO beats line up after any retime.
-- [ ] Encode: 1080x1920, 30fps, faststart; file <40MB for chat.
+Before every delivery, run **[REVIEW-CHECKLIST.md](REVIEW-CHECKLIST.md)** — every
+note Nathan has ever given, as pass/fail gates. Two non-negotiables:
+
+- Check the **final render**, frame-by-frame at every boundary and through every
+  fade — never sign off from the plan or the raw clips.
+- After ANY fix, re-run the whole checklist: fixing one thing can reintroduce
+  another.
 
 ## 10. Repo layout
 
