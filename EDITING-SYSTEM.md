@@ -82,7 +82,10 @@ aac 256k, 44.1kHz, loudnorm I=-14:TP=-1.5:LRA=11, -movflags +faststart
 - Fill VO beats with UI reactions: summary line types out, cards pulse on "compares", sublines brighten on "details", highlight ring + tag on "cheapest", button pops on "link".
 - **Payoff ending:** finish the b-roll on the real-world result (e.g. tap the button → the actual booking website loads). A light-mode page after dark UI is a deliberate contrast pop.
 - Statuses/labels are plain text, no spinners longer than the beat, no emojis.
-- **Keyboard clicks under typing:** REAL recordings only — synth clicks got rejected ("dogshit"). Use pipeline/sfx/keyboard-mechanical-mixkit-1388.mp3 (APPROVED direction: loud + mechanical; 447 = softer alt): cut segments from its active regions to match each typing window, 40ms edge fades, normalize peaks to 0.5, then RMS-normalize segments to ~0.055, lowpass 9.5kHz + highpass 120Hz + volume 0.95, amix normalize=0 after loudnorm (see render76n.sh). More free beds: mixkit.co/free-sound-effects/keyboard/ previews download directly.
+- **UI sound design — real recordings only (synth got rejected):**
+  - Keyboard clicks ONLY when an actual keyboard/typing-person is implied on screen (someone typing a prompt). An AI response typing itself out gets NO typing sound — nobody is typing (Nathan caught this). Bed: pipeline/sfx/keyboard-mechanical-mixkit-1388.mp3 (loud+mechanical direction), RMS-normalize segments ~0.055, volume 0.95.
+  - **Pill/popup dings:** subtle real pop on each pill/card pop-in — pipeline/sfx/pill-pop-mixkit-2356.mp3, peak-normalized to 0.5 in the bed, volume 0.65 in the mix. One ding per pop, placed at the exact overlay pop times.
+  - Mixing: build a single bed wav (44.1k) with events at timeline positions; loudnorm voice, then aresample=44100 BOTH streams before amix normalize=0 (loudnorm outputs 192kHz — unmatched rates truncate the mix). More free SFX: mixkit.co previews download directly.
 
 ## 6. Audio rules
 
