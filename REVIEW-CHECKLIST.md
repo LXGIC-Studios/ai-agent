@@ -69,7 +69,9 @@ a clipped word pulled the look-down back into frame — caught by Nathan, not QC
 ## 7. Delivery
 
 - [ ] Named file (not numbered) in `videos/` on the branch — ONLY after the full audit passes; log it in videos/AUDIT-LOG.md.
-- [ ] Chat copy under 40MB (~50MB fails silently).
+- [ ] Chat copy under ~30MB — 37MB failed silently twice; if the master is bigger,
+      send a crf-23 lite encode and note the master lives in videos/. A send without
+      a file_uuid in the tool result DID NOT ATTACH — always check and re-send lite.
 - [ ] 1080x1920, 30fps, faststart.
 
 ## Sign-off
