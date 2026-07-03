@@ -190,8 +190,56 @@ function sceneC(t) {
   stage.innerHTML = chrome(body, composer75('<span style="color:#8a867d">Reply to Claude</span>', false), '');
 }
 
+
+/* Scene BC (18.0s): fast type, send, searching statuses, results */
+const STATUSES = [[2.5, "Searching Turkish Airlines flights&#8230;"], [5.5, "Comparing 47 flights over the next 30 days&#8230;"], [8.5, "Finding the cheapest fares&#8230;"]];
+function sceneBC(t) {
+  const typeStart = 0.25, typeEnd = 1.55, sendAt = 1.95;
+  const dt = (typeEnd - typeStart) / PROMPT75.length;
+  let n = Math.max(0, Math.min(PROMPT75.length, Math.floor(((t - typeStart) / (typeEnd - typeStart)) * PROMPT75.length)));
+  if (t >= typeEnd) n = PROMPT75.length;
+  const typed = PROMPT75.slice(0, n);
+  const sent = t >= sendAt;
+  let hot = null;
+  if (n > 0) {
+    const appear = typeStart + (n - 1) * dt;
+    if (t - appear < Math.min(0.11, dt * 0.9)) hot = PROMPT75[n - 1].toUpperCase();
+  }
+  const caretOn = (t % 0.9) < 0.55;
+  const caret = `<span class="caret" style="opacity:${caretOn?1:0}"></span>`;
+  let kh = 0;
+  if (t < 0.05) kh = 0; else if (t < 0.25) kh = (t - 0.05) / 0.2;
+  else if (t < 2.0) kh = 1; else kh = Math.max(0, 1 - (t - 2.0) / 0.2);
+  let ai = "";
+  if (sent && t >= 2.5) {
+    if (t < 11.5) {
+      const st = STATUSES.filter(([tt]) => t >= tt).pop();
+      ai = `<div class="tool-chip" style="margin-top:36px"><div class="spin" style="transform:rotate(${(t*480).toFixed(0)}deg)"></div>${st[1]}</div>`;
+    } else {
+      const tf = Math.min(1, (t - 11.5) / 0.35);
+      const TITLE = "Here are the cheapest London &rarr; Dubai flights in the next 30 days:";
+      ai = `<div class="a-msg" style="margin-top:30px"><p>${TITLE.slice(0, Math.floor(TITLE.length*tf))}</p></div>`;
+      FLIGHTS.forEach(([route, sub, price, best], i) => {
+        const st2 = 11.75 + i * 0.7;
+        if (t >= st2) {
+          const f = Math.min(1, (t - st2) / 0.25);
+          const hl = best && t >= 14.0;
+          ai += `<div class="fc ${hl?"best":""}" style="opacity:${f.toFixed(2)};transform:translateY(${(20*(1-f)).toFixed(1)}px)"><div><div class="fc-route">${route}</div><div class="fc-sub">${sub}</div></div><div class="fc-price"><div class="p">${price}</div>${hl ? "<div class=\"tag\">CHEAPEST</div>" : ""}</div></div>`;
+        }
+      });
+      if (t >= 15.9) {
+        const f = Math.min(1, (t - 15.9) / 0.3);
+        ai += `<div style="opacity:${f.toFixed(2)}"><div class="link-btn">Book on turkishairlines.com &#8599;</div></div>`;
+      }
+    }
+  }
+  const body = sent ? `<div style="position:absolute;left:52px;right:52px;top:20px"><div class="u-bubble" style="font-size:31px">${PROMPT75}</div>${ai}</div>` : "";
+  const inputTxt = sent ? `<span style="color:#8a867d">Reply to Claude</span>` : (typed.length ? `${typed}${caret}` : `<span style="color:#8a867d">Chat with Claude</span>${caret}`);
+  stage.innerHTML = chrome(body, composer75(inputTxt, !sent && typed.length > 0), keyboard(kh, hot));
+}
+
 window.seek = (scene, t) => {
-  ({A: sceneA, B: sceneB, C: sceneC})[scene](t);
+  ({A: sceneA, B: sceneB, C: sceneC, BC: sceneBC})[scene](t);
   return true;
 };
 </script>
