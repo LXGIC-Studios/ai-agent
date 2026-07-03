@@ -1,0 +1,64 @@
+<meta charset="utf-8">
+<style>
+@font-face { font-family:'Montserrat'; src:url('fonts/Montserrat-800.ttf'); font-weight:800; }
+* { margin:0; padding:0; box-sizing:border-box; }
+html,body { width:1080px; height:400px; background:transparent; overflow:hidden; }
+#stage { width:1080px; height:400px; position:relative; display:flex; align-items:flex-start; justify-content:center; padding-top:30px; }
+.bub { background:rgba(16,15,17,0.88); border:2px solid rgba(255,255,255,0.16); border-radius:30px;
+  padding:28px 52px; max-width:960px; text-align:center;
+  box-shadow:0 14px 44px rgba(0,0,0,0.5); }
+.bub span { font-family:'Montserrat'; font-weight:800; font-size:60px; line-height:1.28; color:#fff; letter-spacing:0.5px; }
+.bub .org { color:#F0A13C; }
+</style>
+<div id="stage"></div>
+<script>
+const stage = document.getElementById('stage');
+const CHUNKS = [
+ [0.10,0.76,"here's how to make"],
+ [0.76,1.96,"an |extra five grand a month|"],
+ [1.96,2.72,"using |AI|"],
+ [2.72,4.66,"homeowners want their |rooms redesigned|"],
+ [4.66,6.00,"but |can't afford a designer|"],
+ [6.00,7.15,"here's how to |take advantage|"],
+ [7.05,8.75,"go to |ReimagineHome AI|"],
+ [9.27,9.90,"|sign up free|"],
+ [9.90,11.05,"upload a client's |room photo|"],
+ [11.39,12.29,"type in a |style|"],
+ [12.41,13.65,"|in seconds| you have"],
+ [13.65,14.75,"a professional |redesign|"],
+ [14.81,15.45,"ready to |send|"],
+ [15.45,16.75,"offer it on |Fiverr|"],
+ [16.81,17.39,"|Facebook groups|"],
+ [17.39,18.55,"or |real estate agents|"],
+ [18.55,19.60,"who need |staged photos|"],
+ [19.75,21.42,"the whole process takes |under one minute|"],
+ [21.45,22.43,"this is |video number two|"],
+ [22.43,23.89,"of my series on |making money with AI|"],
+ [24.41,25.27,"hope you found this |helpful|"],
+ [25.27,25.53,"and of course"],
+ [25.53,26.51,"|follow along| for our AI tips"]
+];
+
+function fmt(txt) {
+  const parts = txt.split('|');
+  let out = '';
+  parts.forEach((seg, i) => { if (seg) out += i % 2 ? `<span class="org">${seg}</span>` : `<span>${seg}</span>`; });
+  return out;
+}
+
+window.seek = (t) => {
+  const c = CHUNKS.find(([s, e]) => t >= s && t < e);
+  if (!c) { stage.innerHTML = ''; return true; }
+  const lt = t - c[0];
+  let s, o;
+  if (lt < 0.12) {
+    const p = lt / 0.12;
+    const e = 1 - Math.pow(1 - p, 3);
+    s = 0.78 + 0.28 * e;                       // 0.78 -> 1.06
+    if (p > 0.7) s = 1.06 - (p - 0.7) / 0.3 * 0.06;
+    o = Math.min(1, p * 1.8);
+  } else { s = 1.0; o = 1; }
+  stage.innerHTML = `<div class="bub" style="transform:scale(${s.toFixed(4)});opacity:${o.toFixed(3)}">${fmt(c[2])}</div>`;
+  return true;
+};
+</script>
