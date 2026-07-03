@@ -9,17 +9,20 @@ html,body { width:1080px; height:1920px; background:transparent; overflow:hidden
 #stage { width:1080px; height:1920px; position:relative; }
 
 /* ---- numbered step pill (reference 2) ---- */
-.pill-wrap { position:absolute; left:50%; top:1150px; width:920px; }
+.pill-wrap { position:absolute; left:50%; top:1090px; width:920px; }
 .pill { background:rgba(22,22,24,0.82); border:2.5px solid rgba(255,255,255,0.38); border-radius:34px;
   padding:36px 52px; display:flex; align-items:center; gap:44px;
   box-shadow:0 18px 60px rgba(0,0,0,0.55); }
 .pill-num { font-family:'Anton'; font-size:96px; color:#fff; line-height:1;
   text-shadow:0 4px 0 #000, 0 0 26px rgba(0,0,0,.6); }
+.pill-txt .strike { position:relative; }
+.pill-txt .strike:after { content:''; position:absolute; left:-8px; right:-8px; top:52%; height:9px; background:#F0A13C; border-radius:5px; transform:rotate(-2deg); }
+.pill-txt .org { color:#F0A13C; }
 .pill-txt { font-family:'Anton'; font-size:56px; color:#fff; line-height:1.14; letter-spacing:1px;
   text-transform:uppercase; text-shadow:0 4px 0 #000, 0 0 26px rgba(0,0,0,.55); }
 
 /* ---- floating prompt card (reference 1) ---- */
-.card-wrap { position:absolute; left:50%; top:560px; width:840px; }
+.card-wrap { position:absolute; left:50%; top:1000px; width:860px; }
 .card { background:#fdfdfc; border-radius:26px; padding:52px 56px;
   box-shadow:0 30px 90px rgba(0,0,0,0.6), 0 4px 18px rgba(0,0,0,0.35); }
 .card-head { display:flex; align-items:center; gap:22px; margin-bottom:26px; }
@@ -34,9 +37,13 @@ html,body { width:1080px; height:1920px; background:transparent; overflow:hidden
 const stage = document.getElementById('stage');
 
 const PILLS = {
-  p1: ["01.", "ASK FOR THE FASTEST PATH<br>TO YOUR INCOME GOAL"],
-  p2: ["02.", "FIND THE ENTREPRENEUR<br>WORTH LEARNING FROM"],
-  p3: ["03.", "MAKE CLAUDE BECOME<br>THAT ENTREPRENEUR"]
+  t1: ["", "THE 3-PROMPT STRATEGY"],
+  p1: ["01.", "THE FASTEST PATH<br>TO YOUR INCOME"],
+  p2: ["02.", "THE ENTREPRENEUR<br>TO LEARN FROM"],
+  p3: ["03.", "THE MOST IMPORTANT<br>PROMPT"],
+  x1: ["", "<span class='strike'>GENERIC ADVICE</span>"],
+  x2: ["", "TAILORED. SPECIFIC. <span class='org'>YOURS.</span>"],
+  cta: ["", "PROMPTS IN THE <span class='org'>COMMENTS</span>"]
 };
 const CARDS = {
   c1: ["PROMPT 01", "What is the fastest way for me to reach my desired income?"],
@@ -63,12 +70,19 @@ function anim(t) {
   return { s, o, dy };
 }
 
-window.seek = (kind, t) => {
-  const { s, o, dy } = anim(t);
-  if (kind.startsWith('p')) {
+window.seek = (kind, t, dur) => {
+  let { s, o, dy } = anim(t);
+  if (dur && t > dur - 0.18) {
+    const p = (t - (dur - 0.18)) / 0.18;
+    o = o * (1 - p);
+    s = s * (1 - 0.06 * p);
+  }
+  if (PILLS[kind]) {
     const [num, txt] = PILLS[kind];
+    const numHtml = num ? `<div class="pill-num">${num}</div>` : '';
+    const just = num ? '' : 'justify-content:center;text-align:center;';
     stage.innerHTML = `<div class="pill-wrap" style="transform:translateX(-50%) translateY(${dy.toFixed(1)}px) scale(${s.toFixed(4)}); opacity:${o.toFixed(3)}">
-      <div class="pill"><div class="pill-num">${num}</div><div class="pill-txt">${txt}</div></div></div>`;
+      <div class="pill" style="${just}">${numHtml}<div class="pill-txt">${txt}</div></div></div>`;
   } else {
     const [badge, body] = CARDS[kind];
     stage.innerHTML = `<div class="card-wrap" style="transform:translateX(-50%) translateY(${dy.toFixed(1)}px) scale(${s.toFixed(4)}); opacity:${o.toFixed(3)}">
