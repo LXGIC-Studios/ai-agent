@@ -43,6 +43,9 @@ a clipped word pulled the look-down back into frame — caught by Nathan, not QC
 ## 4. B-roll screens
 
 - [ ] Real app UI only: real Claude spark, real chrome, no invented status bars.
+- [ ] Cropped real-screenshot assets are stripped of baked-in UI (labels, badges,
+      watermarks) before the page draws its own — check for DOUBLED text/icons
+      wherever a real image sits under rendered chrome (the double-ORIGINAL bug).
 - [ ] AI responses are real AI output, not written filler.
 - [ ] Claude greeting is "Evening, Zhi"; typed composer text is WHITE.
 - [ ] Typing bursts in ≤1.5s. Watching typing is boring.
