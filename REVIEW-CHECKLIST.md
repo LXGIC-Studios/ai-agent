@@ -10,9 +10,13 @@ a clipped word pulled the look-down back into frame — caught by Nathan, not QC
 
 ## 1. His footage
 
-- [ ] **No look-down / camera-reach visible anywhere** — step frame-by-frame
-      through every clip boundary IN THE RENDER, including through transitions
-      and fades. A 60%-faded look-down is still a look-down.
+- [ ] **No look-down / camera-reach visible anywhere** — make a 30fps CONTACT
+      SHEET (`fps=30,tile=`) of every talking-head boundary IN THE FINAL RENDER:
+      from the last spoken word to full black, and around every transition.
+      Spot-checking every 0.2s is NOT enough — the dip develops in ~0.3s and
+      slipped between samples twice. A 60%-faded look-down is still a look-down.
+      The gaze leaves the lens ~0.1s earlier than it "looks like" at a glance:
+      cut at the last frame where his eyes are clearly on camera.
 - [ ] **No freeze-frames of him.** A cloned frame reads as a creepy pause.
       If audio must outlast clean video: J-cut into b-roll, or fade to black.
 - [ ] Dead air / getting-ready trimmed from the start of every clip.
@@ -61,7 +65,7 @@ a clipped word pulled the look-down back into frame — caught by Nathan, not QC
 
 ## 7. Delivery
 
-- [ ] Named file (not numbered) in `examples/` on the branch.
+- [ ] Named file (not numbered) in `videos/` on the branch — ONLY after the full audit passes; log it in videos/AUDIT-LOG.md.
 - [ ] Chat copy under 40MB (~50MB fails silently).
 - [ ] 1080x1920, 30fps, faststart.
 

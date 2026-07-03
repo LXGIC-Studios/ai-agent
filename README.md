@@ -14,9 +14,9 @@ edit formula, and step-by-step process every video follows.
 |---|---|
 | [`EDITING-SYSTEM.md`](EDITING-SYSTEM.md) | The bible: style, rules, process, QC |
 | [`ASSETS.md`](ASSETS.md) | Raw footage + Drive asset inventory |
-| [`examples/`](examples/) | Finished, named, ready-to-post reels |
+| [`videos/`](videos/) | Audited, finished, ready-to-post reels (see videos/AUDIT-LOG.md) |
 | [`pipeline/`](pipeline/) | Canonical working set (video 75 = reference implementation) |
-| [`archive/`](archive/) | Earlier outputs and pipeline history from the test sessions |
+
 
 ## The pipeline in one line
 

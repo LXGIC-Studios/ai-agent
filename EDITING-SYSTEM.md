@@ -3,7 +3,7 @@
 The locked style + process for every short-form video on this account.
 Format: 1080x1920 (9:16), 30fps, Instagram Reels / TikTok. Editor: Claude. Talent: Zhi.
 
-**APPROVED REFERENCE:** `examples/claude-books-flights.mp4` is the signed-off
+**APPROVED REFERENCE:** `videos/claude-books-flights.mp4` is the signed-off
 gold standard for the full edit (structure, motion, b-roll, captions, ending).
 `pipeline/` contains its exact source files. Video 73 set the color grade;
 video 75 set everything else. Match them.
@@ -102,7 +102,7 @@ Always trim out:
 5. **Build captions + pill:** chunk table in `captions75.html` pattern; capture transparent 1080x400 band; pill via `popups76_i75.html` pattern.
 6. **Assemble:** single ffmpeg filter graph (`pipeline/render_reel.sh` is the canonical reference): grade+zoompan per segment → xfades (tpad clone to preserve offsets) → caption overlay at y=1440 → audio chain.
 7. **QC (checklist below), fix, re-render.**
-8. **Deliver:** named file (not numbered) → `examples/` on the repo branch + send in chat (<40MB; ~50MB silently fails).
+8. **Deliver:** named file (not numbered) → `videos/` on the repo branch + send in chat (<40MB; ~50MB silently fails).
 
 ## 9. QC — run the full checklist
 
@@ -119,7 +119,7 @@ note Nathan has ever given, as pass/fail gates. Two non-negotiables:
 ```
 EDITING-SYSTEM.md      this file — the bible
 ASSETS.md              raw footage / Drive asset inventory
-examples/              finished, named, ready-to-post reels
+videos/                audited finals only — every video passes REVIEW-CHECKLIST first
 pipeline/              canonical working set (video 75 = reference implementation)
   render_reel.sh         final assembly command (the v10 render)
   broll75.html           Claude-app b-roll scenes (seek(scene,t) pattern)
@@ -127,7 +127,7 @@ pipeline/              canonical working set (video 75 = reference implementatio
   popups76_i75.html      intro pill
   capture*.py            Playwright frame-capture scripts
   claude_spark.png       real Claude spark icon (pulled from claude.ai)
-archive/               older outputs + pipeline history from the test sessions
+
 ```
 
 ## 11. Known numbers that keep working
