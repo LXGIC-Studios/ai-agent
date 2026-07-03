@@ -30,8 +30,8 @@ ffmpeg -y -v error \
 [3:v]setpts=PTS-STARTPTS[ocap];[x2][ocap]overlay=0:1440:eof_action=pass,format=yuv420p,fade=t=out:st=31.85:d=0.3,tpad=stop_mode=clone:stop_duration=0.10[vout];
 [0:a]atrim=0.50:27.55,asetpts=PTS-STARTPTS,afade=t=in:st=0:d=0.10[am];
 [1:a]atrim=0.26:5.55,asetpts=PTS-STARTPTS,afade=t=in:st=0:d=0.06[ao];
-[am][ao]concat=n=2:v=0:a=1,loudnorm=I=-14:TP=-1.5:LRA=11[vc];
-[11:a]lowpass=f=9500,highpass=f=120,volume=0.95[clk];
+[am][ao]concat=n=2:v=0:a=1,loudnorm=I=-14:TP=-1.5:LRA=11,aresample=44100[vc];
+[11:a]lowpass=f=9500,highpass=f=120,volume=0.95,aresample=44100[clk];
 [vc][clk]amix=inputs=2:duration=first:normalize=0,afade=t=out:st=32.10:d=0.24,aresample=44100[aout]
 " -map "[vout]" -map "[aout]" \
  -c:v libx264 -preset slow -crf 18 -profile:v high -pix_fmt yuv420p \

@@ -30,7 +30,11 @@ a clipped word pulled the look-down back into frame — caught by Nathan, not QC
       `silencedetect`: speech energy runs ~0.2s past the transcript timestamp.
 - [ ] Fades start AFTER the ring-out, never on a word.
 - [ ] No click/pop at the switch into b-roll audio (fade-ins on every atrim).
-- [ ] loudnorm I=-14 applied once, on the full concat.
+- [ ] loudnorm I=-14 applied once, on the full concat. loudnorm OUTPUTS 192kHz —
+      ALWAYS aresample=44100 immediately after it, and before any amix (rate
+      mismatch at amix silently truncated 3s of outro audio once).
+- [ ] ffprobe the AUDIO STREAM duration of the final file — it must equal the
+      video duration. A silent tail is a cut outro.
 
 ## 3. Motion
 
