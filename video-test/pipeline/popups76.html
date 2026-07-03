@@ -9,17 +9,17 @@ html,body { width:1080px; height:1920px; background:transparent; overflow:hidden
 #stage { width:1080px; height:1920px; position:relative; }
 
 /* ---- numbered step pill (reference 2) ---- */
-.pill-wrap { position:absolute; left:50%; top:1090px; width:920px; }
-.pill { background:rgba(22,22,24,0.82); border:2.5px solid rgba(255,255,255,0.38); border-radius:34px;
-  padding:36px 52px; display:flex; align-items:center; gap:44px;
-  box-shadow:0 18px 60px rgba(0,0,0,0.55); }
-.pill-num { font-family:'Anton'; font-size:96px; color:#fff; line-height:1;
-  text-shadow:0 4px 0 #000, 0 0 26px rgba(0,0,0,.6); }
+.pill-wrap { position:absolute; left:0; top:1100px; width:1080px; display:flex; justify-content:center; }
+.pill { background:rgba(11,11,13,0.68); border:1.5px solid rgba(255,255,255,0.22); border-radius:24px;
+  padding:30px 52px; display:inline-flex; align-items:center; gap:36px;
+  box-shadow:0 12px 44px rgba(0,0,0,0.45); }
+.pill-num { font-family:'Anton'; font-size:64px; color:#F0A13C; line-height:1; }
+.pill-div { width:2px; align-self:stretch; background:rgba(255,255,255,0.18); border-radius:1px; }
 .pill-txt .strike { position:relative; }
-.pill-txt .strike:after { content:''; position:absolute; left:-8px; right:-8px; top:52%; height:9px; background:#F0A13C; border-radius:5px; transform:rotate(-2deg); }
+.pill-txt .strike:after { content:''; position:absolute; left:-6px; right:-6px; top:53%; height:5px; background:#F0A13C; border-radius:3px; transform:rotate(-1.5deg); }
 .pill-txt .org { color:#F0A13C; }
-.pill-txt { font-family:'Anton'; font-size:56px; color:#fff; line-height:1.14; letter-spacing:1px;
-  text-transform:uppercase; text-shadow:0 4px 0 #000, 0 0 26px rgba(0,0,0,.55); }
+.pill-txt { font-family:'Archivo'; font-weight:900; font-size:36px; color:#f4f2ee; line-height:1.38; letter-spacing:4px;
+  text-transform:uppercase; text-shadow:0 2px 14px rgba(0,0,0,.55); }
 
 /* ---- floating prompt card (reference 1) ---- */
 .card-wrap { position:absolute; left:50%; top:1000px; width:880px; }
@@ -42,9 +42,9 @@ const stage = document.getElementById('stage');
 
 const PILLS = {
   t1: ["", "THE 3-PROMPT STRATEGY"],
-  p1: ["01.", "THE FASTEST PATH<br>TO YOUR INCOME"],
-  p2: ["02.", "THE ENTREPRENEUR<br>TO LEARN FROM"],
-  p3: ["03.", "THE MOST IMPORTANT<br>PROMPT"],
+  p1: ["01", "THE FASTEST PATH"],
+  p2: ["02", "THE RIGHT MENTOR"],
+  p3: ["03", "THE MOST IMPORTANT"],
   x1: ["", "<span class='strike'>GENERIC ADVICE</span>"],
   x2: ["", "TAILORED. SPECIFIC. <span class='org'>YOURS.</span>"],
   cta: ["", "PROMPTS IN THE <span class='org'>COMMENTS</span>"]
@@ -57,35 +57,31 @@ const CARDS = {
 
 // pop animation: scale/fade in with overshoot, subtle idle drift, no exit (cut out)
 function anim(t) {
-  const IN = 0.28;
+  const IN = 0.32;
   let s, o, dy;
   if (t < IN) {
     const p = t / IN;
-    const e = 1 - Math.pow(1 - p, 3);           // ease-out cubic
-    s = 0.62 + 0.48 * e;                         // 0.62 -> 1.10
-    if (p > 0.75) s = 1.10 - (p - 0.75) / 0.25 * 0.10;  // settle 1.10 -> 1.0
-    o = Math.min(1, p * 1.6);
-    dy = 60 * (1 - e);
+    const e = 1 - Math.pow(1 - p, 4);            // ease-out quart, no bounce
+    s = 0.965 + 0.035 * e;
+    o = e;
+    dy = 30 * (1 - e);
   } else {
-    s = 1.0 + 0.006 * Math.sin((t - IN) * 1.8);  // subtle premium breathe
-    o = 1;
-    dy = -4 * (t - IN) * 0.6;
+    s = 1.0; o = 1; dy = 0;                       // dead still = elegant
   }
   return { s, o, dy };
 }
 
 window.seek = (kind, t, dur) => {
   let { s, o, dy } = anim(t);
-  if (dur && t > dur - 0.18) {
-    const p = (t - (dur - 0.18)) / 0.18;
+  if (dur && t > dur - 0.22) {
+    const p = (t - (dur - 0.22)) / 0.22;
     o = o * (1 - p);
-    s = s * (1 - 0.06 * p);
   }
   if (PILLS[kind]) {
     const [num, txt] = PILLS[kind];
-    const numHtml = num ? `<div class="pill-num">${num}</div>` : '';
+    const numHtml = num ? `<div class="pill-num">${num}</div><div class="pill-div"></div>` : '';
     const just = num ? '' : 'justify-content:center;text-align:center;';
-    stage.innerHTML = `<div class="pill-wrap" style="transform:translateX(-50%) translateY(${dy.toFixed(1)}px) scale(${s.toFixed(4)}); opacity:${o.toFixed(3)}">
+    stage.innerHTML = `<div class="pill-wrap" style="transform:translateY(${dy.toFixed(1)}px) scale(${s.toFixed(4)}); opacity:${o.toFixed(3)}">
       <div class="pill" style="${just}">${numHtml}<div class="pill-txt">${txt}</div></div></div>`;
   } else {
     const [badge, wm, body, hot] = CARDS[kind];
