@@ -1,0 +1,176 @@
+<meta charset="utf-8">
+<style>
+@font-face { font-family:'Inter'; src:url('fonts/Inter-400.ttf'); font-weight:400; }
+@font-face { font-family:'Inter'; src:url('fonts/Inter-600.ttf'); font-weight:600; }
+@font-face { font-family:'Inter7'; src:url('fonts/Inter-700.ttf'); }
+@font-face { font-family:'Archivo'; src:url('fonts/Archivo-900.ttf'); font-weight:900; }
+* { margin:0; padding:0; box-sizing:border-box; }
+html,body { width:1080px; height:1920px; overflow:hidden; background:#f7f7fb; font-family:'Inter',-apple-system,sans-serif; }
+#stage { width:1080px; height:1920px; position:relative; }
+.app { width:1080px; height:1920px; background:#f7f7fb; display:flex; flex-direction:column; }
+.top { height:114px; background:#fff; border-bottom:1px solid #e9e9f2; display:flex; align-items:center; padding:0 50px; }
+.logo { font-family:'Inter7'; font-size:40px; color:#17171f; letter-spacing:-1px; }
+.logo .dot { color:#5A45FF; }
+.top .cta-s { margin-left:auto; background:#5A45FF; color:#fff; font-size:26px; font-weight:700; border-radius:14px; padding:16px 34px; }
+.body { flex:1; padding:56px 58px; }
+.hero-t { font-family:'Archivo'; font-size:76px; color:#17171f; line-height:1.12; letter-spacing:-1px; }
+.hero-t span { color:#5A45FF; }
+.hero-s { color:#77778c; font-size:31px; margin-top:24px; line-height:1.5; }
+.start { display:inline-block; background:#5A45FF; color:#fff; font-size:33px; font-weight:700; border-radius:18px; padding:28px 54px; margin-top:44px; }
+.mini { display:flex; gap:16px; margin-top:40px; }
+.mini div { background:#fff; border:1px solid #e9e9f2; border-radius:30px; padding:14px 28px; color:#77778c; font-size:25px; }
+.card { background:#fff; border:1px solid #e9e9f2; border-radius:24px; padding:38px 42px; margin-top:26px; box-shadow:0 6px 24px rgba(23,23,31,0.05); }
+.lbl { color:#77778c; font-size:26px; font-weight:600; }
+.fld { background:#f7f7fb; border:2px solid #e9e9f2; border-radius:16px; padding:24px 28px; font-size:30px; color:#17171f; margin-top:14px; min-height:82px; }
+.svc { display:flex; gap:16px; margin-top:14px; flex-wrap:wrap; }
+.svc div { background:#efecff; border:2px solid #cdc4ff; color:#5A45FF; border-radius:30px; padding:14px 30px; font-size:27px; font-weight:600; }
+.gen { background:#5A45FF; color:#fff; border-radius:18px; text-align:center; padding:28px; font-size:32px; font-weight:700; margin-top:28px; }
+.prog { height:16px; background:#e9e9f2; border-radius:8px; overflow:hidden; margin-top:30px; }
+.prog div { height:100%; background:#5A45FF; border-radius:8px; }
+.gtxt { text-align:center; color:#77778c; font-size:29px; margin-top:24px; }
+/* site preview */
+.browser { background:#fff; border:1px solid #e9e9f2; border-radius:22px; overflow:hidden; margin-top:24px; box-shadow:0 10px 34px rgba(23,23,31,0.08); }
+.brw-bar { height:64px; background:#f2f2f7; display:flex; align-items:center; padding:0 26px; gap:10px; }
+.brw-bar i { width:16px; height:16px; border-radius:50%; background:#d9d9e4; }
+.brw-url { flex:1; background:#fff; border-radius:20px; height:38px; margin-left:14px; display:flex; align-items:center; padding:0 20px; color:#9a9aad; font-size:21px; }
+.site-hero { padding:54px 44px; color:#fff; }
+.site-hero .h { font-family:'Archivo'; font-size:52px; line-height:1.15; }
+.site-hero .s { font-size:26px; opacity:0.85; margin-top:14px; }
+.site-hero .b { display:inline-block; background:#fff; border-radius:14px; padding:16px 32px; font-size:24px; font-weight:700; margin-top:26px; }
+.site-row { display:flex; gap:16px; padding:26px; }
+.site-card { flex:1; background:#f7f7fb; border-radius:16px; padding:24px 20px; }
+.site-card .ic2 { width:52px; height:52px; border-radius:14px; margin-bottom:14px; }
+.site-card .t { font-size:23px; font-weight:700; color:#17171f; }
+.site-card .d { font-size:19px; color:#77778c; margin-top:6px; }
+.book { margin:0 26px 26px; border-radius:14px; padding:20px; text-align:center; color:#fff; font-size:23px; font-weight:700; }
+/* customize */
+.tools { display:flex; align-items:center; gap:22px; margin-top:24px; }
+.tools .lbl { margin:0; }
+.sw { width:56px; height:56px; border-radius:16px; border:3px solid transparent; }
+.sw.on { border-color:#17171f; }
+.chipline { display:flex; justify-content:center; margin-top:34px; }
+.chipp { background:#17171f; color:#fff; border-radius:44px; padding:20px 44px; font-family:'Inter7'; font-size:30px; }
+.chipp span { color:#F0A13C; }
+/* outreach */
+.biz { display:flex; align-items:center; gap:26px; padding:26px 0; border-bottom:1px solid #efeff5; }
+.biz .av2 { width:80px; height:80px; min-width:80px; border-radius:20px; display:flex; align-items:center; justify-content:center; color:#fff; font-family:'Inter7'; font-size:32px; }
+.biz .n { font-size:31px; font-weight:600; color:#17171f; }
+.biz .tag { margin-left:auto; border-radius:30px; padding:12px 26px; font-size:24px; font-weight:700; }
+.tag.bad { background:#fdeeee; color:#c0392b; }
+.tag.none { background:#f2f2f7; color:#77778c; }
+.msg { background:#efecff; border:2px solid #cdc4ff; border-radius:24px 24px 24px 6px; padding:30px 34px; font-size:29px; color:#17171f; line-height:1.5; margin-top:26px; max-width:800px; }
+.msg .link { color:#5A45FF; font-weight:700; }
+.reply { background:#fff; border:2px solid #e9e9f2; border-radius:24px 24px 6px 24px; padding:30px 34px; font-size:29px; color:#17171f; margin-top:24px; max-width:640px; margin-left:auto; }
+.sendb { display:flex; justify-content:flex-end; margin-top:18px; }
+.sendb div { background:#5A45FF; color:#fff; border-radius:30px; padding:14px 40px; font-size:26px; font-weight:700; }
+/* payoff */
+.pay-t { text-align:center; font-family:'Archivo'; font-size:52px; color:#17171f; margin-top:20px; }
+.prices { display:flex; gap:22px; justify-content:center; margin-top:46px; }
+.price { background:#fff; border:2px solid #e9e9f2; border-radius:24px; padding:40px 34px; text-align:center; width:280px; }
+.price .amt { font-family:'Archivo'; font-size:58px; color:#17171f; }
+.price .per { color:#77778c; font-size:24px; margin-top:10px; }
+.price.hot { border-color:#5A45FF; background:#efecff; }
+.price.hot .amt { color:#5A45FF; }
+</style>
+<div id="stage"></div>
+<script>
+const stage = document.getElementById('stage');
+const ease = (p) => 1 - Math.pow(1 - Math.min(1, Math.max(0, p)), 3);
+const io = (t, st, dur) => ease((t - st) / dur);
+const el = (f, html, dy=26) => `<div style="opacity:${f.toFixed(3)};transform:translateY(${(dy*(1-f)).toFixed(1)}px)">${html}</div>`;
+const tw = (s, t, a, b) => t < a ? '' : s.slice(0, Math.floor(s.length * Math.min(1, (t-a)/(b-a))));
+const car = (s, full, t, a, b) => `${s}${s.length<full&&t>=a?'<span style="display:inline-block;width:3px;height:34px;background:#17171f;vertical-align:-6px"></span>':''}`;
+
+function chrome(inner) {
+  return `<div class="app"><div class="top"><div class="logo">durable<span class="dot">.</span></div><div class="cta-s">Start for free</div></div>
+    <div class="body">${inner}</div></div>`;
+}
+function sitePreview(t, recolor, refont) {
+  const heroCol = recolor ? 'linear-gradient(135deg,#0e8a7d,#14b8a6)' : 'linear-gradient(135deg,#3b2bb3,#5A45FF)';
+  const acc = recolor ? '#14b8a6' : '#5A45FF';
+  const ff = refont ? 'Georgia,serif' : '';
+  const heroIn = io(t, 8.9, 0.4), cardsIn = io(t, 9.6, 0.35), bookIn = io(t, 10.3, 0.35);
+  const cards = [["C","Cleanings","Gentle routine care"],["W","Whitening","Brighter in one visit"],["I","Implants","Permanent solutions"]];
+  return `<div class="browser">
+    <div class="brw-bar"><i></i><i></i><i></i><div class="brw-url">brightsmile.durable.co</div></div>
+    <div class="site-hero" style="background:${heroCol};opacity:${heroIn.toFixed(3)}">
+      <div class="h" style="font-family:${ff||"'Archivo'"}">BrightSmile Dental</div>
+      <div class="s">Gentle care for the whole family in Austin, TX</div>
+      <div class="b" style="color:${acc}">Book an appointment</div></div>
+    ${cardsIn>0?`<div class="site-row" style="opacity:${cardsIn.toFixed(3)}">${cards.map(([ic,tt,dd])=>`<div class="site-card"><div class="ic2" style="background:${acc}22;border:2px solid ${acc};"></div><div class="t" style="font-family:${ff}">${tt}</div><div class="d">${dd}</div></div>`).join('')}</div>`:''}
+    ${bookIn>0?`<div class="book" style="background:${acc};opacity:${bookIn.toFixed(3)}">Open 7 days &middot; Same-week appointments</div>`:''}</div>`;
+}
+function sceneS(t) {
+  let inner = '';
+  if (t < 3.0) {                                        /* landing */
+    const f = io(t, 0.45, 0.35);
+    const pressed = t >= 2.2 && t < 2.5;
+    inner = el(f, `<div style="padding-top:120px"><div class="hero-t">Build a website<br>in <span>30 seconds</span><br>with AI</div>
+      <div class="hero-s">Describe your business. Durable does the rest &mdash; design, copy, images, contact forms.</div>
+      <div class="start" ${pressed?'style="transform:scale(0.96);background:#4936d9"':''}>Start for free</div>
+      <div class="mini"><div>No code</div><div>Free to try</div><div>Live in minutes</div></div></div>`);
+  } else if (t < 7.0) {                                 /* form */
+    const f = io(t, 3.0, 0.3);
+    const name = tw("BrightSmile Dental", t, 3.1, 3.7);
+    const loc = tw("Austin, TX", t, 4.0, 4.45);
+    const desc = tw("Family dental clinic focused on gentle, modern care", t, 5.3, 6.1);
+    const svcs = ["Cleanings","Whitening","Implants"].map((s,i) => t >= 4.6+i*0.14 ? `<div style="opacity:${io(t,4.6+i*0.14,0.2).toFixed(2)}">${s}</div>` : '').join('');
+    inner = el(f, `<div class="hero-t" style="font-size:54px">Tell us about<br>your business</div>
+      <div class="card"><div class="lbl">Business name</div><div class="fld">${car(name,"BrightSmile Dental",t,3.1)}</div>
+      <div class="lbl" style="margin-top:24px">Location</div><div class="fld">${car(loc,"Austin, TX",t,4.0)}</div>
+      <div class="lbl" style="margin-top:24px">Services</div><div class="svc">${svcs}</div>
+      <div class="lbl" style="margin-top:24px">Short description</div><div class="fld">${car(desc,"Family dental clinic focused on gentle, modern care",t,5.3)}</div>
+      <div class="gen">Generate my website</div></div>`);
+  } else if (t < 14.3) {                                /* generate + site + customize */
+    if (t < 8.9) {
+      const p = Math.min(1, (t - 7.2) / 1.6);
+      inner = el(io(t,7.05,0.25), `<div style="padding-top:300px"><div class="hero-t" style="font-size:56px;text-align:center">Generating your<br><span>website&#8230;</span></div>
+        <div class="prog"><div style="width:${(p*100).toFixed(1)}%"></div></div>
+        <div class="gtxt">${p<0.4?'Writing your copy':(p<0.8?'Designing your pages':'Adding your services')}&#8230;</div></div>`);
+    } else {
+      const recolor = t >= 12.8, refont = t >= 13.3;
+      let toolbar = '';
+      if (t >= 12.2) {
+        toolbar = el(io(t,12.2,0.3), `<div class="tools"><div class="lbl">Theme</div>
+          <div class="sw ${!recolor?'on':''}" style="background:#5A45FF"></div>
+          <div class="sw ${recolor?'on':''}" style="background:#14b8a6"></div>
+          <div class="sw" style="background:#e8590c"></div>
+          <div class="lbl" style="margin-left:26px">Font</div>
+          <div class="sw" style="background:#fff;border:2px solid #e9e9f2;display:flex;align-items:center;justify-content:center;color:#17171f;font-size:28px;${!refont?'outline:3px solid #17171f;':''}">Aa</div>
+          <div class="sw" style="background:#fff;border:2px solid #e9e9f2;display:flex;align-items:center;justify-content:center;color:#17171f;font-size:28px;font-family:Georgia,serif;${refont?'outline:3px solid #17171f;':''}">Aa</div></div>`, 14);
+      }
+      const chip = t >= 11.0 && t < 12.2 ? el(io(t,11.0,0.3), `<div class="chipline"><div class="chipp">READY IN <span>MINUTES</span></div></div>`, 14) : '';
+      inner = sitePreview(t, recolor, refont) + chip + toolbar;
+    }
+  } else if (t < 22.8) {                                /* outreach */
+    const f = io(t, 14.3, 0.3);
+    const BIZ = [["S","Smith Family Dental","#e8590c","Outdated site","bad"],["L","Lakeside Dental","#0e8a7d","No website","none"],["O","Oak Hill Dental","#5A45FF","No website","none"]];
+    let rows = '';
+    BIZ.forEach(([ic,nm,col,tag,cls], i) => {
+      const rf = io(t, 14.5 + i * 0.4, 0.25);
+      if (rf > 0) rows += `<div class="biz" style="opacity:${rf.toFixed(3)}"><div class="av2" style="background:${col}">${ic}</div><div class="n">${nm}</div><div class="tag ${cls}">${tag}</div></div>`;
+    });
+    let msg = '';
+    if (t >= 17.5) {
+      const sent = t >= 18.2;
+      msg = el(io(t,17.5,0.3), `<div class="msg">Hi! I built a free sample website for your clinic &mdash; take a look: <span class="link">brightsmile.durable.co</span>. Want me to customize it for you?</div>
+        <div class="sendb"><div ${t>=18.0&&t<18.25?'style="transform:scale(0.94)"':''}>${sent?'Sent':'Send'}</div></div>`, 20);
+      if (t >= 19.8) msg += el(io(t,19.8,0.3), `<div class="reply">This looks great &mdash; what would it cost?</div>`, 20);
+    }
+    inner = el(f, `<div class="hero-t" style="font-size:54px">Local businesses<br>near Austin</div><div class="card">${rows}</div>`) + msg;
+  } else {                                              /* payoff */
+    const f = io(t, 22.8, 0.3);
+    const P = [["$500","starter site",false],["$1,500","site + branding",true],["$2,500","site + monthly care",false]];
+    let prices = '';
+    P.forEach(([amt,per,hot], i) => {
+      const pf = io(t, 23.0 + i * 0.4, 0.3);
+      if (pf > 0) prices += `<div class="price ${hot?'hot':''}" style="opacity:${pf.toFixed(3)};transform:scale(${(0.85+0.15*pf).toFixed(3)})"><div class="amt">${amt}</div><div class="per">${per}</div></div>`;
+    });
+    const tally = t >= 24.9 ? el(io(t,24.9,0.3), `<div class="chipline" style="margin-top:56px"><div class="chipp" style="font-size:36px;padding:26px 54px">A FEW CLIENTS = <span>$5K A MONTH</span></div></div>`, 18) : '';
+    const wrap = t >= 26.3 ? el(io(t,26.3,0.3), `<div class="chipline" style="margin-top:22px"><div class="chipp">EACH ONE BUILT <span>IN MINUTES</span></div></div>`, 14) : '';
+    inner = el(f, `<div class="pay-t">What businesses pay</div><div class="prices">${prices}</div>`) + tally + wrap;
+  }
+  stage.innerHTML = chrome(inner);
+}
+window.seek = (scene, t) => { ({S: sceneS})[scene](t); return true; };
+</script>
