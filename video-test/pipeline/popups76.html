@@ -1,0 +1,80 @@
+<meta charset="utf-8">
+<style>
+@font-face { font-family:'Anton'; src:url('fonts/Anton-400.ttf'); }
+@font-face { font-family:'Archivo'; src:url('fonts/Archivo-900.ttf'); font-weight:900; }
+@font-face { font-family:'Inter'; src:url('fonts/Inter-600.ttf'); font-weight:600; }
+@font-face { font-family:'Inter'; src:url('fonts/Inter-400.ttf'); font-weight:400; }
+* { margin:0; padding:0; box-sizing:border-box; }
+html,body { width:1080px; height:1920px; background:transparent; overflow:hidden; }
+#stage { width:1080px; height:1920px; position:relative; }
+
+/* ---- numbered step pill (reference 2) ---- */
+.pill-wrap { position:absolute; left:50%; top:1150px; width:920px; }
+.pill { background:rgba(22,22,24,0.82); border:2.5px solid rgba(255,255,255,0.38); border-radius:34px;
+  padding:36px 52px; display:flex; align-items:center; gap:44px;
+  box-shadow:0 18px 60px rgba(0,0,0,0.55); }
+.pill-num { font-family:'Anton'; font-size:96px; color:#fff; line-height:1;
+  text-shadow:0 4px 0 #000, 0 0 26px rgba(0,0,0,.6); }
+.pill-txt { font-family:'Anton'; font-size:56px; color:#fff; line-height:1.14; letter-spacing:1px;
+  text-transform:uppercase; text-shadow:0 4px 0 #000, 0 0 26px rgba(0,0,0,.55); }
+
+/* ---- floating prompt card (reference 1) ---- */
+.card-wrap { position:absolute; left:50%; top:560px; width:840px; }
+.card { background:#fdfdfc; border-radius:26px; padding:52px 56px;
+  box-shadow:0 30px 90px rgba(0,0,0,0.6), 0 4px 18px rgba(0,0,0,0.35); }
+.card-head { display:flex; align-items:center; gap:22px; margin-bottom:26px; }
+.card-badge { background:#1f1e1c; color:#fff; font-family:'Archivo'; font-weight:900; font-size:27px;
+  letter-spacing:3px; padding:12px 26px; border-radius:12px; }
+.card-app { color:#8a867d; font-family:'Inter'; font-weight:600; font-size:27px; margin-left:auto; }
+.card-body { font-family:'Inter'; font-weight:600; font-size:38px; color:#191919; line-height:1.42; }
+.card-body .q { color:#b0b0ab; }
+</style>
+<div id="stage"></div>
+<script>
+const stage = document.getElementById('stage');
+
+const PILLS = {
+  p1: ["01.", "ASK FOR THE FASTEST PATH<br>TO YOUR INCOME GOAL"],
+  p2: ["02.", "FIND THE ENTREPRENEUR<br>WORTH LEARNING FROM"],
+  p3: ["03.", "MAKE CLAUDE BECOME<br>THAT ENTREPRENEUR"]
+};
+const CARDS = {
+  c1: ["PROMPT 01", "What is the fastest way for me to reach my desired income?"],
+  c2: ["PROMPT 02", "Who is the most successful entrepreneur I should learn from?"],
+  c3: ["PROMPT 03", "Pretend you are that entrepreneur. Create me a 90-day action plan with a $5,000 upfront budget, and show me exactly how to get my first client."]
+};
+
+// pop animation: scale/fade in with overshoot, subtle idle drift, no exit (cut out)
+function anim(t) {
+  const IN = 0.28;
+  let s, o, dy;
+  if (t < IN) {
+    const p = t / IN;
+    const e = 1 - Math.pow(1 - p, 3);           // ease-out cubic
+    s = 0.62 + 0.48 * e;                         // 0.62 -> 1.10
+    if (p > 0.75) s = 1.10 - (p - 0.75) / 0.25 * 0.10;  // settle 1.10 -> 1.0
+    o = Math.min(1, p * 1.6);
+    dy = 60 * (1 - e);
+  } else {
+    s = 1.0 + 0.006 * Math.sin((t - IN) * 1.8);  // subtle premium breathe
+    o = 1;
+    dy = -4 * (t - IN) * 0.6;
+  }
+  return { s, o, dy };
+}
+
+window.seek = (kind, t) => {
+  const { s, o, dy } = anim(t);
+  if (kind.startsWith('p')) {
+    const [num, txt] = PILLS[kind];
+    stage.innerHTML = `<div class="pill-wrap" style="transform:translateX(-50%) translateY(${dy.toFixed(1)}px) scale(${s.toFixed(4)}); opacity:${o.toFixed(3)}">
+      <div class="pill"><div class="pill-num">${num}</div><div class="pill-txt">${txt}</div></div></div>`;
+  } else {
+    const [badge, body] = CARDS[kind];
+    stage.innerHTML = `<div class="card-wrap" style="transform:translateX(-50%) translateY(${dy.toFixed(1)}px) scale(${s.toFixed(4)}); opacity:${o.toFixed(3)}">
+      <div class="card"><div class="card-head"><div class="card-badge">${badge}</div><div class="card-app">Claude</div></div>
+      <div class="card-body"><span class="q">&ldquo;</span>${body}<span class="q">&rdquo;</span></div></div></div>`;
+  }
+  return true;
+};
+</script>

@@ -1,0 +1,31 @@
+[Script Info]
+ScriptType: v4.00+
+PlayResX: 1080
+PlayResY: 1920
+WrapStyle: 0
+ScaledBorderAndShadow: yes
+
+[V4+ Styles]
+Format: Name, Fontname, Fontsize, PrimaryColour, SecondaryColour, OutlineColour, BackColour, Bold, Italic, Underline, StrikeOut, ScaleX, ScaleY, Spacing, Angle, BorderStyle, Outline, Shadow, Alignment, MarginL, MarginR, MarginV, Encoding
+Style: Duo,Montserrat ExtraBold,80,&H00FFFFFF,&H00FFFFFF,&H00000000,&H98000000,-1,0,0,0,100,100,1,0,1,10,5,2,60,60,440,1
+
+[Events]
+Format: Layer, Start, End, Style, MarginL, MarginR, MarginV, Effect, Text
+Dialogue: 0,0:00:00.19,0:00:00.60,Duo,0,0,0,,{\fscx80\fscy80\t(0,70,\fscx106\fscy106)\t(70,130,\fscx100\fscy100)}{\c&HFFFFFF&}Now the next thing
+Dialogue: 0,0:00:00.60,0:00:00.98,Duo,0,0,0,,{\fscx80\fscy80\t(0,70,\fscx106\fscy106)\t(70,130,\fscx100\fscy100)}{\c&HFFFFFF&}you want to do
+Dialogue: 0,0:00:00.98,0:00:01.40,Duo,0,0,0,,{\fscx80\fscy80\t(0,70,\fscx106\fscy106)\t(70,130,\fscx100\fscy100)}{\c&HFFFFFF&}is go ahead
+Dialogue: 0,0:00:01.40,0:00:02.18,Duo,0,0,0,,{\fscx80\fscy80\t(0,70,\fscx106\fscy106)\t(70,130,\fscx100\fscy100)}{\c&HFFFFFF&}and {\c&H3CA1F0&}publish that game
+Dialogue: 0,0:00:02.18,0:00:02.72,Duo,0,0,0,,{\fscx80\fscy80\t(0,70,\fscx106\fscy106)\t(70,130,\fscx100\fscy100)}{\c&HFFFFFF&}on {\c&H3CA1F0&}Steam
+Dialogue: 0,0:00:02.72,0:00:03.54,Duo,0,0,0,,{\fscx80\fscy80\t(0,70,\fscx106\fscy106)\t(70,130,\fscx100\fscy100)}{\c&HFFFFFF&}or the {\c&H3CA1F0&}App Store
+Dialogue: 0,0:00:03.54,0:00:03.92,Duo,0,0,0,,{\fscx80\fscy80\t(0,70,\fscx106\fscy106)\t(70,130,\fscx100\fscy100)}{\c&HFFFFFF&}and you can start
+Dialogue: 0,0:00:03.92,0:00:04.58,Duo,0,0,0,,{\fscx80\fscy80\t(0,70,\fscx106\fscy106)\t(70,130,\fscx100\fscy100)}{\c&HFFFFFF&}running {\c&H3CA1F0&}some marketing
+Dialogue: 0,0:00:04.58,0:00:05.12,Duo,0,0,0,,{\fscx80\fscy80\t(0,70,\fscx106\fscy106)\t(70,130,\fscx100\fscy100)}{\c&HFFFFFF&}towards it
+Dialogue: 0,0:00:05.12,0:00:05.60,Duo,0,0,0,,{\fscx80\fscy80\t(0,70,\fscx106\fscy106)\t(70,130,\fscx100\fscy100)}{\c&HFFFFFF&}and start making
+Dialogue: 0,0:00:05.60,0:00:06.04,Duo,0,0,0,,{\fscx80\fscy80\t(0,70,\fscx106\fscy106)\t(70,130,\fscx100\fscy100)}{\c&H3CA1F0&}some money
+Dialogue: 0,0:00:06.04,0:00:06.92,Duo,0,0,0,,{\fscx80\fscy80\t(0,70,\fscx106\fscy106)\t(70,130,\fscx100\fscy100)}{\c&HFFFFFF&}I hope this video
+Dialogue: 0,0:00:06.92,0:00:07.42,Duo,0,0,0,,{\fscx80\fscy80\t(0,70,\fscx106\fscy106)\t(70,130,\fscx100\fscy100)}{\c&HFFFFFF&}helped you out
+Dialogue: 0,0:00:07.42,0:00:07.70,Duo,0,0,0,,{\fscx80\fscy80\t(0,70,\fscx106\fscy106)\t(70,130,\fscx100\fscy100)}{\c&HFFFFFF&}and of course
+Dialogue: 0,0:00:07.70,0:00:08.14,Duo,0,0,0,,{\fscx80\fscy80\t(0,70,\fscx106\fscy106)\t(70,130,\fscx100\fscy100)}{\c&H3CA1F0&}follow along
+Dialogue: 0,0:00:08.14,0:00:08.58,Duo,0,0,0,,{\fscx80\fscy80\t(0,70,\fscx106\fscy106)\t(70,130,\fscx100\fscy100)}{\c&HFFFFFF&}for more ways
+Dialogue: 0,0:00:08.58,0:00:09.02,Duo,0,0,0,,{\fscx80\fscy80\t(0,70,\fscx106\fscy106)\t(70,130,\fscx100\fscy100)}{\c&HFFFFFF&}to {\c&H3CA1F0&}make money
+Dialogue: 0,0:00:09.02,0:00:09.60,Duo,0,0,0,,{\fscx80\fscy80\t(0,70,\fscx106\fscy106)\t(70,130,\fscx100\fscy100)}{\c&HFFFFFF&}with {\c&H3CA1F0&}AI
