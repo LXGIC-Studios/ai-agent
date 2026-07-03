@@ -21,6 +21,17 @@ html,body { width:1080px; height:1920px; background:transparent; overflow:hidden
 .pill-txt { font-family:'Archivo'; font-weight:900; font-size:36px; color:#f4f2ee; line-height:1.38; letter-spacing:4px;
   text-transform:uppercase; text-shadow:0 2px 14px rgba(0,0,0,.55); }
 
+/* ---- expanding pill: grows into the prompt ---- */
+.exp-anchor { position:absolute; left:0; top:1080px; width:1080px; display:flex; justify-content:center; }
+.exp-panel { background:rgba(11,11,13,0.74); border:1.5px solid rgba(255,255,255,0.22); border-radius:26px;
+  box-shadow:0 14px 50px rgba(0,0,0,0.5); overflow:hidden; }
+.exp-panel.hot { border-color:rgba(240,161,60,0.65); }
+.exp-head { display:inline-flex; align-items:center; gap:36px; padding:30px 52px; white-space:nowrap; }
+.exp-div { height:1.5px; background:rgba(255,255,255,0.16); margin:0 40px; }
+.exp-body { padding:26px 48px 36px; font-family:'Inter'; font-weight:600; font-size:34px; color:#eceae4;
+  line-height:1.5; width:880px; }
+.exp-body .q { color:#8a867d; }
+
 /* ---- combo: pill docks top, big card center ---- */
 .pill-top { position:absolute; left:0; width:1080px; display:flex; justify-content:center; }
 .card-big-wrap { position:absolute; left:60px; width:960px; top:430px; }
@@ -112,7 +123,40 @@ function comboSeek(kind, t, dur) {
   }
   stage.innerHTML = html;
 }
+const EXPANDS = {
+  e1: { pill:'p1', tExp:1.30, body:"What is the fastest way for me to reach my desired income?", hot:false },
+  e2: { pill:'p2', tExp:1.70, body:"Who is the most successful entrepreneur I should learn from?", hot:false },
+  e3: { pill:'p3', tExp:2.95, body:"Pretend you are that entrepreneur. Create me a 90-day action plan with a $5,000 upfront budget, and show me exactly how to get my first client.", hot:true }
+};
+function measure(html, width) {
+  const el = document.createElement('div');
+  el.style.cssText = `position:absolute;left:-3000px;top:0;${width ? 'width:'+width+'px;' : ''}`;
+  el.innerHTML = html;
+  document.body.appendChild(el);
+  const r = el.firstElementChild.getBoundingClientRect();
+  document.body.removeChild(el);
+  return { w: r.width, h: r.height };
+}
+function expandSeek(kind, t, dur) {
+  const { pill, tExp, body, hot } = EXPANDS[kind];
+  const [num, txt] = PILLS[pill];
+  let out = 1;
+  if (dur && t > dur - 0.22) out = Math.max(0, 1 - (t - (dur - 0.22)) / 0.22);
+  const pin = ease(t / 0.32);
+  const e = t < tExp ? 0 : ease((t - tExp) / 0.48);
+  const headHtml = `<div class="exp-head"><div class="pill-num">${num}</div><div class="pill-div"></div><div class="pill-txt">${txt}</div></div>`;
+  const bodyHtml = `<div class="exp-div"></div><div class="exp-body"><span class="q">&ldquo;</span>${body}<span class="q">&rdquo;</span></div>`;
+  const collapsed = measure(`<div class="exp-panel" style="display:inline-block">${headHtml}</div>`);
+  const expanded = measure(`<div class="exp-panel" style="display:inline-block;width:960px">${headHtml}${bodyHtml}</div>`, 1080);
+  const w = collapsed.w + (960 - collapsed.w) * e;
+  const h = collapsed.h + (expanded.h - collapsed.h) * e;
+  const bodyOp = Math.max(0, (e - 0.35) / 0.65);
+  stage.innerHTML = `<div class="exp-anchor" style="opacity:${(pin*out).toFixed(3)}; transform:translateY(${(30*(1-pin)).toFixed(1)}px)">
+    <div class="exp-panel ${hot?'hot':''}" style="width:${w.toFixed(1)}px; height:${h.toFixed(1)}px">
+      ${headHtml}<div style="opacity:${bodyOp.toFixed(3)}">${bodyHtml}</div></div></div>`;
+}
 window.seek = (kind, t, dur) => {
+  if (EXPANDS[kind]) { expandSeek(kind, t, dur); return true; }
   if (COMBOS[kind]) { comboSeek(kind, t, dur); return true; }
   let { s, o, dy } = anim(t);
   if (dur && t > dur - 0.22) {
