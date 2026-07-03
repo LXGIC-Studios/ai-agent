@@ -191,9 +191,41 @@ function sceneC(t) {
 }
 
 
+/* TA booking page (BC-local 15.8+): payoff for "official link" */
+function taPage(t) {
+  const lt = t - 15.8;
+  const ease = (d, dur) => { const p = Math.min(1, Math.max(0, (lt - d) / dur)); return 1 - Math.pow(1 - p, 3); };
+  const f1 = ease(0.0, 0.3), f2 = ease(0.15, 0.35), f3 = ease(0.35, 0.35), f4 = ease(0.55, 0.35);
+  const el = (f, html) => `<div style="opacity:${f.toFixed(3)};transform:translateY(${(26*(1-f)).toFixed(1)}px)">${html}</div>`;
+  const chip = (txt) => `<div style="background:#f2f2f5;border-radius:30px;padding:14px 28px;font-size:26px;color:#55555c">${txt}</div>`;
+  stage.innerHTML = `<div style="width:1080px;height:1920px;background:#f4f4f6;display:flex;flex-direction:column">
+    <div style="height:140px;background:#fff;border-bottom:1px solid #e4e4e8;display:flex;align-items:center;justify-content:center">
+      <div style="background:#ededf0;border-radius:30px;padding:20px 52px;font-size:30px;color:#3a3a3e;font-weight:600">turkishairlines.com</div></div>
+    <div style="height:170px;background:#d1092f;display:flex;align-items:center;padding:0 60px;justify-content:space-between">
+      <div style="color:#fff;font-size:40px;font-weight:700;letter-spacing:1px">TURKISH AIRLINES</div>
+      <div style="color:rgba(255,255,255,0.85);font-size:28px;font-weight:600">Sign in</div></div>
+    <div style="padding:54px 56px">
+      ${el(f1, `<div style="font-size:44px;font-weight:700;color:#1c1c22">Review your flight</div>
+        <div style="font-size:29px;color:#7c7c85;margin-top:10px">Flight &rsaquo; Passengers &rsaquo; Payment</div>`)}
+      ${el(f2, `<div style="background:#fff;border-radius:26px;padding:44px 48px;margin-top:40px;box-shadow:0 8px 30px rgba(0,0,0,0.06)">
+        <div style="display:flex;justify-content:space-between;align-items:center">
+          <div><div style="font-size:52px;font-weight:700;color:#1c1c22">LHR</div><div style="font-size:27px;color:#7c7c85;margin-top:6px">London</div></div>
+          <div style="flex:1;margin:0 34px;border-top:3px dashed #d5d5da;position:relative"><div style="position:absolute;top:-16px;left:50%;transform:translateX(-50%);background:#fff;padding:0 14px;font-size:24px;color:#9a9aa2">Nonstop</div></div>
+          <div style="text-align:right"><div style="font-size:52px;font-weight:700;color:#1c1c22">DXB</div><div style="font-size:27px;color:#7c7c85;margin-top:6px">Dubai</div></div></div>
+        <div style="display:flex;justify-content:space-between;margin-top:34px;font-size:30px;color:#3a3a3e"><div>Fri, Jul 18</div><div>14:25 &ndash; 00:55</div></div>
+        <div style="border-top:1px solid #ececf0;margin-top:32px;padding-top:30px;display:flex;gap:20px;flex-wrap:wrap">
+          ${chip('Economy')}${chip('1 adult')}${chip('30kg checked')}${chip('8kg cabin')}</div></div>`)}
+      ${el(f3, `<div style="background:#fff;border-radius:26px;padding:38px 48px;margin-top:28px;box-shadow:0 8px 30px rgba(0,0,0,0.06);display:flex;align-items:center;justify-content:space-between">
+        <div style="font-size:31px;color:#55555c">Total for 1 passenger</div>
+        <div style="font-size:56px;font-weight:800;color:#d1092f">$164</div></div>`)}
+      ${el(f4, `<div style="background:#d1092f;border-radius:22px;margin-top:36px;padding:34px;text-align:center;color:#fff;font-size:34px;font-weight:700">Continue to passenger details</div>`)}
+    </div></div>`;
+}
+
 /* Scene BC (18.0s): fast type, send, searching statuses, results */
 const STATUSES = [[2.5, "Searching Turkish Airlines flights&#8230;"], [3.3, "Comparing 47 flights&#8230;"]];
 function sceneBC(t) {
+  if (t >= 15.8) { taPage(t); return; }
   const typeStart = 0.25, typeEnd = 1.55, sendAt = 1.95;
   const dt = (typeEnd - typeStart) / PROMPT75.length;
   let n = Math.max(0, Math.min(PROMPT75.length, Math.floor(((t - typeStart) / (typeEnd - typeStart)) * PROMPT75.length)));
@@ -224,12 +256,22 @@ function sceneBC(t) {
         if (t >= st2) {
           const f = Math.min(1, (t - st2) / 0.25);
           const hl = best && t >= 11.0;
-          ai += `<div class="fc ${hl?"best":""}" style="opacity:${f.toFixed(2)};transform:translateY(${(20*(1-f)).toFixed(1)}px)"><div><div class="fc-route">${route}</div><div class="fc-sub">${sub}</div></div><div class="fc-price"><div class="p">${price}</div>${hl ? "<div class=\"tag\">CHEAPEST</div>" : ""}</div></div>`;
+          const p0 = 9.1 + i * 0.4;
+          const pulse = !hl && t >= p0 && t < p0 + 0.38;
+          const bagOn = t >= 12.5 + i * 0.25 && t < 13.25 + i * 0.25;
+          const bc2 = pulse ? 'border-color:rgba(240,239,234,0.55);' : '';
+          ai += `<div class="fc ${hl?"best":""}" style="${bc2}opacity:${f.toFixed(2)};transform:translateY(${(20*(1-f)).toFixed(1)}px) scale(${pulse?1.02:1})"><div><div class="fc-route">${route}</div><div class="fc-sub" style="color:${bagOn?'#e8e6df':'#8a867d'}">${sub}</div></div><div class="fc-price"><div class="p">${price}</div>${hl ? "<div class=\"tag\">CHEAPEST</div>" : ""}</div></div>`;
         }
       });
+      const SUMMARY = "Jul 18 is your cheapest option — $164 nonstop with Turkish Airlines.";
+      if (t >= 6.3) {
+        const sf = Math.min(1, (t - 6.3) / 1.6);
+        ai += `<div class="a-msg" style="margin-top:24px"><p>${SUMMARY.slice(0, Math.floor(SUMMARY.length*sf))}${sf<1?'<span class="dot"></span>':''}</p></div>`;
+      }
       if (t >= 14.2) {
         const f = Math.min(1, (t - 14.2) / 0.3);
-        ai += `<div style="opacity:${f.toFixed(2)}"><div class="link-btn">Book on turkishairlines.com &#8599;</div></div>`;
+        const pressed = t >= 15.35 && t < 15.6;
+        ai += `<div style="opacity:${f.toFixed(2)}"><div class="link-btn" style="${pressed?'transform:scale(0.95);background:#c05f3f':''}">Book on turkishairlines.com &#8599;</div></div>`;
       }
     }
   }
