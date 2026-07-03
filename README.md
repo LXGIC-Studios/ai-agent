@@ -1,101 +1,25 @@
-# ai-agent
+# Zhi Reels Studio
 
-[![npm version](https://img.shields.io/npm/v/ai-agent.svg)](https://www.npmjs.com/package/ai-agent)
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
-[![TypeScript](https://img.shields.io/badge/TypeScript-Ready-blue.svg)](https://www.typescriptlang.org/)
+Short-form video editing system for the AI-tips account. Claude edits, Zhi talks.
 
-AI agent framework scaffolding. ReAct, tool-use, planning agents. OpenAI, Anthropic, LangChain compatible.
+Raw footage in (intro / VO / outro clips + script) → finished 1080x1920 reel out,
+with captions, b-roll, grading, and beat-synced motion — ready to post.
 
-## Quick Start
+**Start here: [EDITING-SYSTEM.md](EDITING-SYSTEM.md)** — the locked style rules,
+edit formula, and step-by-step process every video follows.
 
-```bash
-# Run demo agent
-npx ai-agent demo "What is 25 * 4?"
+## Layout
 
-# Generate agent scaffolding
-npx ai-agent init
-```
+| Path | What |
+|---|---|
+| [`EDITING-SYSTEM.md`](EDITING-SYSTEM.md) | The bible: style, rules, process, QC |
+| [`ASSETS.md`](ASSETS.md) | Raw footage + Drive asset inventory |
+| [`examples/`](examples/) | Finished, named, ready-to-post reels |
+| [`pipeline/`](pipeline/) | Canonical working set (video 75 = reference implementation) |
+| [`archive/`](archive/) | Earlier outputs and pipeline history from the test sessions |
 
-## Features
+## The pipeline in one line
 
-- 🤖 **ReAct agents** - Reason + Act loop
-- 🔧 **Tool use** - Define custom tools
-- 📋 **Zod schemas** - Type-safe parameters
-- 🔄 **Iterative** - Multi-step reasoning
-
-## Installation
-
-```bash
-npx ai-agent demo "task"
-npm install ai-agent
-```
-
-## CLI Usage
-
-```bash
-# Demo with built-in tools
-npx ai-agent demo "Calculate 15% of 200"
-npx ai-agent demo --verbose
-
-# Interactive mode
-npx ai-agent demo
-
-# Generate scaffolding
-npx ai-agent init
-npx ai-agent init --type react
-```
-
-## Programmatic Usage
-
-```typescript
-import {
-  createAgent,
-  defineTool,
-  calculatorTool,
-} from 'ai-agent';
-import { z } from 'zod';
-
-// Create agent with tools
-const agent = createAgent({
-  name: 'MyAgent',
-  tools: [calculatorTool],
-  verbose: true,
-});
-
-// Define custom tool
-const weatherTool = defineTool(
-  'get_weather',
-  'Get weather for a location',
-  z.object({ location: z.string() }),
-  async ({ location }) => {
-    return `Weather in ${location}: Sunny, 72°F`;
-  }
-);
-
-agent.addTool(weatherTool);
-
-// Run agent
-const result = await agent.run('What is 25 * 4?');
-console.log(result.answer);
-console.log(result.steps);
-```
-
-## Agent Types
-
-| Type | Use Case |
-|------|----------|
-| ReAct | Multi-step reasoning with tools |
-| Simple | Single response, no tools |
-| Planning | Plan then execute |
-
-## Part of the LXGIC Dev Toolkit
-
-One of 110+ free developer tools from LXGIC Studios.
-
-- GitHub: https://github.com/lxgicstudios
-- Twitter: https://x.com/lxgicstudios
-- Website: https://lxgicstudios.com
-
-## License
-
-MIT. Free forever.
+transcribe words → plan the timeline off word timestamps → render deterministic
+HTML b-roll frame-by-frame with Playwright → assemble one ffmpeg filter graph
+(grade, punch zooms, wipes, bubble captions, loudnorm) → QC checklist → deliver.
