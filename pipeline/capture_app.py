@@ -6,10 +6,17 @@ cookies included. That means signups, logins, and in-app dashboards work:
 fill the form in the page, the session keeps the auth cookies, capture every
 screen.
 
-Email verification: if EMAIL_ADDR / EMAIL_PASS / EMAIL_IMAP_HOST are set
-(burner inbox — NEVER a personal Google account), poll_verification_link()
-grabs the newest verification URL so signups complete hands-free. Use
-plus-addressing (you+sitename@host) so one inbox serves every site.
+Email verification is fully self-service: MailTM creates a disposable inbox
+over pure HTTPS (IMAP is blocked by the proxy; personal Google accounts are
+never used). One fresh inbox per site signup:
+
+    mb = MailTM()                      # creates zhireelsXXXXX@<domain>
+    ...sign up on the site with mb.address...
+    link = mb.wait_link()              # polls for the verification URL
+    b.goto(link)                       # verified; session now logged in
+
+If a site rejects disposable domains, fall back to phone screenshots per
+EDITING-SYSTEM.md rule 4.
 
 Interactive use from a driver script:
     from capture_app import Browser
@@ -98,3 +105,33 @@ def poll_verification_link(subject_hint="verif", timeout_s=120):
         m.logout()
         time.sleep(8)
     raise TimeoutError("no verification mail arrived")
+
+
+class MailTM:
+    """Disposable HTTPS inbox (api.mail.tm) — no IMAP, no personal accounts."""
+    API = "https://api.mail.tm"
+
+    def __init__(self):
+        import json, random, string
+        self.s = requests.Session(); self.s.verify = "/root/.ccr/ca-bundle.crt"
+        dom = self.s.get(f"{self.API}/domains", timeout=20).json()["hydra:member"][0]["domain"]
+        self.address = "zhireels" + "".join(random.choices(string.digits, k=5)) + "@" + dom
+        self.password = "Zr-" + "".join(random.choices(string.ascii_letters + string.digits, k=14))
+        assert self.s.post(f"{self.API}/accounts", json={"address": self.address, "password": self.password}, timeout=20).status_code == 201
+        tok = self.s.post(f"{self.API}/token", json={"address": self.address, "password": self.password}, timeout=20).json()["token"]
+        self.s.headers["Authorization"] = "Bearer " + tok
+
+    def wait_link(self, timeout_s=180):
+        import time
+        deadline = time.time() + timeout_s
+        while time.time() < deadline:
+            msgs = self.s.get(f"{self.API}/messages", timeout=20).json().get("hydra:member", [])
+            for m in msgs:
+                full = self.s.get(f"{self.API}/messages/{m['id']}", timeout=20).json()
+                body = (full.get("html") or [""])[0] + full.get("text", "")
+                links = re.findall(r'https?://[^\s"\'<>]+', body)
+                good = [l for l in links if any(k in l.lower() for k in ("verify", "confirm", "activate", "token"))]
+                if good or links:
+                    return (good or links)[0]
+            time.sleep(8)
+        raise TimeoutError("no verification mail arrived")
