@@ -1,0 +1,183 @@
+<meta charset="utf-8">
+<style>
+@font-face { font-family:'Archivo'; src:url('fonts/Archivo-900.ttf'); font-weight:900; }
+@font-face { font-family:'Archivo8'; src:url('fonts/Archivo-800.ttf'); }
+@font-face { font-family:'Inter'; src:url('fonts/Inter-400.ttf'); font-weight:400; }
+@font-face { font-family:'Inter'; src:url('fonts/Inter-600.ttf'); font-weight:600; }
+@font-face { font-family:'Inter7'; src:url('fonts/Inter-700.ttf'); }
+* { margin:0; padding:0; box-sizing:border-box; }
+html,body { width:1080px; height:1920px; overflow:hidden; background:#131315; font-family:'Inter',sans-serif; }
+#stage { width:1080px; height:1920px; position:relative;
+  background:radial-gradient(ellipse 120% 60% at 50% 8%, #1d1d21 0%, #131315 55%); }
+.wrap { position:absolute; left:70px; right:70px; top:0; height:1920px; display:flex; flex-direction:column; justify-content:center; }
+.lock-big { text-align:center; }
+.lock-big .glm { font-family:'Archivo'; font-weight:900; font-size:190px; color:#f4f2ee; letter-spacing:2px; }
+.lock-big .glm .org { color:#F0A13C; }
+.lock-big .by { font-size:44px; color:#8a867d; margin-top:18px; font-weight:600; }
+.lock-big .by b { color:#f0efea; }
+.tagrow { display:flex; justify-content:center; gap:20px; margin-top:44px; }
+.tag { background:rgba(240,161,60,0.14); border:2px solid rgba(240,161,60,0.55); color:#F0A13C;
+  border-radius:40px; padding:16px 36px; font-family:'Inter7'; font-size:31px; letter-spacing:3px; }
+.lock-top { text-align:center; margin-bottom:54px; }
+.lock-top .glm { font-family:'Archivo'; font-weight:900; font-size:92px; color:#f4f2ee; }
+.lock-top .glm .org { color:#F0A13C; }
+.spec { background:rgba(255,255,255,0.05); border:2px solid rgba(255,255,255,0.14); border-radius:28px;
+  padding:40px 48px; margin-top:26px; display:flex; align-items:center; gap:34px; }
+.spec .num { font-family:'Archivo'; font-weight:900; font-size:74px; color:#F0A13C; min-width:290px; }
+.spec .lbl { font-size:37px; color:#e8e6df; font-weight:600; line-height:1.35; }
+.spec .sub { font-size:28px; color:#8a867d; margin-top:6px; }
+.chipline { display:flex; justify-content:center; margin-top:40px; }
+.chipp { background:rgba(16,15,17,0.9); border:2px solid rgba(255,255,255,0.18); border-radius:44px;
+  padding:20px 44px; color:#f0efea; font-family:'Inter7'; font-size:33px; letter-spacing:1px; }
+.chipp .org { color:#F0A13C; }
+/* benchmark */
+.b-title { text-align:center; font-family:'Archivo8'; font-size:46px; color:#f4f2ee; letter-spacing:1px; margin-bottom:16px; }
+.b-sub { text-align:center; font-size:29px; color:#8a867d; margin-bottom:56px; }
+.brow { margin-top:38px; }
+.brow .nm { font-family:'Inter7'; font-size:34px; color:#e8e6df; margin-bottom:14px; display:flex; justify-content:space-between; }
+.brow .nm .win { color:#F0A13C; letter-spacing:2px; font-size:29px; }
+.btrack { height:64px; background:rgba(255,255,255,0.06); border-radius:18px; overflow:hidden; }
+.bfill { height:100%; border-radius:18px; }
+/* huawei / cost */
+.hcard { background:rgba(255,255,255,0.05); border:2px solid rgba(255,255,255,0.14); border-radius:30px; padding:56px; text-align:center; }
+.hcard .ic { width:120px; height:120px; border-radius:26px; margin:0 auto 36px; background:rgba(240,161,60,0.14);
+  border:2px solid rgba(240,161,60,0.5); display:flex; align-items:center; justify-content:center; }
+.hcard .ic svg { width:64px; height:64px; stroke:#F0A13C; fill:none; stroke-width:1.6; }
+.hcard h1 { font-family:'Archivo8'; font-size:52px; color:#f4f2ee; line-height:1.25; }
+.hcard h1 .org { color:#F0A13C; }
+.hcard .no { margin-top:30px; font-size:36px; color:#8a867d; }
+.hcard .no s { color:#6a675f; }
+.cost-title { text-align:center; font-family:'Archivo8'; font-size:46px; color:#f4f2ee; margin-bottom:60px; }
+.cost-row { display:flex; align-items:flex-end; justify-content:center; gap:56px; height:520px; }
+.cbar { width:220px; display:flex; flex-direction:column; justify-content:flex-end; align-items:center; height:100%; }
+.cbar .col { width:100%; border-radius:20px 20px 8px 8px; }
+.cbar .nm2 { margin-top:22px; font-family:'Inter7'; font-size:31px; color:#e8e6df; }
+.cbar .dol { font-family:'Archivo'; font-size:40px; margin-bottom:14px; }
+.cheap-tag { display:flex; justify-content:center; margin-top:52px; }
+/* terminal */
+.term { background:#0c0c0e; border:2px solid #2a2a2e; border-radius:24px; overflow:hidden; }
+.term-bar { height:74px; background:#1a1a1d; display:flex; align-items:center; padding:0 30px; gap:14px; }
+.term-bar div { width:22px; height:22px; border-radius:50%; }
+.term-body { padding:38px 42px; font-family:'Consolas',monospace; font-size:30px; line-height:1.8; color:#c9c6bd; white-space:pre-wrap; word-break:break-all; min-height:430px; }
+.term-body .p { color:#F0A13C; }
+.term-body .ok { color:#6fcf6f; }
+.term-body .dim { color:#6a675f; }
+.caret { display:inline-block; width:15px; height:32px; background:#c9c6bd; vertical-align:-4px; }
+.cta-wrap { display:flex; justify-content:center; margin-top:64px; }
+.cta { background:#F0A13C; color:#141416; font-family:'Archivo'; font-weight:900; font-size:56px;
+  letter-spacing:2px; border-radius:60px; padding:36px 74px; box-shadow:0 18px 60px rgba(240,161,60,0.35); }
+.cta-sub { text-align:center; margin-top:26px; font-size:31px; color:#8a867d; font-weight:600; }
+</style>
+<div id="stage"></div>
+<script>
+const stage = document.getElementById('stage');
+const ease = (p) => 1 - Math.pow(1 - Math.min(1, Math.max(0, p)), 3);
+const io = (t, st, dur) => ease((t - st) / dur);           // 0..1 after st
+const el = (f, html, dy=30) => `<div style="opacity:${f.toFixed(3)};transform:translateY(${(dy*(1-f)).toFixed(1)}px)">${html}</div>`;
+
+/* ============ S1 (14.8s): lockup -> specs -> benchmarks ============ */
+const SPECS = [
+  [3.14, "744B", "parameters", "one of the largest open models released"],
+  [4.92, "MIT", "license", "free for commercial use"],
+  [6.30, "1M", "token context window", "holds entire codebases at once"]
+];
+function sceneS1(t) {
+  let html = '';
+  if (t < 9.46) {
+    // lockup phase, then shrink to top as cards arrive
+    const born = io(t, 0.74, 0.35);
+    if (t < 3.14) {
+      html = `<div class="lock-big" style="opacity:${born.toFixed(3)};transform:scale(${(0.9+0.1*born).toFixed(4)})">
+        <div class="glm">GLM <span class="org">5.2</span></div>
+        <div class="by">by <b>Z.ai</b></div>
+        <div class="tagrow">${t >= 1.9 ? `<div class="tag" style="opacity:${io(t,1.9,0.3).toFixed(3)}">OPEN SOURCE</div>` : ''}</div></div>`;
+    } else {
+      const shr = io(t, 3.14, 0.3);
+      html = `<div class="lock-top" style="transform:scale(${(1.35-0.35*shr).toFixed(4)})">
+        <div class="glm">GLM <span class="org">5.2</span></div></div>`;
+      SPECS.forEach(([st, num, lbl, sub]) => {
+        if (t >= st) {
+          const f = io(t, st, 0.3);
+          html += el(f, `<div class="spec"><div class="num">${num}</div><div><div class="lbl">${lbl}</div><div class="sub">${sub}</div></div></div>`, 26);
+        }
+      });
+      if (t >= 7.86) html += el(io(t, 7.86, 0.3), `<div class="chipline"><div class="chipp">BUILT FOR <span class="org">CODING PROJECTS</span></div></div>`, 20);
+    }
+  } else {
+    // benchmark phase
+    const f0 = io(t, 9.46, 0.3);
+    const BARS = [
+      ["GLM 5.2", 0.96, "#F0A13C", 10.0],
+      ["GPT-5.2", 0.90, "#57555e", 10.25],
+      ["Claude",  0.88, "#57555e", 10.5]
+    ];
+    let rows = '';
+    BARS.forEach(([nm, target, col, st], bi) => {
+      const g = t >= st ? ease(Math.min(1, (t - st) / 1.0)) : 0;
+      const w = target * g;
+      const win = nm === "GLM 5.2" && t >= 11.6;
+      const p0 = 12.5 + bi * 0.45;                       // re-pulse on "coding and reasoning tests"
+      const pulse = t >= p0 && t < p0 + 0.4;
+      rows += `<div class="brow" style="transform:scale(${pulse?1.015:1})"><div class="nm"><span style="color:${pulse?'#fff':'#e8e6df'}">${nm}</span>${win ? `<span class="win" style="opacity:${io(t,11.6,0.25).toFixed(3)}">TOPS SEVERAL TESTS</span>` : ''}</div>
+        <div class="btrack" style="${pulse?'border:1px solid rgba(255,255,255,0.35);':''}"><div class="bfill" style="width:${(w*100).toFixed(1)}%;background:${col};${win?'box-shadow:0 0 34px rgba(240,161,60,0.5);':''}"></div></div></div>`;
+    });
+    html = el(f0, `<div class="b-title">CODING + REASONING BENCHMARKS</div><div class="b-sub">published results</div>${rows}`, 34);
+  }
+  stage.innerHTML = `<div class="wrap">${html}</div>`;
+}
+
+/* ============ S2 (11.55s): huawei chips -> cost -> terminal + CTA ============ */
+const CHIPSVG = `<svg viewBox="0 0 24 24"><rect x="7" y="7" width="10" height="10" rx="1.5"/><rect x="10" y="10" width="4" height="4"/><path d="M9 7V3.5M12 7V3.5M15 7V3.5M9 20.5V17M12 20.5V17M15 20.5V17M7 9H3.5M7 12H3.5M7 15H3.5M20.5 9H17M20.5 12H17M20.5 15H17"/></svg>`;
+function sceneS2(t) {
+  let html = '';
+  if (t < 4.02) {
+    const f = io(t, 0.05, 0.3);
+    const glow = t >= 2.9 && t < 3.5 ? 0.45 * Math.sin((t - 2.9) / 0.6 * Math.PI) : 0;
+    html = el(f, `<div class="hcard"><div class="ic" style="box-shadow:0 0 ${Math.round(70*glow)}px rgba(240,161,60,${(glow).toFixed(2)})">${CHIPSVG}</div>
+      <h1>TRAINED ON <span class="org">HUAWEI</span><br>AI CHIPS</h1>
+      ${t >= 1.62 ? `<div class="no" style="opacity:${io(t,1.62,0.3).toFixed(3)}">not <s>Nvidia hardware</s></div>` : ''}</div>`, 34);
+  } else if (t < 7.66) {
+    const f0 = io(t, 4.02, 0.3);
+    const BARS2 = [
+      ["GPT-5.2", 1.0, "#57555e", "$$$"],
+      ["Claude", 0.92, "#57555e", "$$$"],
+      ["GLM 5.2", 0.30, "#F0A13C", "$"]
+    ];
+    let bars = '';
+    BARS2.forEach(([nm, hh, col, dol], i) => {
+      const g = ease(Math.min(1, Math.max(0, (t - (4.22 + i * 0.18)) / 0.5)));
+      const h = hh * g;
+      bars += `<div class="cbar"><div class="dol" style="color:${col==='#F0A13C'?'#F0A13C':'#8a867d'}">${dol}</div>
+        <div class="col" style="height:${(h*72).toFixed(1)}%;background:${col};${col==='#F0A13C'?'box-shadow:0 0 40px rgba(240,161,60,0.35);':''}"></div>
+        <div class="nm2">${nm}</div></div>`;
+    });
+    const tagOn = t >= 5.4;
+    html = el(f0, `<div class="cost-title">COST TO RUN</div><div class="cost-row">${bars}</div>
+      ${tagOn ? `<div class="cheap-tag" style="opacity:${io(t,5.4,0.3).toFixed(3)}"><div class="chipp"><span class="org">SIGNIFICANTLY CHEAPER</span></div></div>` : ''}`, 34);
+  } else {
+    const f0 = io(t, 7.66, 0.25);
+    const CMD = 'git clone z-ai/glm-5.2 && ./setup.sh';
+    const n = Math.max(0, Math.min(CMD.length, Math.floor((t - 7.8) / 0.9 * CMD.length)));
+    let body = `<span class="p">$</span> <span style="color:#f0efea">${CMD.slice(0, n)}</span>${n < CMD.length ? '<span class="caret"></span>' : ''}`;
+    if (t >= 8.85) body += `\n<span class="dim">downloading weights&#8230;</span>`;
+    if (t >= 9.15) {
+      const pct = Math.min(100, Math.round((t - 9.15) / 1.5 * 100));
+      body += `\n<span class="dim">glm-5.2</span>  <span style="color:#4ea3e0">${'█'.repeat(Math.round(pct/5))}${'░'.repeat(20-Math.round(pct/5))}</span> ${pct}%`;
+    }
+    if (t >= 10.75) body += `\n<span class="ok">Setup complete — ready in minutes</span>`;
+    html = el(f0, `<div class="term"><div class="term-bar"><div style="background:#ff5f57"></div><div style="background:#febc2e"></div><div style="background:#28c840"></div></div>
+      <div class="term-body">${body}</div></div>`, 30);
+    if (t >= 9.40) {
+      const f = io(t, 9.40, 0.3);
+      html += `<div class="cta-wrap" style="opacity:${f.toFixed(3)};transform:scale(${(0.85+0.15*ease(f)).toFixed(4)})"><div class="cta">COMMENT &ldquo;GUIDE&rdquo;</div></div>
+        <div class="cta-sub" style="opacity:${f.toFixed(3)}">for the full install guide</div>`;
+    }
+  }
+  stage.innerHTML = `<div class="wrap">${html}</div>`;
+}
+
+window.seek = (scene, t) => {
+  ({S1: sceneS1, S2: sceneS2})[scene](t);
+  return true;
+};
+</script>
