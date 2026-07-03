@@ -1,0 +1,71 @@
+<meta charset="utf-8">
+<style>
+@font-face { font-family:'Montserrat'; src:url('fonts/Montserrat-800.ttf'); font-weight:800; }
+* { margin:0; padding:0; box-sizing:border-box; }
+html,body { width:1080px; height:400px; background:transparent; overflow:hidden; }
+#stage { width:1080px; height:400px; position:relative; display:flex; align-items:flex-start; justify-content:center; padding-top:30px; }
+.bub { background:rgba(16,15,17,0.88); border:2px solid rgba(255,255,255,0.16); border-radius:30px;
+  padding:28px 52px; max-width:960px; text-align:center;
+  box-shadow:0 14px 44px rgba(0,0,0,0.5); }
+.bub span { font-family:'Montserrat'; font-weight:800; font-size:60px; line-height:1.28; color:#fff; letter-spacing:0.5px; }
+.bub .org { color:#F0A13C; }
+</style>
+<div id="stage"></div>
+<script>
+const stage = document.getElementById('stage');
+const CHUNKS = [
+ [0.10,0.89,"this AI tool"],
+ [0.89,1.81,"|automatically posts|"],
+ [1.81,2.87,"across |all your social media|"],
+ [2.87,3.55,"|while you sleep|"],
+ [3.59,4.29,"here's how to get it"],
+ [4.26,5.60,"go to |Ocoya| and log in"],
+ [6.18,7.68,"head to the |Connections tab|"],
+ [7.80,9.24,"connect |all your socials|"],
+ [9.60,11.42,"|Instagram, Facebook, LinkedIn, X|"],
+ [11.46,12.30,"all in one place"],
+ [12.54,13.70,"go to |New AI Post|"],
+ [13.88,15.86,"describe |what you want to post|"],
+ [16.58,18.42,"pick |demo or launch|"],
+ [19.16,20.90,"AI generates your |caption and hashtags|"],
+ [20.90,21.60,"|instantly|"],
+ [21.94,23.00,"jump over to |Studios|"],
+ [23.06,24.70,"pick a platform"],
+ [25.20,26.40,"describe the |image you want|"],
+ [26.50,27.62,"it generates a |visual|"],
+ [27.66,28.90,"that |matches your post|"],
+ [29.18,30.60,"once everything's ready"],
+ [30.84,31.54,"just |schedule it|"],
+ [31.60,32.62,"pick a |time and date|"],
+ [32.70,34.10,"|Ocoya| posts it for you"],
+ [34.10,35.39,"across |all your accounts|"],
+ [35.54,36.91,"a |great tool| for automating"],
+ [36.91,38.27,"|non-video| social media accounts"],
+ [38.47,39.21,"hope you guys found this helpful"],
+ [39.25,39.65,"and of course"],
+ [39.67,40.99,"|follow along| for our AI tips"]
+];
+
+function fmt(txt) {
+  const parts = txt.split('|');
+  let out = '';
+  parts.forEach((seg, i) => { if (seg) out += i % 2 ? `<span class="org">${seg}</span>` : `<span>${seg}</span>`; });
+  return out;
+}
+
+window.seek = (t) => {
+  const c = CHUNKS.find(([s, e]) => t >= s && t < e);
+  if (!c) { stage.innerHTML = ''; return true; }
+  const lt = t - c[0];
+  let s, o;
+  if (lt < 0.12) {
+    const p = lt / 0.12;
+    const e = 1 - Math.pow(1 - p, 3);
+    s = 0.78 + 0.28 * e;                       // 0.78 -> 1.06
+    if (p > 0.7) s = 1.06 - (p - 0.7) / 0.3 * 0.06;
+    o = Math.min(1, p * 1.8);
+  } else { s = 1.0; o = 1; }
+  stage.innerHTML = `<div class="bub" style="transform:scale(${s.toFixed(4)});opacity:${o.toFixed(3)}">${fmt(c[2])}</div>`;
+  return true;
+};
+</script>
