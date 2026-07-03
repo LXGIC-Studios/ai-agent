@@ -3,6 +3,11 @@
 The locked style + process for every short-form video on this account.
 Format: 1080x1920 (9:16), 30fps, Instagram Reels / TikTok. Editor: Claude. Talent: Zhi.
 
+**APPROVED REFERENCE:** `examples/claude-books-flights.mp4` is the signed-off
+gold standard for the full edit (structure, motion, b-roll, captions, ending).
+`pipeline/` contains its exact source files. Video 73 set the color grade;
+video 75 set everything else. Match them.
+
 ---
 
 ## 1. Hard rules — never break these
@@ -50,6 +55,10 @@ aac 256k, 44.1kHz, loudnorm I=-14:TP=-1.5:LRA=11, -movflags +faststart
 3. **B-roll walkthrough (bulk of the video):** app screens driven by the VO. Section-to-section transitions: slideleft / circleopen / radial, 0.2–0.3s.
 4. **Radial wipe to outro** exactly when the VO's last word finishes ringing out.
 5. **Outro (CTA):** static camera, end zoom punch-in on the last 0.5s, then **fade to black** (0.3s) with the audio ring-out under it.
+   The outro video ends on his **last clean eyes-up frame** (find it frame-by-frame;
+   the look-down starts ~0.1s later than you think). The fade must reach TRUE black
+   at least one frame before the video ends — a held 90%-faded frame still shows him.
+   Audio continues under black until the ring-out finishes, then the audio fade.
 
 ## 4. Motion rules
 
@@ -133,6 +142,7 @@ archive/               older outputs + pipeline history from the test sessions
 | Card stagger | 0.6s apart, 0.25s entrance |
 | Zoom punch | 0.2–0.3s, ±0.10–0.16 zoom delta |
 | Caption chunk | 2–6 words, pop-in 0.12s |
-| End fade (video) | 0.3s to black |
+| End fade (video) | 0.3s, reaching true black ≥1 frame before video end |
 | End fade (audio) | 0.35s, starting after last word ring-out |
+| Speech ring-out past transcript end | ~0.2s — always leave it |
 | Loudness | −14 LUFS integrated |
