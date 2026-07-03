@@ -19,7 +19,7 @@ video 75 set everything else. Match them.
    **Get real reference screenshots before building any product b-roll — source them yourself first:**
    1. `pipeline/capture_site.py` screenshots the real site live at mobile viewport (Chromium renders, python fetches through the proxy — verified working on durable.co / ocoya.com). Capture the homepage, pricing, onboarding — every public state and scroll position.
    2. For app-store apps, capture the App Store / Play Store listing pages the same way — their galleries show real in-app screens.
-   3. Only if the flow is login-walled (in-app dashboards, post-signup steps): ask Nathan/Zhi to walk it on a phone and send screenshots.
+   3. Only if the flow is login-walled (in-app dashboards, post-signup steps): ask Nathan/Zhi to walk it on a phone and send screenshots. NEVER ask for or accept Google/SSO credentials — too much access, and Google blocks headless sign-in anyway. If repeat access to one site is worth it, a throwaway email+password account made directly on that site can be shared instead.
    Then rebuild screen-for-screen: same questions, copy, icons, colors, buttons, progress indicators. Only the device status bar / browser chrome gets simplified to the clean URL-pill treatment. Never invent UI when a real reference is obtainable.
 5. **Real AI responses.** When a mockup shows an AI answer, generate the answer with the actual AI (or have Nathan paste a real one). Never write fake-sounding filler.
 6. **Claude app specifics:** greeting is "Evening, Zhi" (never a real name that isn't his), typed composer text is WHITE (`#f0efea`), placeholder text is gray (`#8a867d`).
