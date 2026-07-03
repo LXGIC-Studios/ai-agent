@@ -22,14 +22,18 @@ html,body { width:1080px; height:1920px; background:transparent; overflow:hidden
   text-transform:uppercase; text-shadow:0 4px 0 #000, 0 0 26px rgba(0,0,0,.55); }
 
 /* ---- floating prompt card (reference 1) ---- */
-.card-wrap { position:absolute; left:50%; top:1000px; width:860px; }
-.card { background:#fdfdfc; border-radius:26px; padding:52px 56px;
+.card-wrap { position:absolute; left:50%; top:1000px; width:880px; }
+.card { position:relative; background:#fdfdfc; border-radius:28px; padding:50px 56px; overflow:hidden;
   box-shadow:0 30px 90px rgba(0,0,0,0.6), 0 4px 18px rgba(0,0,0,0.35); }
-.card-head { display:flex; align-items:center; gap:22px; margin-bottom:26px; }
+.card.hot { box-shadow:0 30px 90px rgba(0,0,0,0.6), 0 0 0 5px #F0A13C; }
+.card-wm { position:absolute; right:18px; top:-38px; font-family:'Anton'; font-size:230px; color:#f0efec;
+  line-height:1; letter-spacing:-4px; z-index:0; }
+.card-head { position:relative; z-index:1; display:flex; align-items:center; gap:22px; margin-bottom:24px; }
 .card-badge { background:#1f1e1c; color:#fff; font-family:'Archivo'; font-weight:900; font-size:27px;
   letter-spacing:3px; padding:12px 26px; border-radius:12px; }
-.card-app { color:#8a867d; font-family:'Inter'; font-weight:600; font-size:27px; margin-left:auto; }
-.card-body { font-family:'Inter'; font-weight:600; font-size:38px; color:#191919; line-height:1.42; }
+.card-badge.hot { background:#F0A13C; color:#1f1e1c; }
+.card-app { color:#8a867d; font-family:'Inter'; font-weight:600; font-size:27px; }
+.card-body { position:relative; z-index:1; font-family:'Inter'; font-weight:600; font-size:38px; color:#191919; line-height:1.42; }
 .card-body .q { color:#b0b0ab; }
 </style>
 <div id="stage"></div>
@@ -46,9 +50,9 @@ const PILLS = {
   cta: ["", "PROMPTS IN THE <span class='org'>COMMENTS</span>"]
 };
 const CARDS = {
-  c1: ["PROMPT 01", "What is the fastest way for me to reach my desired income?"],
-  c2: ["PROMPT 02", "Who is the most successful entrepreneur I should learn from?"],
-  c3: ["PROMPT 03", "Pretend you are that entrepreneur. Create me a 90-day action plan with a $5,000 upfront budget, and show me exactly how to get my first client."]
+  c1: ["PROMPT 01", "01", "What is the fastest way for me to reach my desired income?", false],
+  c2: ["PROMPT 02", "02", "Who is the most successful entrepreneur I should learn from?", false],
+  c3: ["PROMPT 03", "03", "Pretend you are that entrepreneur. Create me a 90-day action plan with a $5,000 upfront budget, and show me exactly how to get my first client.", true]
 };
 
 // pop animation: scale/fade in with overshoot, subtle idle drift, no exit (cut out)
@@ -84,9 +88,10 @@ window.seek = (kind, t, dur) => {
     stage.innerHTML = `<div class="pill-wrap" style="transform:translateX(-50%) translateY(${dy.toFixed(1)}px) scale(${s.toFixed(4)}); opacity:${o.toFixed(3)}">
       <div class="pill" style="${just}">${numHtml}<div class="pill-txt">${txt}</div></div></div>`;
   } else {
-    const [badge, body] = CARDS[kind];
+    const [badge, wm, body, hot] = CARDS[kind];
     stage.innerHTML = `<div class="card-wrap" style="transform:translateX(-50%) translateY(${dy.toFixed(1)}px) scale(${s.toFixed(4)}); opacity:${o.toFixed(3)}">
-      <div class="card"><div class="card-head"><div class="card-badge">${badge}</div><div class="card-app">Claude</div></div>
+      <div class="card ${hot?'hot':''}"><div class="card-wm">${wm}</div>
+      <div class="card-head"><div class="card-badge ${hot?'hot':''}">${badge}</div><div class="card-app">Claude</div></div>
       <div class="card-body"><span class="q">&ldquo;</span>${body}<span class="q">&rdquo;</span></div></div></div>`;
   }
   return true;
