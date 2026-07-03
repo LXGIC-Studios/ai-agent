@@ -1,0 +1,160 @@
+<meta charset="utf-8">
+<style>
+@font-face { font-family:'Inter'; src:url('fonts/Inter-400.ttf'); font-weight:400; }
+@font-face { font-family:'Inter'; src:url('fonts/Inter-600.ttf'); font-weight:600; }
+* { margin:0; padding:0; box-sizing:border-box; }
+html,body { width:1080px; height:1920px; overflow:hidden; background:#0e1116; font-family:'Inter',sans-serif; }
+#stage { width:1080px; height:1920px; position:relative; }
+.mono { font-family:'Cascadia Code','Consolas',monospace; }
+
+/* terminal full screen */
+.term { width:1080px; height:1920px; background:#0c0c0c; display:flex; flex-direction:column; }
+.term-bar { height:88px; background:#1f1f1f; display:flex; align-items:center; padding:0 34px; gap:20px; }
+.term-tab { background:#0c0c0c; color:#ccc; font-size:26px; padding:14px 34px; border-radius:10px 10px 0 0; margin-top:20px; }
+.term-x { margin-left:auto; color:#888; font-size:34px; letter-spacing:26px; }
+.term-body { flex:1; padding:44px 48px; font-family:'Consolas',monospace; font-size:30px; line-height:1.75; color:#cccccc; white-space:pre-wrap; word-break:break-all; }
+.term-body .p { color:#4ec9b0; }
+.term-body .c { color:#ffffff; }
+.term-body .dim { color:#7a7a7a; }
+.term-body .ok { color:#6fcf6f; }
+.term-body .bar { color:#4ea3e0; }
+.caret { display:inline-block; width:16px; height:34px; background:#cccccc; vertical-align:-4px; }
+
+/* docker desktop */
+.dk { width:1080px; height:1920px; background:#116ed3; display:flex; flex-direction:column; }
+.dk-win { flex:1; margin:130px 40px 170px; background:#0f1924; border-radius:18px; overflow:hidden; display:flex; flex-direction:column; box-shadow:0 30px 90px rgba(0,0,0,.5); }
+.dk-bar { height:92px; background:#0a121b; display:flex; align-items:center; padding:0 34px; gap:22px; }
+.dk-whale { font-size:34px; color:#1d94f4; font-weight:700; }
+.dk-title { color:#dfe7ee; font-size:30px; font-weight:600; }
+.dk-status { margin-left:auto; display:flex; align-items:center; gap:14px; color:#9fb3c4; font-size:26px; }
+.dk-dot { width:20px; height:20px; border-radius:50%; }
+.dk-side { width:250px; background:#0a121b; padding:30px 0; }
+.dk-side div { color:#9fb3c4; font-size:27px; padding:22px 34px; }
+.dk-side .on { background:#123petabyte; }
+.dk-side .sel { background:#16344e; color:#fff; border-left:5px solid #1d94f4; }
+.dk-main { flex:1; padding:40px; }
+.dk-h { color:#dfe7ee; font-size:36px; font-weight:600; margin-bottom:30px; }
+.dk-table-h { display:flex; color:#7f93a6; font-size:24px; padding:16px 20px; border-bottom:1px solid #1d2c3c; }
+.dk-row { display:flex; align-items:center; color:#dfe7ee; font-size:26px; padding:26px 20px; border-bottom:1px solid #14202e; }
+.dk-run { color:#59c97b; }
+.dk-port { color:#3fa4f5; text-decoration:underline; position:relative; }
+.dk-tip { position:absolute; top:-64px; left:0; background:#1d2c3c; color:#fff; font-size:22px; padding:10px 22px; border-radius:8px; white-space:nowrap; }
+.dk-spin { width:70px; height:70px; border:7px solid #1d2c3c; border-top-color:#1d94f4; border-radius:50%; margin:170px auto 30px; }
+.dk-load { text-align:center; color:#9fb3c4; font-size:30px; }
+
+/* browser + webui */
+.br { width:1080px; height:1920px; background:#101014; display:flex; flex-direction:column; }
+.br-bar { height:100px; background:#1c1c22; display:flex; align-items:center; padding:0 30px; gap:22px; }
+.br-dots { display:flex; gap:12px; }
+.br-dots div { width:22px; height:22px; border-radius:50%; }
+.br-addr { flex:1; background:#101014; border-radius:40px; height:62px; display:flex; align-items:center; padding:0 34px; color:#c8c8d0; font-size:27px; }
+.wb { flex:1; display:flex; }
+.wb-side { width:240px; background:#16161c; padding:30px 20px; }
+.wb-new { background:#26262e; color:#ececf1; font-size:25px; border-radius:14px; padding:20px; text-align:center; }
+.wb-hist { color:#6f6f7a; font-size:23px; padding:22px 12px; }
+.wb-main { flex:1; display:flex; flex-direction:column; padding:36px 44px; }
+.wb-model { color:#ececf1; font-size:31px; font-weight:600; }
+.wb-model span { color:#6f6f7a; font-weight:400; }
+.wb-msgs { flex:1; padding-top:44px; }
+.wb-u { background:#26262e; color:#ececf1; font-size:29px; line-height:1.5; padding:22px 32px; border-radius:26px; max-width:560px; margin-left:auto; }
+.wb-a { color:#d9d9e0; font-size:29px; line-height:1.6; margin-top:40px; max-width:640px; }
+.wb-a b { color:#fff; }
+.wb-input { background:#1c1c22; border:1.5px solid #2e2e38; border-radius:36px; padding:24px 34px; color:#6f6f7a; font-size:27px; }
+</style>
+<div id="stage"></div>
+<script>
+const stage = document.getElementById('stage');
+function tw(text, t, t0, t1) {  // typewriter slice
+  if (t < t0) return '';
+  const f = Math.min(1, (t - t0) / (t1 - t0));
+  return text.slice(0, Math.floor(text.length * f));
+}
+function term(bodyHtml) {
+  return `<div class="term"><div class="term-bar"><div class="term-tab">Command Prompt</div><div class="term-x">&#8211;&#9723;&#10005;</div></div>
+    <div class="term-body">${bodyHtml}</div></div>`;
+}
+const P = `<span class="p">C:\\Users\\you&gt;</span> `;
+
+/* T1 (4.9s): ollama run gemma:2b */
+function sceneT1(t) {
+  const cmd = tw('ollama run gemma:2b', t, 0.2, 1.6);
+  let out = '';
+  if (t >= 1.9) out += `\n<span class="dim">pulling manifest</span>`;
+  if (t >= 2.3) {
+    const pct = Math.min(100, Math.round((t - 2.3) / 1.9 * 100));
+    const blocks = Math.round(pct / 5);
+    out += `\n<span class="dim">pulling 1.7 GB</span>  <span class="bar">${'█'.repeat(blocks)}${'░'.repeat(20-blocks)}</span> <span class="c">${pct}%</span>`;
+  }
+  if (t >= 4.3) out += `\n<span class="ok">success</span>\n<span class="c">&gt;&gt;&gt; Send a message (/? for help)</span>`;
+  stage.innerHTML = term(P + `<span class="c">${cmd}</span>` + (t < 1.9 ? '<span class="caret"></span>' : '') + out);
+}
+
+/* T2 (6.9s): docker run open-webui */
+const DCMD = 'docker run -d -p 3000:8080 -v open-webui:/app/backend/data --name open-webui ghcr.io/open-webui/open-webui:main';
+function sceneT2(t) {
+  const cmd = tw(DCMD, t, 0.2, 1.1);  // paste = fast
+  let out = '';
+  const LAYERS = ['4f4fb700ef54','c31ee9e0e46f','8bbfb60ffe28','5a97f1c0a4c0'];
+  LAYERS.forEach((l, i) => {
+    const st = 1.5 + i * 0.9;
+    if (t >= st) {
+      const pct = Math.min(100, Math.round((t - st) / 1.6 * 100));
+      out += `\n<span class="dim">${l}:</span> ${pct >= 100 ? '<span class="ok">Pull complete</span>' : `<span class="bar">Downloading</span> <span class="c">${pct}%</span>`}`;
+    }
+  });
+  if (t >= 5.7) out += `\n<span class="ok">Status: Downloaded newer image for ghcr.io/open-webui/open-webui:main</span>`;
+  if (t >= 6.2) out += `\n<span class="c">e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855</span>`;
+  stage.innerHTML = term(P + `<span class="c">${cmd}</span>` + (t < 1.4 ? '<span class="caret"></span>' : '') + out);
+}
+
+/* DK (4.1s): docker desktop starting -> running */
+function dkChrome(inner, running) {
+  const dot = running ? '#59c97b' : '#e8a838';
+  const label = running ? 'Engine running' : 'Starting...';
+  return `<div class="dk"><div class="dk-win">
+    <div class="dk-bar"><div class="dk-whale">&#9683; docker</div><div class="dk-title">Docker Desktop</div>
+      <div class="dk-status"><div class="dk-dot" style="background:${dot}"></div>${label}</div></div>
+    <div style="flex:1;display:flex">
+      <div class="dk-side"><div class="sel">Containers</div><div>Images</div><div>Volumes</div><div>Builds</div></div>
+      <div class="dk-main">${inner}</div></div></div></div>`;
+}
+function sceneDK(t) {
+  const running = t >= 2.6;
+  const inner = running
+    ? `<div class="dk-h">Containers</div><div class="dk-load" style="margin-top:150px">No containers running.<br><span style="font-size:25px;color:#5f7286">Run a container to get started.</span></div>`
+    : `<div class="dk-spin" style="transform:rotate(${(t*520).toFixed(0)}deg)"></div><div class="dk-load">Docker Engine starting&#8230;</div>`;
+  stage.innerHTML = dkChrome(inner, running);
+}
+
+/* DK2 (4.2s): container running, copy port */
+function sceneDK2(t) {
+  const tip = t >= 2.3;
+  const inner = `<div class="dk-h">Containers</div>
+    <div class="dk-table-h"><div style="width:290px">Name</div><div style="width:250px">Status</div><div>Port(s)</div></div>
+    <div class="dk-row"><div style="width:290px">open-webui</div><div style="width:250px" class="dk-run">&#9679; Running</div>
+      <div class="dk-port">localhost:3000${tip ? '<div class="dk-tip">Copied</div>' : ''}</div></div>`;
+  stage.innerHTML = dkChrome(inner, true);
+}
+
+/* WB (4.4s): open webui in browser */
+function sceneWB(t) {
+  const q = "what can you do?";
+  const uq = tw(q, t, 0.5, 1.3);
+  const ans = "I'm your private AI. I run 100% locally on your PC - no subscription, no limits, free forever.";
+  const at = tw(ans, t, 1.9, 3.9);
+  const msgs = (t >= 1.5 ? `<div class="wb-u">${q}</div>` : (uq ? `<div class="wb-u">${uq}<span class="caret" style="height:26px"></span></div>` : '')) +
+    (at ? `<div class="wb-a">${at}${t < 3.9 ? '<span class="caret" style="height:26px;background:#d9d9e0"></span>' : ''}</div>` : '');
+  stage.innerHTML = `<div class="br">
+    <div class="br-bar"><div class="br-dots"><div style="background:#ff5f57"></div><div style="background:#febc2e"></div><div style="background:#28c840"></div></div>
+      <div class="br-addr">localhost:3000</div></div>
+    <div class="wb"><div class="wb-side"><div class="wb-new">+ New Chat</div><div class="wb-hist">Today</div></div>
+      <div class="wb-main"><div class="wb-model">gemma:2b <span>&#9662; &middot; local</span></div>
+        <div class="wb-msgs">${msgs}</div>
+        <div class="wb-input">Send a message&#8230;</div></div></div></div>`;
+}
+
+window.seek = (scene, t) => {
+  ({T1: sceneT1, T2: sceneT2, DK: sceneDK, DK2: sceneDK2, WB: sceneWB})[scene](t);
+  return true;
+};
+</script>
