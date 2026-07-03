@@ -82,7 +82,7 @@ aac 256k, 44.1kHz, loudnorm I=-14:TP=-1.5:LRA=11, -movflags +faststart
 - Fill VO beats with UI reactions: summary line types out, cards pulse on "compares", sublines brighten on "details", highlight ring + tag on "cheapest", button pops on "link".
 - **Payoff ending:** finish the b-roll on the real-world result (e.g. tap the button → the actual booking website loads). A light-mode page after dark UI is a deliberate contrast pop.
 - Statuses/labels are plain text, no spinners longer than the beat, no emojis.
-- **Keyboard clicks under typing:** synthesize soft mechanical clicks (8-14ms noise+tone bursts, 55-95ms apart, randomized) for every typing window; mix at ~0.45 gain via amix normalize=0 AFTER loudnorm (see render76n.sh / clicks synthesis in pipeline).
+- **Keyboard clicks under typing:** REAL recordings only — synth clicks got rejected ("dogshit"). Use pipeline/sfx/keyboard-typing-mixkit-447.mp3 (soft/warm, Mixkit free-commercial license): cut segments from its active regions to match each typing window, 40ms edge fades, normalize peaks to 0.5, then lowpass 6.5kHz + highpass 150Hz + volume 0.55, amix normalize=0 after loudnorm (see render76n.sh). More free beds: mixkit.co/free-sound-effects/keyboard/ previews download directly.
 
 ## 6. Audio rules
 

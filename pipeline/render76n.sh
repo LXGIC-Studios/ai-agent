@@ -11,7 +11,7 @@ ffmpeg -y -v error \
  -framerate 30 -i b76n/f%04d.png -framerate 30 -i caps76n/f%04d.png \
  -framerate 30 -i pop_i76n/f%04d.png -framerate 30 -i pop_e1/f%04d.png -framerate 30 -i pop_e2/f%04d.png \
  -framerate 30 -i pop_e3/f%04d.png -framerate 30 -i pop_x2/f%04d.png -framerate 30 -i pop_x1/f%04d.png \
- -framerate 30 -i pop_cta76/f%04d.png -i clicks76.wav \
+ -framerate 30 -i pop_cta76/f%04d.png -i clicks76_real.wav \
  -filter_complex "
 [0:v]trim=0.50:21.16,setpts=PTS-STARTPTS,fps=30,scale=1080:1920,setsar=1,$G73,scale=3240:5760,zoompan=z='$ZH':x='(iw-iw/zoom)/2':y='(ih-ih/zoom)*0.33':d=1:s=1080x1920:fps=30,format=yuv420p[vh0];
 [4:v]setpts=PTS-STARTPTS[p0];[vh0][p0]overlay=0:0:eof_action=pass[vh1];
@@ -31,7 +31,7 @@ ffmpeg -y -v error \
 [0:a]atrim=0.50:27.55,asetpts=PTS-STARTPTS,afade=t=in:st=0:d=0.10[am];
 [1:a]atrim=0.26:5.55,asetpts=PTS-STARTPTS,afade=t=in:st=0:d=0.06[ao];
 [am][ao]concat=n=2:v=0:a=1,loudnorm=I=-14:TP=-1.5:LRA=11[vc];
-[11:a]volume=0.45[clk];
+[11:a]lowpass=f=6500,highpass=f=150,volume=0.55[clk];
 [vc][clk]amix=inputs=2:duration=first:normalize=0,afade=t=out:st=32.10:d=0.24,aresample=44100[aout]
 " -map "[vout]" -map "[aout]" \
  -c:v libx264 -preset slow -crf 18 -profile:v high -pix_fmt yuv420p \
