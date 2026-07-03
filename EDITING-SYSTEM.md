@@ -16,6 +16,7 @@ video 75 set everything else. Match them.
 2. **The VO clip is audio-only.** It's a shoulder shot. Never show its video.
 3. **Never park graphics over his face.** Pills go above his head, captions in the lower third band. If a graphic needs the middle of the frame, cut to full-screen b-roll instead.
 4. **Real app UI only.** Mockups must look like the actual product (real Claude spark icon from claude.ai, real chrome, real layout). No fake status bars, no invented icons, no "symmetrical" redrawn logos.
+   **Before building b-roll for any product, ask Nathan/Zhi for real screenshots of the actual flow** (walking it on a phone takes minutes) and rebuild screen-for-screen: same questions, copy, icons, colors, buttons, progress indicators. Only the device status bar / browser chrome gets simplified to the clean URL-pill treatment.
 5. **Real AI responses.** When a mockup shows an AI answer, generate the answer with the actual AI (or have Nathan paste a real one). Never write fake-sounding filler.
 6. **Claude app specifics:** greeting is "Evening, Zhi" (never a real name that isn't his), typed composer text is WHITE (`#f0efea`), placeholder text is gray (`#8a867d`).
 
