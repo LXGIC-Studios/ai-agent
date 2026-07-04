@@ -22,6 +22,10 @@ a clipped word pulled the look-down back into frame — caught by Nathan, not QC
 - [ ] Dead air / getting-ready trimmed from the start of every clip.
 - [ ] The VO clip's video (shoulder shot) never appears.
 - [ ] Ending not cut "a hair too soon" — video extends to cover his voice.
+- [ ] End-fade math uses the TRUE video end: xfade DROPS the first stream's
+      tail beyond offset+duration — output ends at offset + second stream
+      length. A fade computed against the assumed end left a held 90%-faded
+      frame once. Verify YMAX=16 on the actual final frames, not the plan.
 
 ## 2. Audio
 
