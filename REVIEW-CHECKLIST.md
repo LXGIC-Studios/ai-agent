@@ -46,6 +46,12 @@ a clipped word pulled the look-down back into frame — caught by Nathan, not QC
       Subtract the sample's own onset lead. Verify positions in the bed wav.
 - [ ] Every pop-like visual event HAS a sound (pill pops ding, expands swish);
       AI text streaming itself stays silent.
+- [ ] Quality layer present and verified in the mix: pulse ring on every pop,
+      whoosh under every transition, sub-bass thump on punch-INs, chime layered
+      on the CTA. Verify by band-limited RMS at each event (sub 30–130Hz for
+      thumps, ~1.1–1.5kHz sustained for the chime).
+- [ ] Chip grids pop IN PLACE — scrub the pop sequence; no sideways jumps from
+      flex re-centering (render all slots from frame one, visibility-hidden).
 
 ## 3. Motion
 

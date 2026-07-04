@@ -17,6 +17,8 @@ html,body { width:1080px; height:1920px; background:transparent; overflow:hidden
   box-shadow:0 12px 44px rgba(0,0,0,0.45); }
 .pill .org { color:#F0A13C; }
 .cta { background:rgba(58,56,58,0.92); border:none; }
+.pw { position:relative; display:inline-block; }
+.ring { position:absolute; inset:-4px; border:3px solid rgba(240,161,60,0.85); border-radius:26px; pointer-events:none; }
 </style>
 <div id="stage"></div>
 <script>
@@ -43,6 +45,13 @@ function pop(lt, d=0.12) {
   if (p > 0.7) s = 1.06 - (p-0.7)/0.3*0.06;
   return {s, o:Math.min(1,p*1.8)};
 }
+function ringHtml(lt, radius) {
+  // expanding outline pulse: 0 -> 0.38s
+  if (lt < 0 || lt >= 0.38) return '';
+  const p = lt/0.38, e = 1-Math.pow(1-p,2);
+  const sc = 1 + 0.38*e, o = 0.85*(1-p);
+  return `<div class="ring" style="border-radius:${radius}px;transform:scale(${sc.toFixed(4)});opacity:${o.toFixed(3)}"></div>`;
+}
 function exitAnim(t, tout, d=0.15) {
   if (t < tout) return {s:1, o:1};
   const p = (t-tout)/d;
@@ -53,30 +62,29 @@ function exitAnim(t, tout, d=0.15) {
 window.seek = (t) => {
   let html = '';
   if (t < GRID_OUT + 0.15) {
+    // all chips always occupy their final slot (visibility toggles) — no reflow jumps
     const rows = [[],[]];
-    for (const c of CHIPS) {
+    const ALL = CHIPS.concat([{txt:TAG.txt, t:TAG.t, row:1, org:true}]);
+    for (const c of ALL) {
       const ps = pop(t - c.t);
-      if (!ps) continue;
       const ex = exitAnim(t, GRID_OUT);
-      if (!ex) continue;
+      if (!ps || !ex) {
+        rows[c.row].push(`<div class="pw" style="visibility:hidden"><div class="chip${c.org?' org':''}">${c.txt}</div></div>`);
+        continue;
+      }
       const s = ps.s*ex.s, o = ps.o*ex.o;
-      rows[c.row].push(`<div class="chip" style="transform:scale(${s.toFixed(4)});opacity:${o.toFixed(3)}">${c.txt}</div>`);
+      rows[c.row].push(`<div class="pw" style="transform:scale(${s.toFixed(4)});opacity:${o.toFixed(3)}"><div class="chip${c.org?' org':''}">${c.txt}</div>${ringHtml(t-c.t,22)}</div>`);
     }
-    const tp = pop(t - TAG.t);
-    if (tp) {
-      const ex = exitAnim(t, GRID_OUT);
-      if (ex) rows[1].push(`<div class="chip org" style="transform:scale(${(tp.s*ex.s).toFixed(4)});opacity:${(tp.o*ex.o).toFixed(3)}">${TAG.txt}</div>`);
-    }
-    if (rows[0].length) html += `<div class="row" style="top:104px">${rows[0].join('')}</div>`;
-    if (rows[1].length) html += `<div class="row" style="top:232px">${rows[1].join('')}</div>`;
+    html += `<div class="row" style="top:104px">${rows[0].join('')}</div>`;
+    html += `<div class="row" style="top:232px">${rows[1].join('')}</div>`;
   }
   const dp = pop(t - DASH.t);
   if (dp) {
     const ex = exitAnim(t, DASH.out);
-    if (ex) html += `<div class="pill-wrap" style="top:92px"><div class="pill" style="transform:scale(${(dp.s*ex.s).toFixed(4)});opacity:${(dp.o*ex.o).toFixed(3)}">Business API &#8594; <span class="org">live dashboard</span></div></div>`;
+    if (ex) html += `<div class="pill-wrap" style="top:92px"><div class="pw" style="transform:scale(${(dp.s*ex.s).toFixed(4)});opacity:${(dp.o*ex.o).toFixed(3)}"><div class="pill">Business API &#8594; <span class="org">live dashboard</span></div>${ringHtml(t-DASH.t,24)}</div></div>`;
   }
   const cp = pop(t - CTA.t);
-  if (cp) html += `<div class="pill-wrap" style="top:92px"><div class="pill cta" style="transform:scale(${cp.s.toFixed(4)});opacity:${cp.o.toFixed(3)}">Comment <span class="org">&ldquo;GitHub&rdquo;</span></div></div>`;
+  if (cp) html += `<div class="pill-wrap" style="top:92px"><div class="pw" style="transform:scale(${cp.s.toFixed(4)});opacity:${cp.o.toFixed(3)}"><div class="pill cta">Comment <span class="org">&ldquo;GitHub&rdquo;</span></div>${ringHtml(t-CTA.t,24)}</div></div>`;
   stage.innerHTML = html;
   return true;
 };
