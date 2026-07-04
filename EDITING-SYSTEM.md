@@ -84,8 +84,14 @@ aac 256k, 44.1kHz, loudnorm I=-14:TP=-1.5:LRA=11, -movflags +faststart
 - Statuses/labels are plain text, no spinners longer than the beat, no emojis.
 - **UI sound design — real recordings only (synth got rejected):**
   - Keyboard clicks ONLY when an actual keyboard/typing-person is implied on screen (someone typing a prompt). An AI response typing itself out gets NO typing sound — nobody is typing (Nathan caught this). Bed: pipeline/sfx/keyboard-mechanical-mixkit-1388.mp3 (loud+mechanical direction), RMS-normalize segments ~0.055, volume 0.95.
-  - **Pill/popup dings:** subtle real pop on each pill/card pop-in — pipeline/sfx/pill-pop-mixkit-2356.mp3, peak-normalized to 0.5 in the bed, volume 0.65 in the mix. One ding per pop, placed at the exact overlay pop times.
-  - Mixing: build a single bed wav (44.1k) with events at timeline positions; loudnorm voice, then aresample=44100 BOTH streams before amix normalize=0 (loudnorm outputs 192kHz — unmatched rates truncate the mix). More free SFX: mixkit.co previews download directly.
+  - **Pill/popup dings:** subtle real pop on each pill/card pop-in — pipeline/sfx/pill-pop-mixkit-2356.mp3, peak-normalized to 0.5 in the bed, volume 0.65 in the mix. One ding per pop.
+  - **Pill expands get a soft swish:** pipeline/sfx/soft-swish-mixkit-1478.mp3, peak-normalized to ~0.32, sample start ~0.10s before the expand begins so the whoosh rides the ~0.4s growth. AI text streaming itself still gets NO sound.
+  - **Placement is measured, never mapped from the plan (Nathan heard 0.2s: "slightly off"):**
+    1. Find each pop's REAL frame by scanning the overlay PNG track's alpha (or frame-diffing the render). Don't trust punch times.
+    2. Overlay tracks on an xfaded-in scene map to global time as `xfade OFFSET + local t` — NOT offset+duration (that mistake put two dings 0.2s late).
+    3. Align the sample's TRANSIENT to the pop frame: measure the sample's onset (first sample >10% peak — 2356.wav has 35ms of lead) and subtract it from the placement time.
+    4. Verify placement inside the written bed wav (envelope threshold scan) — deterministic, immune to speech masking in the final mix.
+  - Mixing: build a single bed wav (44.1k) with events at timeline positions; loudnorm voice, then aresample=44100 BOTH streams before amix normalize=0 (loudnorm outputs 192kHz — unmatched rates truncate the mix). More free SFX: mixkit.co previews download directly (`assets.mixkit.co/active_storage/sfx/{id}/{id}-preview.mp3`; scrape category pages for ids).
 
 ## 6. Audio rules
 

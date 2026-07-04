@@ -35,6 +35,13 @@ a clipped word pulled the look-down back into frame — caught by Nathan, not QC
       mismatch at amix silently truncated 3s of outro audio once).
 - [ ] ffprobe the AUDIO STREAM duration of the final file — it must equal the
       video duration. A silent tail is a cut outro.
+- [ ] Every SFX transient lands ON its visual event's measured frame — pop
+      frames come from the overlay track's alpha / render frame-diff, never
+      from planned punch times. On xfaded scenes, global = xfade OFFSET +
+      local t (offset+duration put two dings 0.2s late — Nathan heard it).
+      Subtract the sample's own onset lead. Verify positions in the bed wav.
+- [ ] Every pop-like visual event HAS a sound (pill pops ding, expands swish);
+      AI text streaming itself stays silent.
 
 ## 3. Motion
 
@@ -77,6 +84,9 @@ a clipped word pulled the look-down back into frame — caught by Nathan, not QC
       send a crf-23 lite encode and note the master lives in videos/. A send without
       a file_uuid in the tool result DID NOT ATTACH — always check and re-send lite.
 - [ ] 1080x1920, 30fps, faststart.
+- [ ] Frame checks on finals use frame-number `select` (decode from start),
+      never `-ss` — seeking these renders landed ~4s off once and produced a
+      "verification" sheet of the wrong section.
 
 ## Sign-off
 
