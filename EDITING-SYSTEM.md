@@ -3,7 +3,7 @@
 The locked style + process for every short-form video on this account.
 Format: 1080x1920 (9:16), 30fps, Instagram Reels / TikTok. Editor: Claude. Talent: Zhi.
 
-**APPROVED REFERENCE:** `videos/claude-books-flights.mp4` is the signed-off
+**APPROVED REFERENCE:** `videos/75-claude-books-flights.mp4` is the signed-off
 gold standard for the full edit (structure, motion, b-roll, captions, ending).
 `pipeline/` contains its exact source files. Video 73 set the color grade;
 video 75 set everything else. Match them.
@@ -129,7 +129,7 @@ Always trim out:
 5. **Build captions + pill:** chunk table in `captions75.html` pattern; capture transparent 1080x400 band; pill via `popups76_i75.html` pattern.
 6. **Assemble:** single ffmpeg filter graph (`pipeline/render_reel.sh` is the canonical reference): grade+zoompan per segment → xfades (tpad clone to preserve offsets) → caption overlay at y=1440 → audio chain.
 7. **QC (checklist below), fix, re-render.**
-8. **Deliver:** named file (not numbered) → `videos/` on the repo branch + send in chat (<40MB; ~50MB silently fails).
+8. **Deliver:** file named `NN-name.mp4` — the SCRIPT NUMBER leads the label (Nathan wants the number visible) → `videos/` on the repo branch + send in chat (<40MB; ~50MB silently fails).
 
 ## 9. QC — run the full checklist
 
