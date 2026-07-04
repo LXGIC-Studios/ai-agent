@@ -19,7 +19,7 @@ html,body { width:1080px; height:1920px; background:transparent; overflow:hidden
 .cta { background:rgba(58,56,58,0.92); border:none; }
 .pw { position:relative; display:inline-block; }
 .panel { position:absolute; left:70px; top:430px; width:940px; height:810px;
-  background:rgba(13,12,14,0.96); border:1.5px solid rgba(255,255,255,0.2); border-radius:34px;
+  background:rgba(13,12,14,0.988); border:1.5px solid rgba(255,255,255,0.2); border-radius:34px;
   box-shadow:0 30px 90px rgba(0,0,0,0.6); }
 .cas { position:absolute; left:70px; top:450px; width:940px; height:790px;
   display:flex; flex-direction:column; align-items:center; justify-content:center; gap:34px; }
@@ -52,7 +52,7 @@ const TAG   = {txt:'+ more', t:7.79};
 const GRID_OUT = 11.3;
 const DASH  = {t:11.99, out:13.95};
 const CTA   = {t:21.39};
-const CTABIG = {tin:20.62, tout:21.37};
+const CTABIG = {tin:19.62, tout:21.37};
 
 const stage = document.getElementById('stage');
 
@@ -97,14 +97,10 @@ window.seek = (t) => {
     html += `<div class="row" style="top:104px">${rows[0].join('')}</div>`;
     html += `<div class="row" style="top:232px">${rows[1].join('')}</div>`;
   }
-  const dp = pop(t - DASH.t);
-  if (dp) {
-    const ex = exitAnim(t, DASH.out);
-    if (ex) html += `<div class="pill-wrap" style="top:92px"><div class="pw" style="transform:scale(${(dp.s*ex.s).toFixed(4)});opacity:${(dp.o*ex.o).toFixed(3)}"><div class="pill">Business API &#8594; <span class="org">live dashboard</span></div>${ringHtml(t-DASH.t,24)}</div></div>`;
-  }
   const bc = pop(t - CTABIG.tin, 0.14);
   if (bc && t < CTABIG.tout + 0.01) {
-    html += `<div class="pill-wrap" style="top:760px"><div class="pw" style="transform:scale(${(1.55*bc.s).toFixed(4)});opacity:${bc.o.toFixed(3)}"><div class="pill cta">Comment <span class="org">&ldquo;GitHub&rdquo;</span></div>${ringHtml(t-CTABIG.tin,24)}</div></div>`;
+    html += `<div class="panel" style="opacity:${bc.o.toFixed(3)};transform:scale(${bc.s.toFixed(4)})"></div>`
+      + `<div class="cas" style="opacity:${bc.o.toFixed(3)};transform:scale(${(1.5*bc.s).toFixed(4)})"><div class="pw"><div class="pill cta">Comment <span class="org">&ldquo;GitHub&rdquo;</span></div>${ringHtml(t-CTABIG.tin,24)}</div></div>`;
   }
   const cp = pop(t - CTA.t);
   if (cp) html += `<div class="pill-wrap" style="top:92px"><div class="pw" style="transform:scale(${cp.s.toFixed(4)});opacity:${cp.o.toFixed(3)}"><div class="pill cta">Comment <span class="org">&ldquo;GitHub&rdquo;</span></div>${ringHtml(t-CTA.t,24)}</div></div>`;

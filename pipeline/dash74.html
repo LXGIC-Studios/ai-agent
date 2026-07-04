@@ -51,13 +51,13 @@ function chartSvg(prog){
 }
 
 window.seek=(t)=>{
-  const rev=4832+Math.round(ease(Math.min(1,t/1.5))*312);
-  const ord=118+Math.round(ease(Math.min(1,t/1.5))*9);
-  const vis=892+Math.round(ease(Math.min(1,t/1.5))*67);
+  const rev=4832+Math.round(ease(Math.min(1,t/4.6))*812);
+  const ord=118+Math.round(ease(Math.min(1,t/4.6))*23);
+  const vis=892+Math.round(ease(Math.min(1,t/4.6))*167);
   const pulse=0.55+0.45*Math.abs(Math.sin(t*Math.PI*1.6));
   const prog=ease(Math.min(1,t/1.15));
   let rows='';
-  const orders=[["New order &mdash; latte bundle","$64.00","just now",0.95],["New order &mdash; subscription","$29.00","just now",1.35]];
+  const orders=[["New order &mdash; latte bundle","$64.00","just now",0.95],["New order &mdash; subscription","$29.00","just now",1.75],["New order &mdash; gift card","$50.00","just now",2.55],["New order &mdash; espresso kit","$89.00","just now",3.45],["New order &mdash; beans x2","$36.00","just now",4.35]];
   for(const [txt,amt,tm,tin] of orders){
     if(t<tin) continue;
     const lt=t-tin; let s=1,o=1;

@@ -25,6 +25,15 @@ a clipped word pulled the look-down back into frame — caught by Nathan, not QC
       covered by a graphic beat (big near-opaque center card / cascade panel)
       that fills the face zone at the current zoom. Boundary-only checks
       missed four mid-take dips once — Nathan caught them, not QC.
+- [ ] **Crop the scrub tiles TO EYE LEVEL** (his eyes fill the tile) — small
+      whole-face tiles hid down-drifting eyes twice; Nathan: "LOOK AT HIS
+      EYES WHEN EVALUATING." Every b-roll RETURN frame must land on verified
+      eyes-on-lens footage; if the take drifts again within ~1s of the
+      return, extend the b-roll instead of cutting back ("we can use the
+      b-roll more"). On-camera beats between covers are ≥1s, never less.
+- [ ] Cover graphics must hide the EYES specifically — check the final render
+      for eyes peeking above a card/pill (a low-placed CTA card exposed
+      down-drifting eyes once). Panels near-opaque (≥0.985).
 - [ ] Dead air / getting-ready trimmed from the start of every clip.
 - [ ] The VO clip's video (shoulder shot) never appears.
 - [ ] Ending not cut "a hair too soon" — video extends to cover his voice.
