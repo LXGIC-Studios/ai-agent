@@ -1,0 +1,61 @@
+<meta charset="utf-8">
+<style>
+@font-face { font-family:'Montserrat'; src:url('fonts/Montserrat-800.ttf'); font-weight:800; }
+* { margin:0; padding:0; box-sizing:border-box; }
+html,body { width:1080px; height:400px; background:transparent; overflow:hidden; }
+#stage { width:1080px; height:400px; position:relative; display:flex; align-items:flex-start; justify-content:center; padding-top:30px; }
+.bub { background:rgba(16,15,17,0.88); border:2px solid rgba(255,255,255,0.16); border-radius:30px;
+  padding:28px 52px; max-width:960px; text-align:center;
+  box-shadow:0 14px 44px rgba(0,0,0,0.5); }
+.bub span { font-family:'Montserrat'; font-weight:800; font-size:60px; line-height:1.28; color:#fff; letter-spacing:0.5px; }
+.bub .org { color:#F0A13C; }
+</style>
+<div id="stage"></div>
+<script>
+const stage = document.getElementById('stage');
+// hook raw=global; VO +3.15; outro +21.55
+const CHUNKS = [
+ [0.04,1.22,"let's make you |some money|"],
+ [1.22,2.28,"by building a |complete game|"],
+ [2.28,3.52,"with |Claude| in |60 seconds|"],
+ [3.79,5.01,"first |open Claude|"],
+ [5.01,6.02,"go to |Artifacts|"],
+ [6.02,6.89,"create a |new artifact|"],
+ [6.89,8.23,"describe the |game you want|"],
+ [8.23,8.79,"for example"],
+ [8.79,10.29,"a fully playable |Tetris game|"],
+ [10.29,11.89,"with a |premium purple theme|"],
+ [11.89,13.41,"Claude first shows you |its plan|"],
+ [13.41,14.59,"simply tell it to |continue|"],
+ [14.59,15.69,"and in about |60 seconds|"],
+ [15.69,17.15,"a |fully playable game|"],
+ [17.15,19.39,"built inside |Claude's preview|"],
+ [19.39,20.13,"|no coding|"],
+ [20.13,21.55,"|no separate IDE| needed"],
+ [21.57,22.83,"now the next thing"],
+ [22.83,24.03,"go ahead and |publish|"],
+ [24.03,24.57,"on |Steam|"],
+ [24.57,25.39,"or the |App Store|"],
+ [25.39,26.73,"start running some |marketing|"],
+ [26.73,27.89,"and start |making money|"],
+ [28.37,29.27,"hope this video |helped you out|"],
+ [29.27,29.55,"and of course"],
+ [29.55,30.43,"follow along for |more ways|"],
+ [30.43,31.40,"to |make money with AI|"]
+];
+function fmt(txt){
+  const parts=txt.split('|'); let out='';
+  parts.forEach((seg,i)=>{ if(seg) out+= i%2?`<span class="org">${seg}</span>`:`<span>${seg}</span>`; });
+  return out;
+}
+window.seek=(t)=>{
+  const c=CHUNKS.find(([s,e])=>t>=s&&t<e);
+  if(!c){ stage.innerHTML=''; return true; }
+  const lt=t-c[0]; let s,o;
+  if(lt<0.12){ const p=lt/0.12, e=1-Math.pow(1-p,3);
+    s=0.78+0.28*e; if(p>0.7) s=1.06-(p-0.7)/0.3*0.06; o=Math.min(1,p*1.8);
+  } else { s=1.0; o=1; }
+  stage.innerHTML=`<div class="bub" style="transform:scale(${s.toFixed(4)});opacity:${o.toFixed(3)}">${fmt(c[2])}</div>`;
+  return true;
+};
+</script>
