@@ -18,6 +18,23 @@ html,body { width:1080px; height:1920px; background:transparent; overflow:hidden
 .pill .org { color:#F0A13C; }
 .cta { background:rgba(58,56,58,0.92); border:none; }
 .pw { position:relative; display:inline-block; }
+.panel { position:absolute; left:70px; top:430px; width:940px; height:810px;
+  background:rgba(13,12,14,0.96); border:1.5px solid rgba(255,255,255,0.2); border-radius:34px;
+  box-shadow:0 30px 90px rgba(0,0,0,0.6); }
+.cas { position:absolute; left:70px; top:450px; width:940px; height:790px;
+  display:flex; flex-direction:column; align-items:center; justify-content:center; gap:34px; }
+.casrow { display:flex; gap:26px; }
+.bigcard { position:absolute; left:70px; top:450px; width:940px; height:790px;
+  background:#fdfdfc; border-radius:34px; overflow:hidden;
+  box-shadow:0 40px 110px rgba(0,0,0,0.65), 0 6px 22px rgba(0,0,0,0.4);
+  display:flex; flex-direction:column; align-items:center; justify-content:center; text-align:center; }
+.bigcard .wm { position:absolute; right:14px; top:-52px; font-family:'Archivo'; font-weight:900; font-size:300px;
+  color:#f0efec; line-height:1; letter-spacing:-6px; }
+.bigcard .h { position:relative; font-family:'Archivo'; font-weight:900; font-size:76px; color:#191919;
+  letter-spacing:2px; text-transform:uppercase; line-height:1.15; padding:0 60px; }
+.bigcard .h .org { color:#F0A13C; }
+.bigcard .sub { position:relative; margin-top:26px; font-family:'Archivo'; font-weight:900; font-size:30px;
+  color:#8a867d; letter-spacing:3px; text-transform:uppercase; }
 .ring { position:absolute; inset:-4px; border:3px solid rgba(240,161,60,0.85); border-radius:26px; pointer-events:none; }
 </style>
 <div id="stage"></div>
@@ -33,8 +50,16 @@ const CHIPS = [
 ];
 const TAG   = {txt:'+ more', t:7.79};
 const GRID_OUT = 11.3;
-const DASH  = {t:11.99, out:15.88};
+const DASH  = {t:11.99, out:13.95};
 const CTA   = {t:21.39};
+// look-down covers (main-local): cascade on "and many more", big cards on their VO beats
+const CAS = {t0:7.37, step:0.09, out:9.10,
+  rows:[['Music','Crypto','Weather'],['Sports','News','Health'],['Jobs','Science','Video']]};
+const BIGS = [
+ {h:'Business <span class="org">dashboard</span>', sub:'powered by a free business API', wm:'API', tin:9.97,  tout:11.27},
+ {h:'Updates in <span class="org">real time</span>', sub:'live data, zero cost', wm:'LIVE', tin:14.02, tout:15.72},
+ {h:'100% <span class="org">free</span>', sub:'hundreds of APIs, one repo', wm:'FREE', tin:20.37, tout:21.32},
+];
 const stage = document.getElementById('stage');
 
 function pop(lt, d=0.12) {
@@ -77,6 +102,35 @@ window.seek = (t) => {
     }
     html += `<div class="row" style="top:104px">${rows[0].join('')}</div>`;
     html += `<div class="row" style="top:232px">${rows[1].join('')}</div>`;
+  }
+  // cascade cover
+  const cp0 = pop(t - CAS.t0, 0.14);
+  if (cp0 && t < CAS.out + 0.12) {
+    const ex = exitAnim(t, CAS.out, 0.12);
+    if (ex) {
+      html += `<div class="panel" style="opacity:${(cp0.o*ex.o).toFixed(3)};transform:scale(${(cp0.s*ex.s).toFixed(4)})"></div>`;
+      let rowsHtml='';
+      CAS.rows.forEach((row,ri)=>{
+        let cells='';
+        row.forEach((txt,ci)=>{
+          const idx=ri*3+ci;
+          const ps=pop(t-(CAS.t0+0.10+CAS.step*idx));
+          if (ps) cells+=`<div class="pw" style="transform:scale(${(ps.s*ex.s).toFixed(4)});opacity:${(ps.o*ex.o).toFixed(3)}"><div class="chip">${txt}</div>${ringHtml(t-(CAS.t0+0.10+CAS.step*idx),22)}</div>`;
+          else cells+=`<div class="pw" style="visibility:hidden"><div class="chip">${txt}</div></div>`;
+        });
+        rowsHtml+=`<div class="casrow">${cells}</div>`;
+      });
+      html += `<div class="cas">${rowsHtml}</div>`;
+    }
+  }
+  // big-card covers
+  for (const b of BIGS) {
+    const bp = pop(t - b.tin, 0.14);
+    if (!bp) continue;
+    const ex = exitAnim(t, b.tout, 0.14);
+    if (!ex) continue;
+    html += `<div class="pw" style="position:absolute;left:0;top:0;width:1080px;height:1920px;transform:scale(${(bp.s*ex.s).toFixed(4)});opacity:${(bp.o*ex.o).toFixed(3)};transform-origin:540px 845px">`
+      + `<div class="bigcard"><div class="wm">${b.wm}</div><div class="h">${b.h}</div><div class="sub">${b.sub}</div></div>${''}</div>`;
   }
   const dp = pop(t - DASH.t);
   if (dp) {

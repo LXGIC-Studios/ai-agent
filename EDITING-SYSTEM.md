@@ -95,7 +95,7 @@ aac 256k, 44.1kHz, loudnorm I=-14:TP=-1.5:LRA=11, -movflags +faststart
     - Visual **pulse ring** on every pop: 3px orange outline matching the pill/chip shape, expanding scale 1→1.38 and fading over 0.38s from the pop frame.
     - **Whoosh** (pipeline/sfx/soft-swish-mixkit-1478.mp3) under every scene transition, onset aligned to the wipe start.
     - **Sub-bass thump** (pipeline/sfx/bass-thump-mixkit-2299.wav, trim ~0.55s + tail fade) under each punch-IN zoom, ~0.85 gain in the bed. Skip the punch-outs.
-    - **Chime** (pipeline/sfx/chime-mixkit-2863.wav, soft tonal bell ~1.25kHz) layered WITH the ding on the CTA pop only — the one "premium" moment per video.
+    - **NO chimes/bells — rejected** (Nathan: "i said ring not chime"). "Rings" means the VISUAL pulse ring. The CTA pop gets the same ding as everything else, nothing extra tonal.
   - **Grids/stacks of chips must pop IN PLACE:** render every chip in its final slot from frame one (visibility hidden until its pop). Centered flex that re-lays-out per pop makes earlier chips jump sideways.
   - Mixing: build a single bed wav (44.1k) with events at timeline positions; loudnorm voice, then aresample=44100 BOTH streams before amix normalize=0 (loudnorm outputs 192kHz — unmatched rates truncate the mix). More free SFX: mixkit.co previews download directly (`assets.mixkit.co/active_storage/sfx/{id}/{id}-preview.mp3`; scrape category pages for ids).
 
@@ -113,7 +113,8 @@ Every video arrives as 3 clips: **intro** (hook), **VO** (shoulder shot — audi
 Always trim out:
 - Dead air / "getting ready" at the start of every clip (~0.2–0.7s).
 - The camera reach / look-down at the END of every clip (starts ~0.2–0.5s before the clip ends). If audio needs to run longer than the clean video, J-cut or fade to black — never show the reach, never freeze his face.
-- **Mid-take look-downs that can't be trimmed** (audio must run through them): COVER them with a graphic beat — a full-frame card/board cutaway, or time a scene transition so the wipe crosses the dip (Nathan OK'd covering his face for this). The graphic must earn its place on a VO beat; never a random slap-over. Small pills don't cover a dip — the graphic must fill the frame or the dip must be off screen.
+- **Mid-take look-downs that can't be trimmed** (audio must run through them): COVER them with a graphic beat — a big center card (940x790+ at y≤450, near-opaque) or a chip cascade on a solid panel — timed to the VO words around the dip (Nathan explicitly wants his face covered rather than a visible look-down). Small pills don't cover a dip; the card must cover the whole face zone AT THE CURRENT ZOOM level. Rebuild each cover so it earns its place on a beat ("and many more" → more-categories cascade; "business dashboard" → dashboard card).
+- **Finding the dips is a mandatory step:** gaze-scrub the FULL final render as dense face-crop contact sheets (every 2nd frame, `crop` to the face, tile). Sustained (>0.3s) lowered gaze = must be covered; ≤0.3s = natural blink, leave it. Judging from the raw-clip overview at 1s steps missed four dips once — Nathan caught them.
 
 ## 8. Process (per video)
 

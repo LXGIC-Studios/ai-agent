@@ -19,6 +19,12 @@ a clipped word pulled the look-down back into frame — caught by Nathan, not QC
       cut at the last frame where his eyes are clearly on camera.
 - [ ] **No freeze-frames of him.** A cloned frame reads as a creepy pause.
       If audio must outlast clean video: J-cut into b-roll, or fade to black.
+- [ ] **Full-video GAZE SCRUB on the final render** — dense face-crop contact
+      sheets (every 2nd frame, cropped to the face) across the WHOLE video,
+      not just boundaries. Every sustained (>0.3s) lowered/away gaze must be
+      covered by a graphic beat (big near-opaque center card / cascade panel)
+      that fills the face zone at the current zoom. Boundary-only checks
+      missed four mid-take dips once — Nathan caught them, not QC.
 - [ ] Dead air / getting-ready trimmed from the start of every clip.
 - [ ] The VO clip's video (shoulder shot) never appears.
 - [ ] Ending not cut "a hair too soon" — video extends to cover his voice.
@@ -47,9 +53,10 @@ a clipped word pulled the look-down back into frame — caught by Nathan, not QC
 - [ ] Every pop-like visual event HAS a sound (pill pops ding, expands swish);
       AI text streaming itself stays silent.
 - [ ] Quality layer present and verified in the mix: pulse ring on every pop,
-      whoosh under every transition, sub-bass thump on punch-INs, chime layered
-      on the CTA. Verify by band-limited RMS at each event (sub 30–130Hz for
-      thumps, ~1.1–1.5kHz sustained for the chime).
+      whoosh under every transition, sub-bass thump on punch-INs. Verify by
+      band-limited RMS at each event (sub 30–130Hz for thumps).
+- [ ] NO chimes/bells anywhere — "rings" means the visual pulse ring (chime
+      rejected by Nathan). No tonal extras on the CTA.
 - [ ] Chip grids pop IN PLACE — scrub the pop sequence; no sideways jumps from
       flex re-centering (render all slots from frame one, visibility-hidden).
 
