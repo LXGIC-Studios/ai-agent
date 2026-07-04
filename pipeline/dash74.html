@@ -1,0 +1,79 @@
+<meta charset="utf-8">
+<style>
+@font-face { font-family:'Archivo'; src:url('fonts/Archivo-900.ttf'); font-weight:900; }
+@font-face { font-family:'Inter'; src:url('fonts/Inter-600.ttf'); font-weight:600; }
+@font-face { font-family:'Inter'; src:url('fonts/Inter-400.ttf'); font-weight:400; }
+* { margin:0; padding:0; box-sizing:border-box; }
+html,body { width:1080px; height:1920px; background:#131215; overflow:hidden; }
+#stage { width:1080px; height:1920px; position:relative; padding:250px 60px 0;
+  background:radial-gradient(ellipse 120% 60% at 50% -8%, #1e1c22 0%, #131215 60%); font-family:'Inter'; }
+.top { display:flex; align-items:center; justify-content:space-between; padding-bottom:36px; }
+.top .nm { font-family:'Archivo'; font-weight:900; font-size:44px; color:#f4f2ee; letter-spacing:2px; text-transform:uppercase; }
+.top .sub { font-size:26px; color:#8a867d; margin-top:6px; }
+.live { display:flex; align-items:center; gap:14px; background:rgba(74,222,128,0.10); border:1.5px solid rgba(74,222,128,0.45);
+  border-radius:999px; padding:14px 28px; font-weight:600; font-size:26px; color:#4ade80; letter-spacing:2px; }
+.dot { width:16px; height:16px; border-radius:50%; background:#4ade80; }
+.kpis { display:flex; gap:24px; }
+.kpi { flex:1; background:rgba(255,255,255,0.055); border:1.5px solid rgba(255,255,255,0.12); border-radius:26px; padding:30px 32px; }
+.kpi .lab { font-size:24px; color:#8a867d; letter-spacing:1px; }
+.kpi .val { font-family:'Archivo'; font-weight:900; font-size:52px; color:#f4f2ee; margin-top:10px; letter-spacing:1px; }
+.kpi .d { font-size:23px; color:#4ade80; margin-top:8px; font-weight:600; }
+.chartbox { margin-top:26px; background:rgba(255,255,255,0.055); border:1.5px solid rgba(255,255,255,0.12);
+  border-radius:26px; padding:34px 32px 24px; }
+.chartbox .lab { font-size:26px; color:#8a867d; letter-spacing:1px; margin-bottom:18px; }
+.feed { margin-top:26px; }
+.frow { display:flex; align-items:center; justify-content:space-between; background:rgba(255,255,255,0.055);
+  border:1.5px solid rgba(255,255,255,0.12); border-radius:22px; padding:26px 32px; margin-bottom:18px; }
+.frow .t { font-size:29px; color:#eceae4; font-weight:600; }
+.frow .v { font-family:'Archivo'; font-weight:900; font-size:32px; color:#F0A13C; }
+.frow .tm { font-size:23px; color:#8a867d; }
+</style>
+<div id="stage"></div>
+<script>
+// deterministic dashboard: KPIs tick, chart draws, LIVE pulses, order rows pop
+function fmt(n){ return n.toLocaleString('en-US'); }
+function ease(p){ return 1-Math.pow(1-p,3); }
+const stage=document.getElementById('stage');
+
+function chartSvg(prog){
+  // revenue line: fixed shape, drawn left->right by prog
+  const pts=[[0,150],[60,138],[120,144],[180,120],[240,126],[300,96],[360,104],[420,74],[480,84],[540,58],[600,66],[660,40],[720,50],[780,22],[840,30],[876,18]];
+  const W=876,H=170;
+  const vis=pts.filter(p=>p[0]<=prog*W);
+  if(vis.length<2) return `<svg width="${W}" height="${H}"></svg>`;
+  const line=vis.map((p,i)=>(i?'L':'M')+p[0]+','+p[1]).join(' ');
+  const area=line+` L${vis[vis.length-1][0]},${H} L0,${H} Z`;
+  return `<svg width="${W}" height="${H}" viewBox="0 0 ${W} ${H}">
+    <path d="${area}" fill="rgba(240,161,60,0.14)"/>
+    <path d="${line}" stroke="#F0A13C" stroke-width="5" fill="none" stroke-linecap="round"/>
+    <circle cx="${vis[vis.length-1][0]}" cy="${vis[vis.length-1][1]}" r="9" fill="#F0A13C"/>
+  </svg>`;
+}
+
+window.seek=(t)=>{
+  const rev=4832+Math.round(ease(Math.min(1,t/1.5))*312);
+  const ord=118+Math.round(ease(Math.min(1,t/1.5))*9);
+  const vis=892+Math.round(ease(Math.min(1,t/1.5))*67);
+  const pulse=0.55+0.45*Math.abs(Math.sin(t*Math.PI*1.6));
+  const prog=ease(Math.min(1,t/1.15));
+  let rows='';
+  const orders=[["New order &mdash; latte bundle","$64.00","just now",0.95],["New order &mdash; subscription","$29.00","just now",1.35]];
+  for(const [txt,amt,tm,tin] of orders){
+    if(t<tin) continue;
+    const lt=t-tin; let s=1,o=1;
+    if(lt<0.12){const p=lt/0.12;const e2=1-Math.pow(1-p,3);s=0.9+0.1*e2;o=Math.min(1,p*1.8);}
+    rows+=`<div class="frow" style="transform:scale(${s.toFixed(3)});opacity:${o.toFixed(3)}"><span class="t">${txt}</span><span class="v">${amt}</span><span class="tm">${tm}</span></div>`;
+  }
+  stage.innerHTML=`
+  <div class="top"><div><div class="nm">Business dashboard</div><div class="sub">Coffee Co. &middot; today</div></div>
+  <div class="live"><div class="dot" style="opacity:${pulse.toFixed(2)}"></div>LIVE</div></div>
+  <div class="kpis">
+    <div class="kpi"><div class="lab">Revenue</div><div class="val">$${fmt(rev)}</div><div class="d">+12.4% vs yesterday</div></div>
+    <div class="kpi"><div class="lab">Orders</div><div class="val">${ord}</div><div class="d">+9 this hour</div></div>
+    <div class="kpi"><div class="lab">Visitors</div><div class="val">${fmt(vis)}</div><div class="d">live on site</div></div>
+  </div>
+  <div class="chartbox"><div class="lab">Revenue &mdash; last 24h</div>${chartSvg(prog)}</div>
+  <div class="feed">${rows}</div>`;
+  return true;
+};
+</script>

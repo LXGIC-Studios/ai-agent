@@ -52,6 +52,7 @@ const TAG   = {txt:'+ more', t:7.79};
 const GRID_OUT = 11.3;
 const DASH  = {t:11.99, out:13.95};
 const CTA   = {t:21.39};
+const CTABIG = {tin:20.62, tout:21.37};
 
 const stage = document.getElementById('stage');
 
@@ -100,6 +101,10 @@ window.seek = (t) => {
   if (dp) {
     const ex = exitAnim(t, DASH.out);
     if (ex) html += `<div class="pill-wrap" style="top:92px"><div class="pw" style="transform:scale(${(dp.s*ex.s).toFixed(4)});opacity:${(dp.o*ex.o).toFixed(3)}"><div class="pill">Business API &#8594; <span class="org">live dashboard</span></div>${ringHtml(t-DASH.t,24)}</div></div>`;
+  }
+  const bc = pop(t - CTABIG.tin, 0.14);
+  if (bc && t < CTABIG.tout + 0.01) {
+    html += `<div class="pill-wrap" style="top:760px"><div class="pw" style="transform:scale(${(1.55*bc.s).toFixed(4)});opacity:${bc.o.toFixed(3)}"><div class="pill cta">Comment <span class="org">&ldquo;GitHub&rdquo;</span></div>${ringHtml(t-CTABIG.tin,24)}</div></div>`;
   }
   const cp = pop(t - CTA.t);
   if (cp) html += `<div class="pill-wrap" style="top:92px"><div class="pw" style="transform:scale(${cp.s.toFixed(4)});opacity:${cp.o.toFixed(3)}"><div class="pill cta">Comment <span class="org">&ldquo;GitHub&rdquo;</span></div>${ringHtml(t-CTA.t,24)}</div></div>`;
